@@ -788,7 +788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputType: 0
   speedMultiplier: 10
-  bomb: {fileID: 0}
+  bomb: {fileID: 7487867137819571873, guid: 9a68cfe661454734f9e4acb9323cc452, type: 3}
 --- !u!58 &947137370
 CircleCollider2D:
   m_ObjectHideFlags: 0
