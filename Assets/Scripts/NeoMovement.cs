@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,6 @@ public class NeoMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(horizontalMove, 1, 1);
         }
-
     }
+    
 }

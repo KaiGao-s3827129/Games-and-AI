@@ -7,12 +7,13 @@ public class NeoCollect : MonoBehaviour
 {
     private Rigidbody2D neo;
 
-    private Animator _animator;
+    public int jumpAccount;
+
+    public bool isGetWeapon;
     // Start is called before the first frame update
     void Start()
     {
         neo = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -23,10 +24,14 @@ public class NeoCollect : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Platform")
+        if (col.tag == "WeaponBox" && !isGetWeapon)
         {
-            _animator.SetTrigger("get");
-            Destroy(col.gameObject);
+            isGetWeapon = true;
+        }
+
+        if (col.tag == "SkillBox" && jumpAccount == 1)
+        {
+            jumpAccount++;
         }
     }
 }
