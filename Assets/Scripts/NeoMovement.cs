@@ -38,9 +38,15 @@ public class NeoMovement : MonoBehaviour
     void Update()
     {
         Run();
-        if (Input.GetButtonDown("Jump") && isGround)
+        if (Input.GetButtonDown("Jump") && (isGround || jumpCount >= 1) )
         {
             jumpRequest = true;
+            jumpCount--;
+        }
+
+        if (isGround && jumpCount <= 0)
+        {
+            jumpCount = 1;
         }
         SwitchAnim();
     }
@@ -51,6 +57,8 @@ public class NeoMovement : MonoBehaviour
         {
             neo.AddForce(Vector2.up * jumpValue, ForceMode2D.Impulse);
             jumpRequest = false;
+            isGround = false;
+            jumpCount--;
         }
         else
         {
@@ -59,10 +67,12 @@ public class NeoMovement : MonoBehaviour
             if (Physics2D.OverlapBox(boxCenter, boxSize, 0, mask) != null)
             {
                 isGround = true;
+                isJump = false;
             }
             else
             {
                 isGround = false;
+                isJump = true;
             }
         }
         
@@ -122,9 +132,9 @@ public class NeoMovement : MonoBehaviour
             Destroy(col.gameObject, 1.5f);
         }
         
-        if (col.tag == "SkillBox" && jumpCount == 1)
+        if (col.tag == "SkillBox" && jumpCount < 2)
         {
-            jumpCount += 1;
+            jumpCount++;
             col.GetComponent<Animator>().SetTrigger("get");
             Destroy(col.gameObject, 1.5f);
         }
