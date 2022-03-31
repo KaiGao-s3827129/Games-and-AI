@@ -89,6 +89,8 @@ public class NeoMovement : MonoBehaviour
             transform.localScale = new Vector3(horizontalMove, 1, 1);
         }
     }
+    
+    
 
     void SwitchAnim()
     {
