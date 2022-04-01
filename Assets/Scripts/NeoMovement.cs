@@ -139,11 +139,13 @@ public class NeoMovement : MonoBehaviour
             Destroy(col.gameObject, 1.5f);
         }
 
-        if (col.tag == "Enemy")
+        if (col.gameObject.name == "Minion")
         {
+            
             healthPoint -= 1;
             if (healthPoint == 0)
             {
+                gameObject.SetActive(false);
                 // die
             }
             else
@@ -152,4 +154,5 @@ public class NeoMovement : MonoBehaviour
             }
         }
     }
+
 }
