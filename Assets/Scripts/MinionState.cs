@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum State
 {
-    Patrol, Die, Attack, Walk, Run,
+    Patrol, Die, Attack, Walk, Run, 
 }
 
 public class MinionState : MonoBehaviour
@@ -18,7 +18,7 @@ public class MinionState : MonoBehaviour
     {
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         currentState = State.Patrol;
-        HP = 1;
+        HP = 100;
         //distance = Vector2.Distance(transform.position, Neo.transform.position);
         distance = toTarget.magnitude;
         availableTime = 0;
@@ -29,11 +29,9 @@ public class MinionState : MonoBehaviour
     {
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         distance = toTarget.magnitude;
-        switch (currentState)
-        {
+        switch (currentState) { 
             case State.Patrol:
-                if (HP <= 0)
-                {
+                if (HP <= 0) {
                     ChangeState(State.Die);
                 }
                 if (distance <= 1)
@@ -59,13 +57,11 @@ public class MinionState : MonoBehaviour
             case State.Die:
                 break;
             case State.Attack:
-                if (HP <= 0)
-                {
+                if (HP <= 0) {
                     ChangeState(State.Die);
                 }
                 // if Neo enter invincible state, change to patrol.
-                if (distance > 1)
-                {
+                if (distance > 1) {
                     if (HP <= 10)
                     {
                         ChangeState(State.Run);
@@ -81,16 +77,13 @@ public class MinionState : MonoBehaviour
                 {
                     ChangeState(State.Die);
                 }
-                if (HP <= 10)
-                {
+                if (HP <= 10) {
                     ChangeState(State.Run);
                 }
-                if (distance > 9 && availableTime <= 0)
-                {
-                    ChangeState(State.Patrol);
+                if (distance > 9 && availableTime <= 0) { 
+                    ChangeState (State.Patrol);
                 }
-                if (distance <= 1)
-                {
+                if (distance <= 1) {
                     ChangeState(State.Attack);
                 }
                 break;
@@ -111,8 +104,7 @@ public class MinionState : MonoBehaviour
         }
     }
 
-    public void ChangeState(State state)
-    {
+    public void ChangeState(State state) {
         currentState = state;
     }
 

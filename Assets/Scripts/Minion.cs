@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -69,7 +69,10 @@ public class Minion : MonoBehaviour
         }
         else if (minionState.currentState == State.Die) {
             Destroy(ant);
+        }else if(minionState.currentState==State.Attack){
+            
         }
+        
            
     }
 }
