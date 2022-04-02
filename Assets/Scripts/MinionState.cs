@@ -27,6 +27,10 @@ public class MinionState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if (availableTime > 0)
+        // {
+        //     availableTime--;
+        // }
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         distance = toTarget.magnitude;
         switch (currentState) { 
@@ -48,10 +52,7 @@ public class MinionState : MonoBehaviour
                     {
                         ChangeState(State.Walk);
                     }
-                    if (availableTime > 0)
-                    {
-                        availableTime--;
-                    }
+
                 }
                 break;
             case State.Die:
@@ -82,6 +83,8 @@ public class MinionState : MonoBehaviour
                 }
                 if (distance > 9 && availableTime <= 0) { 
                     ChangeState (State.Patrol);
+                }else if(availableTime>0){
+                    availableTime--;
                 }
                 if (distance <= 1) {
                     ChangeState(State.Attack);
@@ -95,6 +98,8 @@ public class MinionState : MonoBehaviour
                 if (distance > 9 && availableTime <= 0)
                 {
                     ChangeState(State.Patrol);
+                }else if(availableTime>0){
+                    availableTime--;
                 }
                 if (distance <= 1)
                 {
@@ -106,6 +111,10 @@ public class MinionState : MonoBehaviour
 
     public void ChangeState(State state) {
         currentState = state;
+    }
+
+    public void BossBeenAttacked(){
+        availableTime = 5;
     }
 
 }

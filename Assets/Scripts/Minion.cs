@@ -34,6 +34,7 @@ public class Minion : MonoBehaviour
         float distance = toTarget.magnitude;
         if (minionState.currentState == State.Walk)
         {
+            // 替换A* and flocking
             if (distance < slowDownRadius)
             {
                 Vector2 desiredVelocity = (toTarget).normalized * max_velocity * (distance / slowDownRadius);
@@ -49,6 +50,7 @@ public class Minion : MonoBehaviour
         }
         else if (minionState.currentState == State.Run)
         {
+            // 替换A* and flocking
             max_velocity = 1.5f;
             if (distance < slowDownRadius)
             {
@@ -65,12 +67,12 @@ public class Minion : MonoBehaviour
         }
         else if (minionState.currentState == State.Patrol)
         {
-            
+            // flocking
         }
         else if (minionState.currentState == State.Die) {
             Destroy(ant);
         }else if(minionState.currentState==State.Attack){
-            
+            //可以不写
         }
         
            
