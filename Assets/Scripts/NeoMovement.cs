@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class NeoMovement : MonoBehaviour
 {
@@ -19,7 +18,6 @@ public class NeoMovement : MonoBehaviour
     public int healthPoint = 3;
     public bool isGetWeapon = false;
     public bool isJump = false;
-    public bool haveDoubleJumpSkill = false;
 
     private Vector2 playerSize;
     private Vector2 boxSize;
@@ -43,17 +41,12 @@ public class NeoMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && (isGround || jumpCount >= 1) )
         {
             jumpRequest = true;
+            jumpCount--;
         }
 
         if (isGround && jumpCount <= 0)
         {
             jumpCount = 1;
-            haveDoubleJumpSkill = false;
-        }
-
-        if (isGround && haveDoubleJumpSkill)
-        {
-            jumpCount = 2;
         }
         SwitchAnim();
     }
@@ -142,24 +135,17 @@ public class NeoMovement : MonoBehaviour
         if (col.tag == "SkillBox" && jumpCount < 2)
         {
             jumpCount++;
-            haveDoubleJumpSkill = true;
             col.GetComponent<Animator>().SetTrigger("get");
             Destroy(col.gameObject, 1.5f);
         }
 
-        if (col.tag == "trench")
+        if (col.gameObject.name == "Minion")
         {
-            // die
-            gameObject.SetActive(false);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            // GameManager.PlayerDied();
-        }
-        
-        if (col.tag == "Enemy")
-        {
+            
             healthPoint -= 1;
             if (healthPoint == 0)
             {
+                gameObject.SetActive(false);
                 // die
             }
             else
@@ -168,4 +154,5 @@ public class NeoMovement : MonoBehaviour
             }
         }
     }
+
 }
