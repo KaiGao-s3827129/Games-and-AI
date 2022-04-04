@@ -24,6 +24,8 @@ public class NeoMovement : MonoBehaviour
     private float horizontalMove;
     private bool jumpRequest = false;
     private bool isGround = false;
+
+    private bool attack = false;
     
     // Start is called before the first frame update
     void Start()
@@ -48,6 +50,12 @@ public class NeoMovement : MonoBehaviour
         {
             jumpCount = 1;
         }
+        if(Input.GetButtonDown("Fire1")){
+            attack = true;
+        }else{
+            attack = false;
+        }
+
         SwitchAnim();
     }
 
@@ -121,6 +129,10 @@ public class NeoMovement : MonoBehaviour
             anim.SetBool("jumping", false);
             anim.SetBool("falling", true);
         }
+        if(attack){
+            anim.SetBool("attack",true); 
+        }  
+        
     }
 
     private void OnTriggerEnter2D(Collider2D col)
