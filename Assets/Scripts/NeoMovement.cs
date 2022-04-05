@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class NeoMovement : MonoBehaviour
 {
+    public Transform firePoint;
+    public GameObject bulletPrefab;
     private Rigidbody2D neo;
     private Animator anim;
 
@@ -25,7 +27,7 @@ public class NeoMovement : MonoBehaviour
     private bool jumpRequest = false;
     private bool isGround = false;
 
-    private bool attack = false;
+    // private bool attack = false;
     
     // Start is called before the first frame update
     void Start()
@@ -50,12 +52,10 @@ public class NeoMovement : MonoBehaviour
         {
             jumpCount = 1;
         }
-        if(Input.GetButtonDown("Fire1")){
-            attack = true;
-        }else{
-            attack = false;
+        
+        if(Input.GetKey(KeyCode.J)){
+            Shoot();
         }
-
         SwitchAnim();
     }
 
@@ -96,7 +96,7 @@ public class NeoMovement : MonoBehaviour
             neo.gravityScale = 10f;
         }
     }
-
+    public bool facingRight = true;
     private void Run()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal");
@@ -104,10 +104,16 @@ public class NeoMovement : MonoBehaviour
         
         if (horizontalMove != 0)
         {
+            if(horizontalMove>0){
+                facingRight = true;
+            }else{
+                facingRight = false;
+            }
             transform.localScale = new Vector3(horizontalMove, 1, 1);
         }
     }
     
+
     
 
     void SwitchAnim()
@@ -129,9 +135,11 @@ public class NeoMovement : MonoBehaviour
             anim.SetBool("jumping", false);
             anim.SetBool("falling", true);
         }
-        if(attack){
-            anim.SetBool("attack",true); 
-        }  
+        // if(attack){
+        //     anim.SetBool("attack",true); 
+        // }else{
+        //     anim.SetBool("attack",false); 
+        // }
         
     }
 
@@ -165,6 +173,9 @@ public class NeoMovement : MonoBehaviour
                 // invincibility
             }
         }
+    }
+        void Shoot(){
+        Instantiate(bulletPrefab,firePoint.position,firePoint.rotation);
     }
 
 }

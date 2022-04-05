@@ -117,4 +117,9 @@ public class MinionState : MonoBehaviour
         availableTime = 5;
     }
 
+    public void TakeDamage(int damage){
+        
+        HP -= damage;
+        Debug.Log(HP);
+    }
 }
