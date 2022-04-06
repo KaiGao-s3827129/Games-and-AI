@@ -36,6 +36,7 @@ public class NeoMovement : MonoBehaviour
         playerSize = GetComponent<SpriteRenderer>().bounds.size;
         boxSize = new Vector2(playerSize.x * 0.0f, boxHeight);
         anim = GetComponent<Animator>();
+        bulletPrefab = GameObject.Find("bulletPrefab");
     }
 
     // Update is called once per frame
@@ -53,9 +54,7 @@ public class NeoMovement : MonoBehaviour
             jumpCount = 1;
         }
         
-        if(Input.GetKey(KeyCode.J)){
-            Shoot();
-        }
+        
         SwitchAnim();
     }
 
@@ -94,6 +93,10 @@ public class NeoMovement : MonoBehaviour
         else
         {
             neo.gravityScale = 10f;
+        }
+
+        if(Input.GetKey(KeyCode.J)){
+            Shoot();
         }
     }
     public bool facingRight = true;
@@ -135,12 +138,6 @@ public class NeoMovement : MonoBehaviour
             anim.SetBool("jumping", false);
             anim.SetBool("falling", true);
         }
-        // if(attack){
-        //     anim.SetBool("attack",true); 
-        // }else{
-        //     anim.SetBool("attack",false); 
-        // }
-        
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -166,6 +163,7 @@ public class NeoMovement : MonoBehaviour
             if (healthPoint == 0)
             {
                 gameObject.SetActive(false);
+                Destroy(GameObject.Find("Sword"));
                 // die
             }
             else

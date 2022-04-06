@@ -64,6 +64,12 @@ public class sword : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.K))
             {
                 anim.SetTrigger("Attacked");
+
+                Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
+                for (int i = 0; i < Minions.Length; i++)
+                {
+                    Minions[i].GetComponent<MinionState>().TakeDamage(damage);
+                }
             }
 
         }
@@ -72,14 +78,15 @@ public class sword : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.K))
             {
                 anim.SetTrigger("AttackLeft");
+                Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
+                for (int i = 0; i < Minions.Length; i++)
+                {
+                    Minions[i].GetComponent<MinionState>().TakeDamage(damage);
+                }
             }
         }
 
-        Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
-        for (int i = 0; i < Minions.Length; i++)
-        {
-            Minions[i].GetComponent<MinionState>().TakeDamage(damage);
-        }
+
 
     }
 

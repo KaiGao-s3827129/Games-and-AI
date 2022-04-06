@@ -74,7 +74,6 @@ public class NeoState : MonoBehaviour
                 break;
             case JumpState.DoubleJump:
 
-
                 break;
         }
 
