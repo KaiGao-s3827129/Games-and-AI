@@ -22,7 +22,7 @@ public class Shoot : MonoBehaviour
         }else{
             rb2d.velocity = -transform.right*speed*5;
         }
-        Destroy (gameObject, 10);
+        // Destroy (gameObject, 10);
     }
 
 }

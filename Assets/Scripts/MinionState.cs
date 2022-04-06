@@ -52,7 +52,6 @@ public class MinionState : MonoBehaviour
                     {
                         ChangeState(State.Walk);
                     }
-
                 }
                 break;
             case State.Die:
@@ -118,7 +117,6 @@ public class MinionState : MonoBehaviour
     }
 
     public void TakeDamage(int damage){
-        
         HP -= damage;
         Debug.Log(HP);
     }

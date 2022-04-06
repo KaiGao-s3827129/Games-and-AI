@@ -16,11 +16,10 @@ public class sword : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         ant = GameObject.Find("Neo");
         neoMovement = ant.GetComponent<NeoMovement>();
         damage = 20;
-        // anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -37,11 +36,6 @@ public class sword : MonoBehaviour
         //                 Minions[i].GetComponent<MinionState>().TakeDamage(damage);
         //             }
         //         }
-
-
-
-
-
         if (neoMovement.facingRight)
         {
             Vector2 newLocation = new Vector2(ant.transform.position.x + 2, ant.transform.position.y + 1);
@@ -64,14 +58,12 @@ public class sword : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.K))
             {
                 anim.SetTrigger("Attacked");
-
                 Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
                 for (int i = 0; i < Minions.Length; i++)
                 {
                     Minions[i].GetComponent<MinionState>().TakeDamage(damage);
                 }
             }
-
         }
         else
         {
@@ -85,9 +77,6 @@ public class sword : MonoBehaviour
                 }
             }
         }
-
-
-
     }
 
     void OnDrawGizmosSelected()
