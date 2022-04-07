@@ -25,17 +25,6 @@ public class sword : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (timeBtwAttack <= 0)
-        // {
-
-        //         if (Input.GetKeyDown(KeyCode.K))
-        //         {
-        //             Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
-        //             for (int i = 0; i < Minions.Length; i++)
-        //             {
-        //                 Minions[i].GetComponent<MinionState>().TakeDamage(damage);
-        //             }
-        //         }
         if (neoMovement.facingRight)
         {
             Vector2 newLocation = new Vector2(ant.transform.position.x + 2, ant.transform.position.y + 1);
@@ -61,7 +50,16 @@ public class sword : MonoBehaviour
                 Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
                 for (int i = 0; i < Minions.Length; i++)
                 {
-                    Minions[i].GetComponent<MinionState>().TakeDamage(damage);
+                    if(Minions[i].name=="FlockingMinion"){
+                        Minions[i].GetComponent<FlockingMinionState>().TakeDamage(damage);
+                    }
+                    if(Minions[i].name=="Minion"){
+                        Minions[i].GetComponent<MinionState>().TakeDamage(damage);
+                    }
+                    if(Minions[i].name=="TheBoss"){
+                        Minions[i].GetComponent<BossState>().TakeDamage(damage);
+                    }
+                
                 }
             }
         }
@@ -71,9 +69,19 @@ public class sword : MonoBehaviour
             {
                 anim.SetTrigger("AttackLeft");
                 Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
+                
                 for (int i = 0; i < Minions.Length; i++)
                 {
-                    Minions[i].GetComponent<MinionState>().TakeDamage(damage);
+                    if(Minions[i].name=="FlockingMinion"){
+                        Minions[i].GetComponent<FlockingMinionState>().TakeDamage(damage);
+                    }
+                    if(Minions[i].name=="Minion"){
+                        Minions[i].GetComponent<MinionState>().TakeDamage(damage);
+                    }
+                    if(Minions[i].name=="TheBoss"){
+                        Minions[i].GetComponent<BossState>().TakeDamage(damage);
+                    }
+                
                 }
             }
         }

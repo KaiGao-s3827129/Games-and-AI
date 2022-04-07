@@ -14,8 +14,8 @@ public class BossState : MonoBehaviour
     {
         ant = GameObject.Find("Neo");
         minionState = ant.GetComponent<MinionState>();
-        healthPoint = 5;
-        previousHealthPoint = 5;
+        healthPoint = 200;
+        previousHealthPoint = 200;
     }
 
     // Update is called once per frame
@@ -32,4 +32,11 @@ public class BossState : MonoBehaviour
         //     minionState.BossBeenAttacked();
         // }
     }
+
+    public void TakeDamage(int damage){
+        healthPoint -= damage;
+        Debug.Log(healthPoint);
+    }
+
+
 }

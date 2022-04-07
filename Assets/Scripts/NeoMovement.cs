@@ -36,7 +36,7 @@ public class NeoMovement : MonoBehaviour
         playerSize = GetComponent<SpriteRenderer>().bounds.size;
         boxSize = new Vector2(playerSize.x * 0.0f, boxHeight);
         anim = GetComponent<Animator>();
-        bulletPrefab = GameObject.Find("bulletPrefab");
+        
     }
 
     // Update is called once per frame
@@ -60,6 +60,7 @@ public class NeoMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Debug.Log();
         if (jumpRequest)
         {
             neo.AddForce(Vector2.up * jumpValue, ForceMode2D.Impulse);
@@ -160,10 +161,10 @@ public class NeoMovement : MonoBehaviour
         {
             
             healthPoint -= 1;
-            if (healthPoint == 0)
+            if (healthPoint <= 0)
             {
                 gameObject.SetActive(false);
-                Destroy(GameObject.Find("Sword"));
+                Destroy(GameObject.Find("sword"));
                 // die
             }
             else
@@ -171,6 +172,7 @@ public class NeoMovement : MonoBehaviour
                 // invincibility
             }
         }
+        
     }
         void Shoot(){
         Instantiate(bulletPrefab,firePoint.position,firePoint.rotation);
