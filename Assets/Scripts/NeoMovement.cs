@@ -36,7 +36,6 @@ public class NeoMovement : MonoBehaviour
         playerSize = GetComponent<SpriteRenderer>().bounds.size;
         boxSize = new Vector2(playerSize.x * 0.0f, boxHeight);
         anim = GetComponent<Animator>();
-        
     }
 
     // Update is called once per frame
@@ -170,6 +169,26 @@ public class NeoMovement : MonoBehaviour
             else
             {
                 // invincibility
+            }
+        }
+        if(col.gameObject.name=="TheBoss"){
+            Debug.Log(11111111111);
+            healthPoint--;
+                        if (healthPoint <= 0)
+            {
+                gameObject.SetActive(false);
+                Destroy(GameObject.Find("sword"));
+                // die
+            }
+        }
+        if(col.gameObject.name=="FlockingMinion"){
+            Debug.Log(222222222);
+            healthPoint--;
+                        if (healthPoint <= 0)
+            {
+                gameObject.SetActive(false);
+                Destroy(GameObject.Find("sword"));
+                // die
             }
         }
         

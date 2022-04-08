@@ -12,7 +12,7 @@ public class BossState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ant = GameObject.Find("Neo");
+        ant = GameObject.Find("Minion");
         minionState = ant.GetComponent<MinionState>();
         healthPoint = 200;
         previousHealthPoint = 200;
@@ -21,22 +21,18 @@ public class BossState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Decide the boss die.
         if(healthPoint<=0){
             Destroy(gameObject);
         }
-        // Vector2 newLocation = new Vector2(ant.transform.position.x-30,ant.transform.position.y+30);
-        // float step = speed * Time.deltaTime;
-        // transform.position = Vector2.MoveTowards(transform.position, newLocation, step);
-        // if(previousHealthPoint>healthPoint){
-        //     previousHealthPoint = healthPoint;
-        //     minionState.BossBeenAttacked();
-        // }
+        if(previousHealthPoint>healthPoint){
+            previousHealthPoint = healthPoint;
+            minionState.BossBeenAttacked();
+        }
     }
 
     public void TakeDamage(int damage){
         healthPoint -= damage;
         Debug.Log(healthPoint);
     }
-
-
 }

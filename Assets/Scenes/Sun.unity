@@ -2001,6 +2001,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   rb2d: {fileID: 0}
+  ant: {fileID: 0}
+  damage: 0
 --- !u!1 &364756461
 GameObject:
   m_ObjectHideFlags: 0
@@ -4572,7 +4574,8 @@ GameObject:
   - component: {fileID: 2013189156}
   - component: {fileID: 2013189155}
   - component: {fileID: 2013189154}
-  m_Layer: 0
+  - component: {fileID: 2013189158}
+  m_Layer: 9
   m_Name: FlockingMinion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4670,6 +4673,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2013189158
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013189153}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 4.84
 --- !u!1 &2094740063
 GameObject:
   m_ObjectHideFlags: 0
@@ -5202,7 +5221,8 @@ GameObject:
   - component: {fileID: 2131857722}
   - component: {fileID: 2131857721}
   - component: {fileID: 2131857720}
-  m_Layer: 0
+  - component: {fileID: 2131857723}
+  m_Layer: 9
   m_Name: TheBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5290,3 +5310,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2131857723
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131857719}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.5600002

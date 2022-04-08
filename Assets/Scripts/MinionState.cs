@@ -19,18 +19,13 @@ public class MinionState : MonoBehaviour
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         currentState = State.Patrol;
         HP = 100;
-        //distance = Vector2.Distance(transform.position, Neo.transform.position);
         distance = toTarget.magnitude;
         availableTime = 0;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        // if (availableTime > 0)
-        // {
-        //     availableTime--;
-        // }
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         distance = toTarget.magnitude;
         switch (currentState) { 
@@ -113,11 +108,10 @@ public class MinionState : MonoBehaviour
     }
 
     public void BossBeenAttacked(){
-        availableTime = 5;
+        availableTime = 10;
     }
 
     public void TakeDamage(int damage){
         HP -= damage;
-        Debug.Log(HP);
     }
 }

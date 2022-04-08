@@ -34,7 +34,6 @@ public class Shoot: MonoBehaviour
             GameObject TheBoss = GameObject.Find("TheBoss");
             if(TheBoss !=null){
             BossState bossState = TheBoss.GetComponent<BossState>();
-        
             bossState.TakeDamage(damage);
         }
         }
@@ -51,15 +50,6 @@ public class Shoot: MonoBehaviour
                 flockingMinionState.TakeDamage(damage);
             }
         }
-
-
-
-
-        // if(minion !=null){
-        // MinionState minionState = minion.GetComponent<MinionState>();
-        
-        //     minionState.TakeDamage(damage);
-        // }
 
 
     }

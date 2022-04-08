@@ -32,6 +32,7 @@ public class Minion : MonoBehaviour
         Vector2 steeringForce = new Vector2(0, 0);
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         float distance = toTarget.magnitude;
+        Debug.Log(minionState.currentState);
         if (minionState.currentState == State.Walk)
         {
             // 替换A* and flocking
