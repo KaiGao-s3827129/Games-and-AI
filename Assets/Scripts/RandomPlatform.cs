@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
@@ -24,6 +25,8 @@ public class RandomPlatform : MonoBehaviour
         platformParent = GameObject.Find("Platforms").transform;
         platformSpawn();
         InvokeRepeating("boxSpawn", 5f, 10f);
+        Destroy(skillBox, 2f);
+        Destroy(weaponBox, 2f);
         // boxSpawn(skillBox);
         // boxSpawn(weaponBox);
 
