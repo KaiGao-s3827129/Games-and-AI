@@ -36,9 +36,8 @@ public class NeoState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         
-        if(healthPoint<previousHealthPoint){
+        if(healthPoint < previousHealthPoint){
             previousHealthPoint = healthPoint;
         }
         switch (currentPlayerState) { 
@@ -69,22 +68,33 @@ public class NeoState : MonoBehaviour
 
         switch(currentJumpState){
             case JumpState.SingleJump:
-
-
+                if (NeoMovement.isGetSkill)
+                {
+                    ChangeJumpState(JumpState.DoubleJump);
+                }
                 break;
             case JumpState.DoubleJump:
-
+                if (!NeoMovement.isGetSkill)
+                {
+                    ChangeJumpState(JumpState.SingleJump);
+                }
                 break;
         }
 
 
         switch(currentAttackState){
             case AttackState.Melee:
-
+                if (NeoMovement.isGetWeapon)
+                {
+                    ChangeAttackState(AttackState.Remote);
+                }
             
                 break;
             case AttackState.Remote:
-
+                if (!NeoMovement.isGetWeapon)
+                {
+                    ChangeAttackState(AttackState.Melee);
+                }
 
                 break;
         }
@@ -96,11 +106,11 @@ public class NeoState : MonoBehaviour
         currentPlayerState = state;
     }
 
-        public void ChangeJumpState(JumpState state) {
+    public void ChangeJumpState(JumpState state) {
         currentJumpState = state;
     }
 
-        public void ChangeAttackState(AttackState state) {
+    public void ChangeAttackState(AttackState state) {
         currentAttackState = state;
     }
 }

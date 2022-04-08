@@ -16,10 +16,13 @@ public class NeoMovement : MonoBehaviour
     public float speed = 20f;
     public float fallMulti = 20f;
     public float lowJumpMulti = 25f;
-    public int jumpCount;
-    public int healthPoint = 3;
-    public bool isGetWeapon = false;
+    public int jumpCount = 1;
+
     public bool isJump = false;
+    
+    public static bool isGetWeapon = false;
+    public static bool isGetSkill = false;
+    public static int healthPoint = 3;
 
     private Vector2 playerSize;
     private Vector2 boxSize;
@@ -45,12 +48,20 @@ public class NeoMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && (isGround || jumpCount >= 1) )
         {
             jumpRequest = true;
-            jumpCount--;
         }
 
+        if (jumpCount <= 0)
+        {
+            isGetSkill = false;
+        }
         if (isGround && jumpCount <= 0)
         {
             jumpCount = 1;
+        }
+
+        if (isGround && isGetSkill)
+        {
+            jumpCount = 2;
         }
         
         
@@ -65,7 +76,7 @@ public class NeoMovement : MonoBehaviour
             neo.AddForce(Vector2.up * jumpValue, ForceMode2D.Impulse);
             jumpRequest = false;
             isGround = false;
-            jumpCount--;
+            jumpCount -= 1;
         }
         else
         {
@@ -86,6 +97,10 @@ public class NeoMovement : MonoBehaviour
         if (neo.velocity.y < 0)
         {
             neo.gravityScale = fallMulti;
+            if (Input.GetButtonDown("Jump") && isGetSkill)
+            {
+                neo.AddForce(Vector2.up * jumpValue, ForceMode2D.Impulse);
+            }
         } else if (neo.velocity.y > 0 && !Input.GetButton("Jump"))
         {
             neo.gravityScale = lowJumpMulti;
@@ -146,19 +161,20 @@ public class NeoMovement : MonoBehaviour
         {
             isGetWeapon = true;
             col.GetComponent<Animator>().SetTrigger("get");
+            
             Destroy(col.gameObject, 1.5f);
         }
         
         if (col.tag == "SkillBox" && jumpCount < 2)
         {
             jumpCount++;
+            isGetSkill = true;
             col.GetComponent<Animator>().SetTrigger("get");
             Destroy(col.gameObject, 1.5f);
         }
 
         if (col.gameObject.name == "Minion")
         {
-            
             healthPoint -= 1;
             if (healthPoint <= 0)
             {
