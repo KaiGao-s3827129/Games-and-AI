@@ -34,12 +34,9 @@ public class NeoState : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
-        if(healthPoint < previousHealthPoint){
-            previousHealthPoint = healthPoint;
-        }
+   
         switch (currentPlayerState) { 
             case PlayerState.Alive:
                 if(healthPoint<=0){
@@ -47,8 +44,8 @@ public class NeoState : MonoBehaviour
                 }
                 if(healthPoint<previousHealthPoint){
                     previousHealthPoint = healthPoint;
-                    InvincibilityTime = 3;
-                     ChangePlayerState(PlayerState.Invincibility);
+                    InvincibilityTime = 100;
+                    ChangePlayerState(PlayerState.Invincibility);
                 }
                 break;
             case PlayerState.Die:
@@ -64,7 +61,6 @@ public class NeoState : MonoBehaviour
                 }
                 break;
         }
-
 
         switch(currentJumpState){
             case JumpState.SingleJump:
@@ -95,7 +91,6 @@ public class NeoState : MonoBehaviour
                 {
                     ChangeAttackState(AttackState.Melee);
                 }
-
                 break;
         }
 
@@ -112,5 +107,9 @@ public class NeoState : MonoBehaviour
 
     public void ChangeAttackState(AttackState state) {
         currentAttackState = state;
+    }
+
+    public void TakeDamage(int damage){
+        healthPoint -= damage;
     }
 }

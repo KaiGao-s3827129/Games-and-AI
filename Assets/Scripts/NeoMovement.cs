@@ -17,24 +17,24 @@ public class NeoMovement : MonoBehaviour
     public float fallMulti = 20f;
     public float lowJumpMulti = 25f;
     public int jumpCount = 1;
-
     public bool isJump = false;
-    
     public static bool isGetWeapon = false;
     public static bool isGetSkill = false;
     public static int healthPoint = 3;
-
     private Vector2 playerSize;
     private Vector2 boxSize;
     private float horizontalMove;
     private bool jumpRequest = false;
     private bool isGround = false;
-
+    public GameObject ant;
+    private NeoState neoState;
     // private bool attack = false;
     
     // Start is called before the first frame update
     void Start()
     {
+        ant = GameObject.Find("Neo");
+        neoState = ant.GetComponent<NeoState>();
         neo = GetComponent<Rigidbody2D>();
         playerSize = GetComponent<SpriteRenderer>().bounds.size;
         boxSize = new Vector2(playerSize.x * 0.0f, boxHeight);
@@ -44,6 +44,7 @@ public class NeoMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         Run();
         if (Input.GetButtonDown("Jump") && (isGround || jumpCount >= 1) )
         {
@@ -109,7 +110,6 @@ public class NeoMovement : MonoBehaviour
         {
             neo.gravityScale = 10f;
         }
-
         if(Input.GetKey(KeyCode.J)){
             Shoot();
         }
@@ -131,9 +131,6 @@ public class NeoMovement : MonoBehaviour
         }
     }
     
-
-    
-
     void SwitchAnim()
     {
         anim.SetFloat("running", Mathf.Abs(neo.velocity.x));
@@ -175,8 +172,8 @@ public class NeoMovement : MonoBehaviour
 
         if (col.gameObject.name == "Minion")
         {
-            healthPoint -= 1;
-            if (healthPoint <= 0)
+            neoState.TakeDamage(1);
+            if (neoState.currentPlayerState==PlayerState.Die)
             {
                 gameObject.SetActive(false);
                 Destroy(GameObject.Find("sword"));
@@ -188,9 +185,8 @@ public class NeoMovement : MonoBehaviour
             }
         }
         if(col.gameObject.name=="TheBoss"){
-            Debug.Log(11111111111);
-            healthPoint--;
-                        if (healthPoint <= 0)
+            neoState.TakeDamage(1);
+            if (neoState.currentPlayerState==PlayerState.Die)
             {
                 gameObject.SetActive(false);
                 Destroy(GameObject.Find("sword"));
@@ -198,19 +194,18 @@ public class NeoMovement : MonoBehaviour
             }
         }
         if(col.gameObject.name=="FlockingMinion"){
-            Debug.Log(222222222);
-            healthPoint--;
-                        if (healthPoint <= 0)
+            neoState.TakeDamage(1);
+            if (neoState.currentPlayerState==PlayerState.Die)
             {
                 gameObject.SetActive(false);
                 Destroy(GameObject.Find("sword"));
                 // die
             }
         }
-        
     }
-        void Shoot(){
-        Instantiate(bulletPrefab,firePoint.position,firePoint.rotation);
+    void Shoot(){
+        GameObject bullet = Instantiate(bulletPrefab,firePoint.position,firePoint.rotation);
+        Destroy(bullet,3f);
     }
 
 }
