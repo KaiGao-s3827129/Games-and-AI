@@ -10,6 +10,8 @@ public class NeoMovement : MonoBehaviour
     private Rigidbody2D neo;
     private Animator anim;
 
+    public AudioSource getAudio;
+    
     public LayerMask mask;
     public float boxHeight = 0.05f;
     public float jumpValue = 60f;
@@ -39,6 +41,7 @@ public class NeoMovement : MonoBehaviour
         playerSize = GetComponent<SpriteRenderer>().bounds.size;
         boxSize = new Vector2(playerSize.x * 0.0f, boxHeight);
         anim = GetComponent<Animator>();
+        getAudio = GetComponent<AudioSource>();
         bulletPrefab = GameObject.Find("bulletPrefab");
     }
 
@@ -74,6 +77,7 @@ public class NeoMovement : MonoBehaviour
         if (jumpRequest)
         {
             neo.AddForce(Vector2.up * jumpValue, ForceMode2D.Impulse);
+            SoundManage.instance.JumpAudioPlay();
             jumpRequest = false;
             isGround = false;
             jumpCount -= 1;
@@ -131,9 +135,6 @@ public class NeoMovement : MonoBehaviour
         }
     }
     
-
-    
-
     void SwitchAnim()
     {
         anim.SetFloat("running", Mathf.Abs(neo.velocity.x));
@@ -160,15 +161,17 @@ public class NeoMovement : MonoBehaviour
         if (col.tag == "WeaponBox" && !isGetWeapon)
         {
             isGetWeapon = true;
+            SoundManage.instance.GetAudioPlay();
             col.GetComponent<Animator>().SetTrigger("get");
             
             Destroy(col.gameObject, 1.5f);
         }
         
-        if (col.tag == "SkillBox" && jumpCount < 2)
+        if (col.tag == "SkillBox" && !isGetSkill)
         {
             jumpCount++;
             isGetSkill = true;
+            SoundManage.instance.GetAudioPlay();
             col.GetComponent<Animator>().SetTrigger("get");
             Destroy(col.gameObject, 1.5f);
         }
@@ -176,6 +179,7 @@ public class NeoMovement : MonoBehaviour
         if (col.gameObject.name == "Minion")
         {
             healthPoint -= 1;
+            SoundManage.instance.HurtAudioPlay();
         }
     }
         void Shoot(){

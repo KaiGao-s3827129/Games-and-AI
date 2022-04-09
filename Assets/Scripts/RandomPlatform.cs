@@ -17,18 +17,16 @@ public class RandomPlatform : MonoBehaviour
 
     public GameObject skillBox;
     public GameObject weaponBox;
-    public int boxCount = 2;
+    public int boxCount = 1;
     public int platformCount = 20;
     
     void Start()
     {
         platformParent = GameObject.Find("Platforms").transform;
         platformSpawn();
-        InvokeRepeating("boxSpawn", 5f, 10f);
-        Destroy(skillBox, 2f);
-        Destroy(weaponBox, 2f);
-        // boxSpawn(skillBox);
-        // boxSpawn(weaponBox);
+        InvokeRepeating("boxSpawn", 5f, 5f);
+        // Destroy(skillBox, 2f);
+        // Destroy(weaponBox, 2f);
 
     }
 
@@ -88,7 +86,8 @@ public class RandomPlatform : MonoBehaviour
             y = platformPos.y + 4f;
             boxPos = new Vector2(x, y);
             Debug.Log("create a skill box on:" + boxPos +" and platform pos is:" + platformPos );
-            Instantiate(skillBox, boxPos, transform.rotation);
+            GameObject gameObjectSkillBox = Instantiate(skillBox, boxPos, transform.rotation);
+            Destroy(gameObjectSkillBox, 3f);
         }
 
         for (int j = 0; j < boxCount; j++)
@@ -104,8 +103,10 @@ public class RandomPlatform : MonoBehaviour
             y = platformPos.y + 4f;
             boxPos = new Vector2(x, y);
             Debug.Log("create a skill box on:" + boxPos +" and platform pos is:" + platformPos );
-            Instantiate(weaponBox, boxPos, transform.rotation);
+            GameObject gameObjectWeaponBox = Instantiate(weaponBox, boxPos, transform.rotation);
+            Destroy(gameObjectWeaponBox, 3f);
         }
 
     }
+    
 }

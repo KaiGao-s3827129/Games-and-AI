@@ -8,6 +8,7 @@ TagManager:
   - WeaponBox
   - SkillBox
   - trench
+  - GlobalUIMusic
   layers:
   - Default
   - TransparentFX
