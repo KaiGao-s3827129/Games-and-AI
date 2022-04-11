@@ -8,9 +8,13 @@ public class Shoot: MonoBehaviour
     public Rigidbody2D rb2d;
     private float horizontalMove;
     public int damage;
+    public GameObject ant;
+    public NeoMovement neoMovement;
     // Start is called before the first frame update
     void Start()
     {
+        ant = GameObject.Find("Neo");
+        neoMovement = ant.GetComponent<NeoMovement>();
         damage = 10;
         rb2d = GetComponent<Rigidbody2D>();
         if(Input.GetKey(KeyCode.W)){
