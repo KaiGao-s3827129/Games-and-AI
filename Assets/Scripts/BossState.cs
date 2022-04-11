@@ -1,46 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossState : MonoBehaviour
 {
     public int healthPoint;
-    public int previousHealthPoint = 200;
+    public int previousHealthPoint = 500;
     public List<GameObject> ant;
-    public MinionState minionState;
-    private float speed = 20.0f;
     public GameObject platforms;
     public RandomPlatform randomPlatform;
+    public HealthBar healthBar;
 
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        //Get the all Leader Minions.
         ant = new List<GameObject>();
         platforms = GameObject.Find("Platforms");
-        randomPlatform  = platforms.GetComponent<RandomPlatform>();
-
-        // healthPoint = 200;
+        randomPlatform = platforms.GetComponent<RandomPlatform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        
         //Decide the boss die.
-        if(healthPoint<=0){
+        if (healthPoint <= 0)
+        {
             Destroy(gameObject);
         }
         ant = new List<GameObject>();
-        foreach(string one in randomPlatform.leaderMinions){
+        foreach (string one in randomPlatform.leaderMinions)
+        {
             ant.Add(GameObject.Find(one));
         }
-        
+
     }
 
-    public void TakeDamage(int damage){
+    public void TakeDamage(int damage)
+    {
+        //Take the damage from Neo.
         healthPoint -= damage;
-        foreach(GameObject one in ant){
+        //Set the health bar.
+        healthBar.SetHealth(healthPoint);
+        foreach (GameObject one in ant)
+        {
+            //Let Minion know the Boss has been attacked
             one.GetComponent<MinionState>().BossBeenAttacked();
         }
     }

@@ -1,11 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//public enum State
-//{
-//    Patrol, Die, Attack, Walk, Run,
-//}
 
+//Leader Minion Movement
 public class Minion : MonoBehaviour
 {
     public float max_velocity;
@@ -22,12 +19,12 @@ public class Minion : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         max_velocity = 1;
-        
     }
 
     // Update is called once per frame
     void Update()
     {
+        //According to state script to move
         platforms = GameObject.Find("Platforms");
         randomPlatform  = platforms.GetComponent<RandomPlatform>();
         ant = GameObject.Find(gameObject.name);
@@ -35,10 +32,10 @@ public class Minion : MonoBehaviour
         Vector2 steeringForce = new Vector2(0, 0);
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         float distance = toTarget.magnitude;
-        // Debug.Log(minionState.currentState);
+        //Chase state
         if (minionState.currentState == State.Walk)
         {
-            // 替换A* and flocking
+            // 替换A**
             if (distance < slowDownRadius)
             {
                 Vector2 desiredVelocity = (toTarget).normalized * max_velocity * (distance / slowDownRadius);
@@ -54,8 +51,8 @@ public class Minion : MonoBehaviour
         }
         else if (minionState.currentState == State.Run)
         {
-            // 替换A* and flocking
             max_velocity = 1.5f;
+            // 替换A**
             if (distance < slowDownRadius)
             {
                 Vector2 desiredVelocity = (toTarget).normalized * max_velocity * (distance / slowDownRadius);
@@ -79,13 +76,8 @@ public class Minion : MonoBehaviour
                     randomPlatform.leaderMinions.Remove(one);
                 }
             }
-            
-            Destroy(ant);
-            
-        }else if(minionState.currentState==State.Attack){
-            //可以不写
+            Destroy(ant);   
         }
-        
            
     }
 }

@@ -8,13 +8,13 @@ using Random = UnityEngine.Random;
 
 public class RandomPlatform : MonoBehaviour
 {
+    //Random create platfrom
     public GameObject platform;
     // public float spawnTime = 2.5f;
     public float yMin, yMax, xMin, xMax;
     public LayerMask layerMask;
     private Transform platformParent;
     private List<Vector2> platformList = new List<Vector2>();
-
     public GameObject skillBox;
     public GameObject weaponBox;
     public int boxCount = 2;
@@ -30,7 +30,6 @@ public class RandomPlatform : MonoBehaviour
     public int followMinionNumber;
     public List<string> leaderMinions;
 
-
     void Start()
     {
         leaderMinions = new List<string>();
@@ -39,14 +38,8 @@ public class RandomPlatform : MonoBehaviour
         platformSpawn();
         InvokeRepeating("boxSpawn", 5f, 10f);
         Destroy(skillBox, 2f);
-        Destroy(weaponBox, 2f);
-        
+        Destroy(weaponBox, 2f); 
         InvokeRepeating("createMinion", 0, 10f);
-        
-        
-        // boxSpawn(skillBox);
-        // boxSpawn(weaponBox);
-
     }
 
     void platformSpawn()

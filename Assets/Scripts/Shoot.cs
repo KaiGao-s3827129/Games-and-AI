@@ -4,21 +4,15 @@ using UnityEngine;
 
 public class Shoot: MonoBehaviour
 {
-    public float speed = 100f;
+    public float speed = 70f;
     public Rigidbody2D rb2d;
     private float horizontalMove;
-    public GameObject ant;
-    private NeoMovement neoMovement;
     public int damage;
     // Start is called before the first frame update
     void Start()
     {
         damage = 10;
-        // horizontalMove = Input.GetAxisRaw("Horizontal");
         rb2d = GetComponent<Rigidbody2D>();
-        // rb2d.velocity = transform.right*speed*5;
-        ant = GameObject.Find("Neo");
-        neoMovement = ant.GetComponent<NeoMovement>();
         if(Input.GetKey(KeyCode.W)){
             rb2d.velocity = transform.up*speed*5;
         }else if(Input.GetKey(KeyCode.S)){
@@ -29,11 +23,11 @@ public class Shoot: MonoBehaviour
         }else{
             rb2d.velocity = -transform.right*speed*5;
         }
-        // Destroy (gameObject, 10f);
     }
 
     void OnTriggerEnter2D(Collider2D hit){
         // Debug.Log(hit.name);
+        //Hit Minion through Collider
         string enemy = hit.name;
         if(enemy == "TheBoss"){
             GameObject TheBoss = GameObject.Find(hit.name);
@@ -57,8 +51,6 @@ public class Shoot: MonoBehaviour
             }
         }
         
-
-
     }
 
 }

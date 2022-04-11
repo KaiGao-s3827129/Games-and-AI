@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Player's melee
 public class sword : MonoBehaviour
 {
     public Animator anim;
@@ -25,6 +26,7 @@ public class sword : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //switch different side through facingRight.
         if (neoMovement.facingRight)
         {
             Vector2 newLocation = new Vector2(ant.transform.position.x + 2, ant.transform.position.y + 1);
@@ -46,11 +48,12 @@ public class sword : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.K))
             {
+                //Attack right enemy
                 anim.SetTrigger("Attacked");
                 Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
                 for (int i = 0; i < Minions.Length; i++)
                 {
-                    
+                    //Attack different enemy
                    if(Minions[i].name.Substring(0,3)=="Flo"){
                         Minions[i].GetComponent<FlockingMinionState>().TakeDamage(damage);
                     }
@@ -68,11 +71,12 @@ public class sword : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.K))
             {
+                //Attack left enemy
                 anim.SetTrigger("AttackLeft");
                 Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
-                
                 for (int i = 0; i < Minions.Length; i++)
                 {
+                    //Attack different enemy
                     if(Minions[i].name.Substring(0,3)=="Flo"){
                         Minions[i].GetComponent<FlockingMinionState>().TakeDamage(damage);
                     }
