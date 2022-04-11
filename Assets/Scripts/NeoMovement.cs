@@ -64,8 +64,6 @@ public class NeoMovement : MonoBehaviour
         {
             jumpCount = 2;
         }
-        
-        
         SwitchAnim();
     }
 
@@ -110,9 +108,14 @@ public class NeoMovement : MonoBehaviour
         {
             neo.gravityScale = 10f;
         }
-        if(Input.GetKey(KeyCode.J)){
-            Shoot();
+        if(neoState.currentAttackState==AttackState.Remote){
+            if(Input.GetKey(KeyCode.J)){
+                Shoot();
+            }
         }
+
+        
+
     }
     public bool facingRight = true;
     private void Run()
@@ -190,7 +193,6 @@ public class NeoMovement : MonoBehaviour
             {
                 gameObject.SetActive(false);
                 Destroy(GameObject.Find("sword"));
-                // die
             }
         }
         if(col.gameObject.name=="FlockingMinion"){
@@ -199,7 +201,6 @@ public class NeoMovement : MonoBehaviour
             {
                 gameObject.SetActive(false);
                 Destroy(GameObject.Find("sword"));
-                // die
             }
         }
     }

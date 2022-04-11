@@ -31,7 +31,7 @@ public class MinionState : MonoBehaviour
     {
         ant = GameObject.Find("Neo");
         neoState = ant.GetComponent<NeoState>();
-        Debug.Log(currentState);
+        // Debug.Log(currentState);
         
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         distance = toTarget.magnitude;

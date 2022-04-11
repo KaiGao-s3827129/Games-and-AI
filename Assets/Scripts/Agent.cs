@@ -30,21 +30,15 @@ public class Agent : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	    
 		m_Transform = transform;
-
 		m_vWanderTarget = new Vector2(1,0);
-
 		m_GameWorld = GameWorld.Instance;
 		m_CurrentGrid = -1;
 		m_NebCount = 0;
-	
 	}
 	
 	void FixedUpdate(){
-
 		GetComponent<Rigidbody2D>().AddForce (SteeringForce());
-
 		//set heading
 		m_Velocity = GetComponent<Rigidbody2D>().velocity;
 		m_HeadingAngle = (Mathf.Atan2(m_Velocity.y,m_Velocity.x))*Mathf.Rad2Deg;
@@ -65,7 +59,6 @@ public class Agent : MonoBehaviour {
 			if(m_CurrentGrid!=-1)m_GameWorld.Grid[m_CurrentGrid].Remove(this);
 			m_CurrentGrid = i;
 			m_GameWorld.Grid[i].Add(this);
-			
 		}
 	}
 
@@ -123,10 +116,6 @@ public class Agent : MonoBehaviour {
 						}
 					}
 				}
-
-
-
-				
 			}
 			
 		}
@@ -153,27 +142,20 @@ public class Agent : MonoBehaviour {
 	}
 
 	private Vector2 Seek(Vector2 targetPo){
-
 		Vector2 DesiredVelocity = (targetPo - (Vector2)m_Transform.position).normalized;
 		return (DesiredVelocity - m_Velocity);
-
 	}
 
 	private Vector2 Wander(){
-
 		float R = Random.Range(-10f,10f);
 		//Debug.Log (GetInstanceID()+" R "+R);
-
 		m_vWanderTarget += (new Vector2(R,R)*WanderJitter);
 		m_vWanderTarget.Normalize ();
 		m_vWanderTarget *= WanderRadius;
-
 		Vector2 target = new Vector2 (WanderDistance,0);
 		target += m_vWanderTarget;
 		target = m_Transform.TransformPoint (target);
-
 		target = (target - (Vector2)m_Transform.position).normalized;
-
 		return (target - m_Velocity);
 	}
 
@@ -181,7 +163,7 @@ public class Agent : MonoBehaviour {
 
 		int layerMask = 1 << 8;
 		float hit_Distance=2;
-		Vector3 Wall_normal=new Vector3(0,0,0);
+		Vector2 Wall_normal=new Vector2(0,0);
 
 		RaycastHit2D hit = Physics2D.Raycast (m_Transform.position,m_Transform.right,1,layerMask);
 		if (hit.collider != null){

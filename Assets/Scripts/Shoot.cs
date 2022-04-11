@@ -19,7 +19,12 @@ public class Shoot: MonoBehaviour
         // rb2d.velocity = transform.right*speed*5;
         ant = GameObject.Find("Neo");
         neoMovement = ant.GetComponent<NeoMovement>();
-        if(neoMovement.facingRight){
+        if(Input.GetKey(KeyCode.W)){
+            rb2d.velocity = transform.up*speed*5;
+        }else if(Input.GetKey(KeyCode.S)){
+            rb2d.velocity = -transform.up *speed*5;
+        }
+        else if(neoMovement.facingRight){
             rb2d.velocity = transform.right*speed*5;
         }else{
             rb2d.velocity = -transform.right*speed*5;
@@ -28,23 +33,25 @@ public class Shoot: MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D hit){
-        Debug.Log(hit.name);
+        // Debug.Log(hit.name);
         string enemy = hit.name;
+        Debug.Log(enemy.Substring(0,3));
         if(enemy == "TheBoss"){
-            GameObject TheBoss = GameObject.Find("TheBoss");
+            GameObject TheBoss = GameObject.Find(hit.name);
             if(TheBoss !=null){
             BossState bossState = TheBoss.GetComponent<BossState>();
             bossState.TakeDamage(damage);
         }
         }
-        else if(enemy=="Minion"){
-            GameObject minion = GameObject.Find("Minion");
+        else if(enemy.Substring(0,3)=="Min"){
+            GameObject minion = GameObject.Find(enemy);
             if(minion !=null){
                 MinionState minionState = minion.GetComponent<MinionState>();
                 minionState.TakeDamage(damage);
             }
-        }else if(enemy=="FlockingMinion"){
-            GameObject flockingMinion = GameObject.Find("FlockingMinion");
+        }else if(enemy.Substring(0,3)=="Flo"){
+            
+            GameObject flockingMinion = GameObject.Find(enemy);
             if(flockingMinion !=null){
                 FlockingMinionState flockingMinionState = flockingMinion.GetComponent<FlockingMinionState>();
                 flockingMinionState.TakeDamage(damage);

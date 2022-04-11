@@ -27,8 +27,8 @@ public class GameWorld : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	     
-		m_Grid = new List<Agent>[12];
-		for(int i=0;i<12;i++){
+		m_Grid = new List<Agent>[50];
+		for(int i=0;i<50;i++){
 			m_Grid[i]=new List<Agent>();
 		}
 	}

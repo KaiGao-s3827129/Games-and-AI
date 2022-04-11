@@ -7,6 +7,7 @@ public class FlockingMinionMovement : MonoBehaviour
     public GameObject ant;
     private FlockingMinionState flockingMinionState;
     private Rigidbody2D rb2d;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,7 @@ public class FlockingMinionMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ant = GameObject.Find("FlockingMinion");
+        ant = GameObject.Find(gameObject.name);
         flockingMinionState = ant.GetComponent<FlockingMinionState>();
         if(flockingMinionState.currentState == FlockingState.Die){
             Destroy(gameObject);

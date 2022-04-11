@@ -50,10 +50,11 @@ public class sword : MonoBehaviour
                 Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
                 for (int i = 0; i < Minions.Length; i++)
                 {
-                    if(Minions[i].name=="FlockingMinion"){
+                    
+                   if(Minions[i].name.Substring(0,3)=="Flo"){
                         Minions[i].GetComponent<FlockingMinionState>().TakeDamage(damage);
                     }
-                    if(Minions[i].name=="Minion"){
+                    if(Minions[i].name.Substring(0,3)=="Min"){
                         Minions[i].GetComponent<MinionState>().TakeDamage(damage);
                     }
                     if(Minions[i].name=="TheBoss"){
@@ -72,10 +73,10 @@ public class sword : MonoBehaviour
                 
                 for (int i = 0; i < Minions.Length; i++)
                 {
-                    if(Minions[i].name=="FlockingMinion"){
+                    if(Minions[i].name.Substring(0,3)=="Flo"){
                         Minions[i].GetComponent<FlockingMinionState>().TakeDamage(damage);
                     }
-                    if(Minions[i].name=="Minion"){
+                    if(Minions[i].name.Substring(0,3)=="Min"){
                         Minions[i].GetComponent<MinionState>().TakeDamage(damage);
                     }
                     if(Minions[i].name=="TheBoss"){

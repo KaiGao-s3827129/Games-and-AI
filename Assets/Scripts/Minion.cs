@@ -27,12 +27,12 @@ public class Minion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ant = GameObject.Find("Minion");
+        ant = GameObject.Find(gameObject.name);
         minionState = ant.GetComponent<MinionState>();
         Vector2 steeringForce = new Vector2(0, 0);
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         float distance = toTarget.magnitude;
-        Debug.Log(minionState.currentState);
+        // Debug.Log(minionState.currentState);
         if (minionState.currentState == State.Walk)
         {
             // 替换A* and flocking
