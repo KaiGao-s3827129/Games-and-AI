@@ -18,7 +18,7 @@ public class sword : MonoBehaviour
     {
         ant = GameObject.Find("Neo");
         neoMovement = ant.GetComponent<NeoMovement>();
-        damage = 20;
+        damage = 30;
         anim = GetComponent<Animator>();
     }
 

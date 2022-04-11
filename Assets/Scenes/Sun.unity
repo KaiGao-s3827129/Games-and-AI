@@ -1999,7 +1999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &366807076
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2019,7 +2019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 164, y: 106}
+  m_AnchoredPosition: {x: 144, y: 76}
   m_SizeDelta: {x: 811, y: 456}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &366807077
@@ -2330,6 +2330,13 @@ MonoBehaviour:
   weaponBox: {fileID: 732048550543656259, guid: 4c85ca589a1b04c40a3ba324cb0a4c7a, type: 3}
   boxCount: 2
   platformCount: 20
+  startingCount: 5
+  agentPrefab: {fileID: 8742687085964862010, guid: d088133f2483cfa43a7737d47bad7f8d, type: 3}
+  minionAgentPrefab: {fileID: 8130398289744179380, guid: 30564c54a77e2b046a29ab1005c7d8a7, type: 3}
+  AgentDensity: 5
+  leaderMinionNumber: 0
+  followMinionNumber: 0
+  leaderMinions: []
 --- !u!4 &595501942
 Transform:
   m_ObjectHideFlags: 0
@@ -2373,54 +2380,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1326709622}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &724152066
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 724152068}
-  - component: {fileID: 724152067}
-  m_Layer: 0
-  m_Name: 2222
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &724152067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 724152066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2693b6c0e193e96429e98b3c7b053f67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ant: {fileID: 0}
-  startingCount: 5
-  agentPrefab: {fileID: 8742687085964862010, guid: d088133f2483cfa43a7737d47bad7f8d, type: 3}
-  minionAgentPrefab: {fileID: 8130398289744179380, guid: 30564c54a77e2b046a29ab1005c7d8a7, type: 3}
-  AgentDensity: 5
---- !u!4 &724152068
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 724152066}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.010801, y: -0.45874214, z: -782.4063}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &733618322
 GameObject:
@@ -4275,7 +4234,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6, y: 0}
+  m_AnchoredPosition: {x: -104, y: -20}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1935751520
@@ -4496,10 +4455,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1037afec51b1fff42a0fbe80c926edc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoint: 0
-  previousHealthPoint: 0
-  ant: {fileID: 0}
+  healthPoint: 200
+  previousHealthPoint: 200
+  ant: []
   minionState: {fileID: 0}
+  platforms: {fileID: 0}
+  randomPlatform: {fileID: 0}
 --- !u!212 &2131857721
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4539,7 +4500,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 2c485f404f6b79e46bf40f28682b23d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4559,7 +4520,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131857719}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -67.2, y: 29.7, z: 0}
+  m_LocalPosition: {x: -67, y: 27.6, z: 0}
   m_LocalScale: {x: 6.2870073, y: 5.9460216, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

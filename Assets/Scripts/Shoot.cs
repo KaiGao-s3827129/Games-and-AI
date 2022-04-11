@@ -13,7 +13,7 @@ public class Shoot: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        damage = 1;
+        damage = 10;
         // horizontalMove = Input.GetAxisRaw("Horizontal");
         rb2d = GetComponent<Rigidbody2D>();
         // rb2d.velocity = transform.right*speed*5;
@@ -35,7 +35,6 @@ public class Shoot: MonoBehaviour
     void OnTriggerEnter2D(Collider2D hit){
         // Debug.Log(hit.name);
         string enemy = hit.name;
-        Debug.Log(enemy.Substring(0,3));
         if(enemy == "TheBoss"){
             GameObject TheBoss = GameObject.Find(hit.name);
             if(TheBoss !=null){
@@ -57,6 +56,7 @@ public class Shoot: MonoBehaviour
                 flockingMinionState.TakeDamage(damage);
             }
         }
+        
 
 
     }

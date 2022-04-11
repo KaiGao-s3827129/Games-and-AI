@@ -38,6 +38,5 @@ public class FlockingMinionState : MonoBehaviour
 
     public void TakeDamage(int damage){
         HP -= damage;
-        Debug.Log(HP);
     }
 }

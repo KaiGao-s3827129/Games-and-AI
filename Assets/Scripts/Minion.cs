@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 //public enum State
 //{
 //    Patrol, Die, Attack, Walk, Run,
@@ -16,6 +15,8 @@ public class Minion : MonoBehaviour
     public float slowDownRadius;
     public GameObject ant;
     private MinionState minionState;
+    public GameObject platforms;
+    public RandomPlatform randomPlatform;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,8 @@ public class Minion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        platforms = GameObject.Find("Platforms");
+        randomPlatform  = platforms.GetComponent<RandomPlatform>();
         ant = GameObject.Find(gameObject.name);
         minionState = ant.GetComponent<MinionState>();
         Vector2 steeringForce = new Vector2(0, 0);
@@ -71,7 +74,14 @@ public class Minion : MonoBehaviour
             // flocking
         }
         else if (minionState.currentState == State.Die) {
+            foreach(string one in randomPlatform.leaderMinions){
+                if(one==ant.name){
+                    randomPlatform.leaderMinions.Remove(one);
+                }
+            }
+            
             Destroy(ant);
+            
         }else if(minionState.currentState==State.Attack){
             //可以不写
         }

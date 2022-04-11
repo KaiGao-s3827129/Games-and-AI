@@ -173,7 +173,7 @@ public class NeoMovement : MonoBehaviour
             Destroy(col.gameObject, 1.5f);
         }
 
-        if (col.gameObject.name == "Minion")
+        if (col.gameObject.name.Substring(0,3)=="Min")
         {
             neoState.TakeDamage(1);
             if (neoState.currentPlayerState==PlayerState.Die)
@@ -195,7 +195,7 @@ public class NeoMovement : MonoBehaviour
                 Destroy(GameObject.Find("sword"));
             }
         }
-        if(col.gameObject.name=="FlockingMinion"){
+        if(col.gameObject.name.Substring(0,3)=="Flo"){
             neoState.TakeDamage(1);
             if (neoState.currentPlayerState==PlayerState.Die)
             {
