@@ -3,31 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Timeline;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class RandomPlatform : MonoBehaviour
 {
     public GameObject platform;
-    // public float spawnTime = 2.5f;
     public float yMin, yMax, xMin, xMax;
+    public float spawnTime;
+    public float spawnRepeatingTime;
+    public float destroyTime;
     public LayerMask layerMask;
     private Transform platformParent;
     private List<Vector2> platformList = new List<Vector2>();
 
     public GameObject skillBox;
     public GameObject weaponBox;
-    public int boxCount = 1;
+    public int boxCount;
     public int platformCount = 20;
     
     void Start()
     {
         platformParent = GameObject.Find("Platforms").transform;
         platformSpawn();
-        InvokeRepeating("boxSpawn", 5f, 5f);
-        // Destroy(skillBox, 2f);
-        // Destroy(weaponBox, 2f);
-
+        InvokeRepeating("boxSpawn", spawnTime, spawnRepeatingTime);
     }
 
     void platformSpawn(){
@@ -47,7 +47,6 @@ public class RandomPlatform : MonoBehaviour
                 clone = Instantiate (platform, pos, transform.rotation);
                 platformSize = clone.GetComponent<Collider2D>().bounds.size;
                 clone.transform.SetParent(platformParent);
-                Debug.Log("create a platform on: " + pos);
             }
             while (hasObstacleAtPosition(pos, platformSize, layerMask));
             platformList.Add(pos);
@@ -55,10 +54,6 @@ public class RandomPlatform : MonoBehaviour
             
         }
     }
-
-    // private void OnCollisionEnter2D(Collision2D collision) {
-        
-    // }
 
     bool hasObstacleAtPosition(Vector2 position, Vector2 size, LayerMask layerMask){
         Vector2 checkSize = new Vector2(size.x * 2f, size.y * 3.5f);
@@ -68,7 +63,6 @@ public class RandomPlatform : MonoBehaviour
 
     void boxSpawn()
     {
-        float x, y;
         Vector2 boxPos;
         int platformNo;
         List<int> selectedPlatforms = new List<int>();
@@ -81,16 +75,15 @@ public class RandomPlatform : MonoBehaviour
             } while (selectedPlatforms.Contains(platformNo));
             selectedPlatforms.Add(platformNo);
             Vector2 platformPos = platformList[platformNo];
-            // x = Random.Range(platformPos.x - 5f, platformPos.x + 5f);
-            x = Random.Range(platformPos.x - 10f + 4f, platformPos.x + 10f - 4f);
-            y = platformPos.y + 4f;
+            float x = Random.Range(platformPos.x - 10f + 4f, platformPos.x + 10f - 4f);
+            float y = platformPos.y + 4f;
             boxPos = new Vector2(x, y);
-            Debug.Log("create a skill box on:" + boxPos +" and platform pos is:" + platformPos );
+            Debug.Log("create a skill box on (" + x + "," + y + ")");
             GameObject gameObjectSkillBox = Instantiate(skillBox, boxPos, transform.rotation);
-            Destroy(gameObjectSkillBox, 3f);
+            Destroy(gameObjectSkillBox, destroyTime);
         }
-
-        for (int j = 0; j < boxCount; j++)
+        
+        for (int i = 0; i < boxCount; i++)
         {
             do
             {
@@ -98,15 +91,15 @@ public class RandomPlatform : MonoBehaviour
             } while (selectedPlatforms.Contains(platformNo));
             selectedPlatforms.Add(platformNo);
             Vector2 platformPos = platformList[platformNo];
-            // x = Random.Range(platformPos.x - 5f, platformPos.x + 5f);
-            x = Random.Range(platformPos.x - 10f + 4f, platformPos.x + 10f - 4f);
-            y = platformPos.y + 4f;
+            float x = Random.Range(platformPos.x - 10f + 4f, platformPos.x + 10f - 4f);
+            float y = platformPos.y + 4f;
             boxPos = new Vector2(x, y);
-            Debug.Log("create a skill box on:" + boxPos +" and platform pos is:" + platformPos );
-            GameObject gameObjectWeaponBox = Instantiate(weaponBox, boxPos, transform.rotation);
-            Destroy(gameObjectWeaponBox, 3f);
+            Debug.Log("create a weapon box on (" + x + "," + y + ")");
+            GameObject gameObjectSkillBox = Instantiate(weaponBox, boxPos, transform.rotation);
+            Destroy(gameObjectSkillBox, destroyTime);
         }
-
+        
+        
     }
-    
+
 }
