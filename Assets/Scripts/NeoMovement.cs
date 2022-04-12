@@ -9,7 +9,8 @@ public class NeoMovement : MonoBehaviour
     public GameObject bulletPrefab;
     private Rigidbody2D neo;
     private Animator anim;
-
+    public GameObject loseMenu;
+    
     public AudioSource getAudio;
     
     public LayerMask mask;
@@ -68,6 +69,15 @@ public class NeoMovement : MonoBehaviour
             jumpCount = 2;
         }
         SwitchAnim();
+        
+        // die
+        if (neoState.currentPlayerState == PlayerState.Die)
+        {
+            gameObject.SetActive(false);
+            Destroy(GameObject.Find("sword"));
+            loseMenu.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 
     private void FixedUpdate()
@@ -182,12 +192,8 @@ public class NeoMovement : MonoBehaviour
             //Neo has been damaged by Leader Minion
             neoState.TakeDamage(1);
             SoundManage.instance.HurtAudioPlay();
-            // die
-            if (neoState.currentPlayerState==PlayerState.Die)
-            {
-                gameObject.SetActive(false);
-                Destroy(GameObject.Find("sword"));
-            }
+           
+            
         }
         //Neo damaged by Boss.
         if(col.gameObject.name=="TheBoss"){

@@ -11,6 +11,8 @@ public class BossState : MonoBehaviour
     public GameObject platforms;
     public RandomPlatform randomPlatform;
     public HealthBar healthBar;
+    public GameObject winMenu;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,8 @@ public class BossState : MonoBehaviour
         if (healthPoint <= 0)
         {
             Destroy(gameObject);
+            winMenu.SetActive(true);
+            Time.timeScale = 0f;
         }
         ant = new List<GameObject>();
         foreach (string one in randomPlatform.leaderMinions)

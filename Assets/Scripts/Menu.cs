@@ -6,6 +6,8 @@ using UnityEngine.Audio;
 public class Menu : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public GameObject loseMenu;
+    public GameObject winMenu;
     public AudioMixer audioMixer;
     public GameObject musicButton;
     public GameObject muteButton;
@@ -51,8 +53,8 @@ public class Menu : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
-    }    
-     
+    }
+
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);

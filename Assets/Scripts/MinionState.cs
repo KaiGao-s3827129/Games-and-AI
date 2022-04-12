@@ -31,6 +31,10 @@ public class MinionState : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (GameObject.Find("Neo") == null)
+        {
+            return;
+        }
         ant = GameObject.Find("Neo");
         neoState = ant.GetComponent<NeoState>();
         // Debug.Log(availableTime);

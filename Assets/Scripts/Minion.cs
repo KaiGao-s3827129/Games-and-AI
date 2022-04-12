@@ -24,6 +24,10 @@ public class Minion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameObject.Find("Neo") == null)
+        {
+            return;
+        }
         //According to state script to move
         platforms = GameObject.Find("Platforms");
         randomPlatform  = platforms.GetComponent<RandomPlatform>();

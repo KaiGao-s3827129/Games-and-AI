@@ -14,6 +14,10 @@ public class WeaponUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameObject.Find("Neo") == null)
+        {
+            return;
+        }
         neo = GameObject.Find("Neo");
         _neoState = neo.GetComponent<NeoState>();
         if (_neoState.currentAttackState == AttackState.Melee)

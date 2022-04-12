@@ -17,6 +17,10 @@ public class HealthUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameObject.Find("Neo") == null)
+        {
+            return;
+        }
         neo = GameObject.Find("Neo");
         _neoState = neo.GetComponent<NeoState>();
         int currentHealth = _neoState.healthPoint;
