@@ -39,8 +39,6 @@ public class RandomPlatform : MonoBehaviour
         platformParent = GameObject.Find("Platforms").transform;
         leaderMinionNumber = 0;
         platformSpawn();
-        Destroy(skillBox, 2f);
-        Destroy(weaponBox, 2f); 
         InvokeRepeating("createMinion", 0, 10f);
         InvokeRepeating("boxSpawn", spawnTime, spawnRepeatingTime);
     }

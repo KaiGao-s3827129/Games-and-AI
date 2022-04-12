@@ -41,7 +41,7 @@ public class NeoMovement : MonoBehaviour
         boxSize = new Vector2(playerSize.x * 0.0f, boxHeight);
         anim = GetComponent<Animator>();
         getAudio = GetComponent<AudioSource>();
-        bulletPrefab = GameObject.Find("bulletPrefab");
+        // bulletPrefab = GameObject.Find("bulletPrefab");
     }
 
     // Update is called once per frame
