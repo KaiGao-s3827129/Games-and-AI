@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Player's melee
 public class sword : MonoBehaviour
 {
     public Animator anim;
@@ -16,32 +17,16 @@ public class sword : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         ant = GameObject.Find("Neo");
         neoMovement = ant.GetComponent<NeoMovement>();
-        damage = 20;
-        // anim = GetComponent<Animator>();
+        damage = 30;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if (timeBtwAttack <= 0)
-        // {
-
-        //         if (Input.GetKeyDown(KeyCode.K))
-        //         {
-        //             Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
-        //             for (int i = 0; i < Minions.Length; i++)
-        //             {
-        //                 Minions[i].GetComponent<MinionState>().TakeDamage(damage);
-        //             }
-        //         }
-
-
-
-
-
+        //switch different side through facingRight.
         if (neoMovement.facingRight)
         {
             Vector2 newLocation = new Vector2(ant.transform.position.x + 2, ant.transform.position.y + 1);
@@ -63,31 +48,48 @@ public class sword : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.K))
             {
+                //Attack right enemy
                 anim.SetTrigger("Attacked");
-
                 Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
                 for (int i = 0; i < Minions.Length; i++)
                 {
-                    Minions[i].GetComponent<MinionState>().TakeDamage(damage);
+                    //Attack different enemy
+                   if(Minions[i].name.Substring(0,3)=="Flo"){
+                        Minions[i].GetComponent<FlockingMinionState>().TakeDamage(damage);
+                    }
+                    if(Minions[i].name.Substring(0,3)=="Min"){
+                        Minions[i].GetComponent<MinionState>().TakeDamage(damage);
+                    }
+                    if(Minions[i].name=="TheBoss"){
+                        Minions[i].GetComponent<BossState>().TakeDamage(damage);
+                    }
+                
                 }
             }
-
         }
         else
         {
             if (Input.GetKeyDown(KeyCode.K))
             {
+                //Attack left enemy
                 anim.SetTrigger("AttackLeft");
                 Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
                 for (int i = 0; i < Minions.Length; i++)
                 {
-                    Minions[i].GetComponent<MinionState>().TakeDamage(damage);
+                    //Attack different enemy
+                    if(Minions[i].name.Substring(0,3)=="Flo"){
+                        Minions[i].GetComponent<FlockingMinionState>().TakeDamage(damage);
+                    }
+                    if(Minions[i].name.Substring(0,3)=="Min"){
+                        Minions[i].GetComponent<MinionState>().TakeDamage(damage);
+                    }
+                    if(Minions[i].name=="TheBoss"){
+                        Minions[i].GetComponent<BossState>().TakeDamage(damage);
+                    }
+                
                 }
             }
         }
-
-
-
     }
 
     void OnDrawGizmosSelected()

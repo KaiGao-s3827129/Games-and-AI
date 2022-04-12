@@ -19,24 +19,23 @@ public class NeoMovement : MonoBehaviour
     public float fallMulti = 20f;
     public float lowJumpMulti = 25f;
     public int jumpCount = 1;
-
     public bool isJump = false;
-    
     public static bool isGetWeapon = false;
     public static bool isGetSkill = false;
-    public static int healthPoint = 3;
-
     private Vector2 playerSize;
     private Vector2 boxSize;
     private float horizontalMove;
     private bool jumpRequest = false;
     private bool isGround = false;
-
-    // private bool attack = false;
+    public GameObject ant;
+    private NeoState neoState;
+    public bool facingRight = true;
     
     // Start is called before the first frame update
     void Start()
     {
+        ant = GameObject.Find("Neo");
+        neoState = ant.GetComponent<NeoState>();
         neo = GetComponent<Rigidbody2D>();
         playerSize = GetComponent<SpriteRenderer>().bounds.size;
         boxSize = new Vector2(playerSize.x * 0.0f, boxHeight);
@@ -48,6 +47,7 @@ public class NeoMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //movement
         Run();
         if (Input.GetButtonDown("Jump") && (isGround || jumpCount >= 1) )
         {
@@ -67,13 +67,12 @@ public class NeoMovement : MonoBehaviour
         {
             jumpCount = 2;
         }
-        
-        
         SwitchAnim();
     }
 
     private void FixedUpdate()
     {
+        // Jump function
         if (jumpRequest)
         {
             neo.AddForce(Vector2.up * jumpValue, ForceMode2D.Impulse);
@@ -113,12 +112,14 @@ public class NeoMovement : MonoBehaviour
         {
             neo.gravityScale = 10f;
         }
-
-        if(Input.GetKey(KeyCode.J)){
-            Shoot();
+        //Click J to shoot.
+        if(neoState.currentAttackState==AttackState.Remote){
+            if(Input.GetKey(KeyCode.J)){
+                Shoot();
+            }
         }
     }
-    public bool facingRight = true;
+    
     private void Run()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal");
@@ -158,6 +159,7 @@ public class NeoMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        //Get WeaponBox can shoot
         if (col.tag == "WeaponBox" && !isGetWeapon)
         {
             isGetWeapon = true;
@@ -175,15 +177,42 @@ public class NeoMovement : MonoBehaviour
             col.GetComponent<Animator>().SetTrigger("get");
             Destroy(col.gameObject, 1.5f);
         }
-
-        if (col.gameObject.name == "Minion")
+        if (col.gameObject.name.Substring(0,3)=="Min")
         {
-            healthPoint -= 1;
+            //Neo has been damaged by Leader Minion
+            neoState.TakeDamage(1);
             SoundManage.instance.HurtAudioPlay();
+            // die
+            if (neoState.currentPlayerState==PlayerState.Die)
+            {
+                gameObject.SetActive(false);
+                Destroy(GameObject.Find("sword"));
+            }
+        }
+        //Neo damaged by Boss.
+        if(col.gameObject.name=="TheBoss"){
+            neoState.TakeDamage(1);
+            if (neoState.currentPlayerState==PlayerState.Die)
+            {
+                gameObject.SetActive(false);
+                Destroy(GameObject.Find("sword"));
+            }
+        }
+        //Neo damaged by following minion.
+        if(col.gameObject.name.Substring(0,3)=="Flo"){
+            neoState.TakeDamage(1);
+            if (neoState.currentPlayerState==PlayerState.Die)
+            {
+                gameObject.SetActive(false);
+                Destroy(GameObject.Find("sword"));
+            }
         }
     }
-        void Shoot(){
-        Instantiate(bulletPrefab,firePoint.position,firePoint.rotation);
+
+    //Shoot function
+    void Shoot(){
+        GameObject bullet = Instantiate(bulletPrefab,firePoint.position,firePoint.rotation);
+        Destroy(bullet,3f);
     }
 
 }

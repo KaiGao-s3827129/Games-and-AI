@@ -2,22 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+//Player state
 public enum PlayerState
 {
     Die, Invincibility, Alive
 }
-
+//Player Jump state
 public enum JumpState{
     SingleJump, DoubleJump
 }
-
+//Player attack state(melee or shoot)
 public enum AttackState{
     Melee, Remote
 }
 
 public class NeoState : MonoBehaviour
 {
+    //Neo's health points
     public int healthPoint = 3;
     public int previousHealthPoint=3;
     public PlayerState currentPlayerState;
@@ -34,12 +35,9 @@ public class NeoState : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
-        if(healthPoint < previousHealthPoint){
-            previousHealthPoint = healthPoint;
-        }
+        //change state according to different condition
         switch (currentPlayerState) { 
             case PlayerState.Alive:
                 if(healthPoint<=0){
@@ -47,8 +45,8 @@ public class NeoState : MonoBehaviour
                 }
                 if(healthPoint<previousHealthPoint){
                     previousHealthPoint = healthPoint;
-                    InvincibilityTime = 3;
-                     ChangePlayerState(PlayerState.Invincibility);
+                    InvincibilityTime = 100;
+                    ChangePlayerState(PlayerState.Invincibility);
                 }
                 break;
             case PlayerState.Die:
@@ -64,8 +62,7 @@ public class NeoState : MonoBehaviour
                 }
                 break;
         }
-
-
+        //switch jump state
         switch(currentJumpState){
             case JumpState.SingleJump:
                 if (NeoMovement.isGetSkill)
@@ -81,7 +78,7 @@ public class NeoState : MonoBehaviour
                 break;
         }
 
-
+        //switch attack state
         switch(currentAttackState){
             case AttackState.Melee:
                 if (NeoMovement.isGetWeapon)
@@ -95,7 +92,6 @@ public class NeoState : MonoBehaviour
                 {
                     ChangeAttackState(AttackState.Melee);
                 }
-
                 break;
         }
 
@@ -112,5 +108,9 @@ public class NeoState : MonoBehaviour
 
     public void ChangeAttackState(AttackState state) {
         currentAttackState = state;
+    }
+
+    public void TakeDamage(int damage){
+        healthPoint -= damage;
     }
 }

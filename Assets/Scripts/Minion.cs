@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//public enum State
-//{
-//    Patrol, Die, Attack, Walk, Run,
-//}
-
+//Leader Minion Movement
 public class Minion : MonoBehaviour
 {
     public float max_velocity;
@@ -16,25 +12,30 @@ public class Minion : MonoBehaviour
     public float slowDownRadius;
     public GameObject ant;
     private MinionState minionState;
+    public GameObject platforms;
+    public RandomPlatform randomPlatform;
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         max_velocity = 1;
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        ant = GameObject.Find("Minion");
+        //According to state script to move
+        platforms = GameObject.Find("Platforms");
+        randomPlatform  = platforms.GetComponent<RandomPlatform>();
+        ant = GameObject.Find(gameObject.name);
         minionState = ant.GetComponent<MinionState>();
         Vector2 steeringForce = new Vector2(0, 0);
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         float distance = toTarget.magnitude;
+        //Chase state
         if (minionState.currentState == State.Walk)
         {
-            // 替换A* and flocking
+            // 替换A**
             if (distance < slowDownRadius)
             {
                 Vector2 desiredVelocity = (toTarget).normalized * max_velocity * (distance / slowDownRadius);
@@ -50,8 +51,8 @@ public class Minion : MonoBehaviour
         }
         else if (minionState.currentState == State.Run)
         {
-            // 替换A* and flocking
             max_velocity = 1.5f;
+            // 替换A**
             if (distance < slowDownRadius)
             {
                 Vector2 desiredVelocity = (toTarget).normalized * max_velocity * (distance / slowDownRadius);
@@ -70,11 +71,13 @@ public class Minion : MonoBehaviour
             // flocking
         }
         else if (minionState.currentState == State.Die) {
-            Destroy(ant);
-        }else if(minionState.currentState==State.Attack){
-            //可以不写
+            foreach(string one in randomPlatform.leaderMinions){
+                if(one==ant.name){
+                    randomPlatform.leaderMinions.Remove(one);
+                }
+            }
+            Destroy(ant);   
         }
-        
            
     }
 }

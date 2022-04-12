@@ -1,32 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossState : MonoBehaviour
 {
     public int healthPoint;
-    public int previousHealthPoint;
-    public GameObject ant;
-    public MinionState minionState;
-    private float speed = 20.0f;
+    public int previousHealthPoint = 500;
+    public List<GameObject> ant;
+    public GameObject platforms;
+    public RandomPlatform randomPlatform;
+    public HealthBar healthBar;
+
     // Start is called before the first frame update
     void Start()
-    {
-        ant = GameObject.Find("Neo");
-        minionState = ant.GetComponent<MinionState>();
-        healthPoint = 5;
-        previousHealthPoint = 5;
+    {   
+        //Get the all Leader Minions.
+        ant = new List<GameObject>();
+        platforms = GameObject.Find("Platforms");
+        randomPlatform = platforms.GetComponent<RandomPlatform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 newLocation = new Vector2(ant.transform.position.x-30,ant.transform.position.y+30);
-        float step = speed * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, newLocation, step);
-        if(previousHealthPoint>healthPoint){
-            previousHealthPoint = healthPoint;
-            minionState.BossBeenAttacked();
+        //Decide the boss die.
+        if (healthPoint <= 0)
+        {
+            Destroy(gameObject);
+        }
+        ant = new List<GameObject>();
+        foreach (string one in randomPlatform.leaderMinions)
+        {
+            ant.Add(GameObject.Find(one));
+        }
+
+    }
+
+    public void TakeDamage(int damage)
+    {
+        //Take the damage from Neo.
+        healthPoint -= damage;
+        //Set the health bar.
+        healthBar.SetHealth(healthPoint);
+        foreach (GameObject one in ant)
+        {
+            //Let Minion know the Boss has been attacked
+            one.GetComponent<MinionState>().BossBeenAttacked();
         }
     }
+
 }
