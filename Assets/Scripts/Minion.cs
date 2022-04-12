@@ -73,6 +73,10 @@ public class Minion : MonoBehaviour
         else if (minionState.currentState == State.Patrol)
         {
             // flocking
+
+
+
+            
         }
         else if (minionState.currentState == State.Die) {
             foreach(string one in randomPlatform.leaderMinions){
@@ -80,6 +84,12 @@ public class Minion : MonoBehaviour
                     randomPlatform.leaderMinions.Remove(one);
                 }
             }
+            foreach(GameObject one in randomPlatform.agents){
+                if(one.name==ant.name){
+                    randomPlatform.agents.Remove(one);
+                }
+            }
+
             Destroy(ant);   
         }
            

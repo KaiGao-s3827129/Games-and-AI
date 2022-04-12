@@ -35,7 +35,7 @@ public class NeoState : MonoBehaviour
         InvincibilityTime = 0;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //change state according to different condition
         switch (currentPlayerState) { 
@@ -45,7 +45,7 @@ public class NeoState : MonoBehaviour
                 }
                 if(healthPoint<previousHealthPoint){
                     previousHealthPoint = healthPoint;
-                    InvincibilityTime = 100;
+                    InvincibilityTime = 500;
                     ChangePlayerState(PlayerState.Invincibility);
                 }
                 break;

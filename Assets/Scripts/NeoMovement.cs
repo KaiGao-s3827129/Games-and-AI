@@ -36,7 +36,7 @@ public class NeoMovement : MonoBehaviour
     void Start()
     {
         ant = GameObject.Find("Neo");
-        neoState = ant.GetComponent<NeoState>();
+        
         neo = GetComponent<Rigidbody2D>();
         playerSize = GetComponent<SpriteRenderer>().bounds.size;
         boxSize = new Vector2(playerSize.x * 0.0f, boxHeight);
@@ -48,6 +48,7 @@ public class NeoMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        neoState = ant.GetComponent<NeoState>();
         //movement
         Run();
         if (Input.GetButtonDown("Jump") && (isGround || jumpCount >= 1) )
@@ -189,15 +190,27 @@ public class NeoMovement : MonoBehaviour
         }
         if (col.gameObject.name.Substring(0,3)=="Min")
         {
+            Debug.Log(neoState.currentPlayerState);
             //Neo has been damaged by Leader Minion
-            neoState.TakeDamage(1);
+            if(neoState.currentPlayerState!=PlayerState.Invincibility){
+                neoState.TakeDamage(1);
+            }
+                        if (neoState.currentPlayerState==PlayerState.Die)
+            {
+                gameObject.SetActive(false);
+                Destroy(GameObject.Find("sword"));
+            }
             SoundManage.instance.HurtAudioPlay();
            
             
         }
         //Neo damaged by Boss.
         if(col.gameObject.name=="TheBoss"){
-            neoState.TakeDamage(1);
+            Debug.Log(neoState.currentPlayerState);
+            if(neoState.currentPlayerState!=PlayerState.Invincibility){
+                neoState.TakeDamage(1);
+            }
+            
             if (neoState.currentPlayerState==PlayerState.Die)
             {
                 gameObject.SetActive(false);
@@ -206,7 +219,10 @@ public class NeoMovement : MonoBehaviour
         }
         //Neo damaged by following minion.
         if(col.gameObject.name.Substring(0,3)=="Flo"){
-            neoState.TakeDamage(1);
+            Debug.Log(neoState.currentPlayerState);
+            if(neoState.currentPlayerState!=PlayerState.Invincibility){
+                neoState.TakeDamage(1);
+            }
             if (neoState.currentPlayerState==PlayerState.Die)
             {
                 gameObject.SetActive(false);
