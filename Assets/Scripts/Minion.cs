@@ -39,36 +39,36 @@ public class Minion : MonoBehaviour
         //Chase state
         if (minionState.currentState == State.Walk)
         {
-            // 替换A**
-            if (distance < slowDownRadius)
-            {
-                Vector2 desiredVelocity = (toTarget).normalized * max_velocity * (distance / slowDownRadius);
-                steeringForce = desiredVelocity - velocity;
-                rb2d.AddForce(steeringForce);
-            }
-            else
-            {
-                Vector2 desiredVelocity = toTarget * max_velocity;
-                steeringForce = desiredVelocity - velocity;
-                rb2d.AddForce(steeringForce);
-            }
+            // // 替换A**
+            // if (distance < slowDownRadius)
+            // {
+            //     Vector2 desiredVelocity = (toTarget).normalized * max_velocity * (distance / slowDownRadius);
+            //     steeringForce = desiredVelocity - velocity;
+            //     rb2d.AddForce(steeringForce);
+            // }
+            // else
+            // {
+            //     Vector2 desiredVelocity = toTarget * max_velocity;
+            //     steeringForce = desiredVelocity - velocity;
+            //     rb2d.AddForce(steeringForce);
+            // }
         }
         else if (minionState.currentState == State.Run)
         {
-            max_velocity = 1.5f;
-            // 替换A**
-            if (distance < slowDownRadius)
-            {
-                Vector2 desiredVelocity = (toTarget).normalized * max_velocity * (distance / slowDownRadius);
-                steeringForce = desiredVelocity - velocity;
-                rb2d.AddForce(steeringForce);
-            }
-            else
-            {
-                Vector2 desiredVelocity = toTarget * max_velocity;
-                steeringForce = desiredVelocity - velocity;
-                rb2d.AddForce(steeringForce);
-            }
+            // max_velocity = 1.5f;
+            // // 替换A**
+            // if (distance < slowDownRadius)
+            // {
+            //     Vector2 desiredVelocity = (toTarget).normalized * max_velocity * (distance / slowDownRadius);
+            //     steeringForce = desiredVelocity - velocity;
+            //     rb2d.AddForce(steeringForce);
+            // }
+            // else
+            // {
+            //     Vector2 desiredVelocity = toTarget * max_velocity;
+            //     steeringForce = desiredVelocity - velocity;
+            //     rb2d.AddForce(steeringForce);
+            // }
         }
         else if (minionState.currentState == State.Patrol)
         {
