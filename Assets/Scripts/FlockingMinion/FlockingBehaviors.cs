@@ -5,7 +5,18 @@ using UnityEngine;
 
 public class FlockingBehaviors : MonoBehaviour
 {
-    
+
+       static public GameObject platforms;
+    static public RandomPlatform randomPlatform;
+
+    public void Start(){
+        platforms = GameObject.Find("Platforms");
+        randomPlatform  = platforms.GetComponent<RandomPlatform>();
+    }
+    public void update(){
+        platforms = GameObject.Find("Platforms");
+        randomPlatform  = platforms.GetComponent<RandomPlatform>();
+    }
     public static Vector2 getAlignmentVector(GameObject agent, List<GameObject> context, float weight)
     {
         
@@ -30,8 +41,15 @@ public class FlockingBehaviors : MonoBehaviour
         }
         direction /= context.Count;
         direction -= (Vector2) agent.transform.position;
-        // Vector3 leaderPos = GameObject.Find("Leader").transform.position;
+        // Vector3 leaderPos = new Vector3(0,0,0);
+        // foreach(string one in randomPlatform.leaderMinions){
+        //     if(one.Substring(0,3)=="Min"){
+        //         leaderPos = GameObject.Find(one).transform.position;
+        //     }
+        // }
+        
         // direction = (Vector2)(leaderPos - agent.transform.position);
+        // Debug.Log(direction);
         direction *= weight;
         // direction = Seek(agent, direction);
         // Debug.Log(direction);
@@ -47,10 +65,20 @@ public class FlockingBehaviors : MonoBehaviour
         //     direction += (Vector2)neighbor.transform.position;
         // }
         // direction -= (Vector2) agent.transform.position;
-        direction = randomPos - (Vector2)agent.transform.position;
-        if(direction.magnitude > maxForceMagnitude){
-            direction.Normalize();
+        Vector3 leaderPos = new Vector3(0,0,0);
+        foreach(string one in randomPlatform.leaderMinions){
+            if(one.Substring(0,3)=="Min"){
+                leaderPos = GameObject.Find(one).transform.position;
+            }
         }
+        
+        direction = (Vector2)(leaderPos - agent.transform.position);
+        // Debug.Log(direction);
+        // direction *= weight;
+        // direction = randomPos - (Vector2)agent.transform.position;
+        // if(direction.magnitude > maxForceMagnitude){
+        //     direction.Normalize();
+        // }
         direction *= weight;
         // direction = Seek(agent, direction);
         // Debug.Log(direction);

@@ -57,7 +57,7 @@ public class Astar : MonoBehaviour
             Debug.DrawLine(currPos, nextPosition, Color.white, 0.1f);
         }
         
-        Debug.Log("next position is " + nextPosition);
+        // Debug.Log("next position is " + nextPosition);
         // Vector2 nextPosition = new Vector2(0f, 0f);
         Vector2 offset = nextPosition - currPos;
 
@@ -112,9 +112,9 @@ public class Astar : MonoBehaviour
             path = element.Item2;
             cost = element.Item3;
             
-            Debug.Log("Distance is " + Vector2.Distance(position, targetPosition));
+            // Debug.Log("Distance is " + Vector2.Distance(position, targetPosition));
             if (Vector2.Distance(position, targetPosition) < 1.2f){
-                Debug.Log("return the path");
+                // Debug.Log("return the path");
                 return path;
             }
 
@@ -136,7 +136,7 @@ public class Astar : MonoBehaviour
             }
             counter ++;
         }
-        Debug.Log("return empty");
+        // Debug.Log("return empty");
         return new List<Vector2>();
         
     }

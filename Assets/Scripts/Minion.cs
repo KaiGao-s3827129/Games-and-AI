@@ -22,7 +22,7 @@ public class Minion : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (GameObject.Find("Neo") == null)
         {
@@ -37,42 +37,21 @@ public class Minion : MonoBehaviour
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         float distance = toTarget.magnitude;
         //Chase state
+        Debug.Log(minionState.currentState);
         if (minionState.currentState == State.Walk)
         {
-            // // 替换A**
-            // if (distance < slowDownRadius)
-            // {
-            //     Vector2 desiredVelocity = (toTarget).normalized * max_velocity * (distance / slowDownRadius);
-            //     steeringForce = desiredVelocity - velocity;
-            //     rb2d.AddForce(steeringForce);
-            // }
-            // else
-            // {
-            //     Vector2 desiredVelocity = toTarget * max_velocity;
-            //     steeringForce = desiredVelocity - velocity;
-            //     rb2d.AddForce(steeringForce);
-            // }
+            ant.GetComponent<Astar>().enabled = true;
+            ant.GetComponent<FlockingBehaviors>().enabled = false;
         }
         else if (minionState.currentState == State.Run)
         {
-            // max_velocity = 1.5f;
-            // // 替换A**
-            // if (distance < slowDownRadius)
-            // {
-            //     Vector2 desiredVelocity = (toTarget).normalized * max_velocity * (distance / slowDownRadius);
-            //     steeringForce = desiredVelocity - velocity;
-            //     rb2d.AddForce(steeringForce);
-            // }
-            // else
-            // {
-            //     Vector2 desiredVelocity = toTarget * max_velocity;
-            //     steeringForce = desiredVelocity - velocity;
-            //     rb2d.AddForce(steeringForce);
-            // }
+            ant.GetComponent<Astar>().enabled = true;
+            ant.GetComponent<FlockingBehaviors>().enabled = false;
         }
         else if (minionState.currentState == State.Patrol)
         {
-            // flocking
+            ant.GetComponent<Astar>().enabled = false;
+            ant.GetComponent<FlockingBehaviors>().enabled = true;
 
 
 

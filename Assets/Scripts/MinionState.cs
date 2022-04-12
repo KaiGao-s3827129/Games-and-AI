@@ -92,7 +92,7 @@ public class MinionState : MonoBehaviour
                     ChangeState(State.Run);
                 }
                 //If Neo's location not available, change to patrol state
-                if (distance > 9 && availableTime <= 0) { 
+                if (distance > 35 && availableTime <= 0) { 
                     ChangeState (State.Patrol);
                 }else if(availableTime>0){
                     availableTime--;
@@ -107,7 +107,7 @@ public class MinionState : MonoBehaviour
                     ChangeState(State.Die);
                 }
                 //If Neo's location not available, change to patrol state
-                if (distance > 9 && availableTime <= 0)
+                if (distance > 35 && availableTime <= 0)
                 {
                     ChangeState(State.Patrol);
                 }else if(availableTime>0){

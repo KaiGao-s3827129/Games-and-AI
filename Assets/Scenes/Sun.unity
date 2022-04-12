@@ -1996,7 +1996,7 @@ MonoBehaviour:
   getAudio: {fileID: 0}
   mask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 72
   boxHeight: 0.05
   jumpValue: 60
   speed: 20
@@ -2037,7 +2037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e76e45cac1783a4c929ca925c5f401c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 60
   rb2d: {fileID: 0}
   damage: 0
   ant: {fileID: 0}
@@ -2933,7 +2933,7 @@ GameObject:
   - component: {fileID: 595501942}
   - component: {fileID: 595501941}
   - component: {fileID: 1006783389}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Platforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2962,11 +2962,11 @@ MonoBehaviour:
   destroyTime: 6
   layerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 72
   skillBox: {fileID: 7485881631667402372, guid: 72af46dc158899b408140eebebe35877, type: 3}
   weaponBox: {fileID: 732048550543656259, guid: 4c85ca589a1b04c40a3ba324cb0a4c7a, type: 3}
   boxCount: 1
-  platformCount: 10
+  platformCount: 15
   startingCount: 5
   AgentPrefabs: {fileID: 0}
   minionAgentPrefab: {fileID: 8130398289744179382, guid: 30564c54a77e2b046a29ab1005c7d8a7, type: 3}
@@ -2976,15 +2976,15 @@ MonoBehaviour:
   agentPrefab: {fileID: 8742687085964862009, guid: d088133f2483cfa43a7737d47bad7f8d, type: 3}
   agents: []
   agentCount: 2
-  AgentDensity: 5
-  maxForceMagnitude: 20.67
-  neighborRadius: 1.5
+  AgentDensity: 4.46
+  maxForceMagnitude: 20.4
+  neighborRadius: 2.29
   center: {x: 0, y: 0}
   radius: 20
-  avoidanceWeight: 20
-  cohesionWeight: 20
-  cohesionWeightPos: 0
-  alignmentWeight: 20
+  avoidanceWeight: 30
+  cohesionWeight: 5
+  cohesionWeightPos: 2
+  alignmentWeight: 2
   stayWeight: 0
   wanderWeight: 1
   randomPos: {x: 0, y: 0}
@@ -4938,63 +4938,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1 &1483879713
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1483879715}
-  - component: {fileID: 1483879714}
-  m_Layer: 0
-  m_Name: 11111
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1483879714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483879713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 119f9d18a468cb14aab441d7eec9d461, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentPrefab: {fileID: 8742687085964862009, guid: d088133f2483cfa43a7737d47bad7f8d, type: 3}
-  agentCount: 19
-  AgentDensity: 1
-  maxForceMagnitude: 10
-  neighborRadius: 13.01
-  center: {x: 0, y: 0}
-  radius: 18.4
-  avoidanceWeight: 30
-  cohesionWeight: 5
-  cohesionWeightPos: 2
-  alignmentWeight: 2
-  stayWeight: 0
-  wanderWeight: 1
-  randomPos: {x: 0, y: 0}
---- !u!4 &1483879715
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483879713}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.022545, y: 9.342387, z: -10.906097}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1517678793
 GameObject:
   m_ObjectHideFlags: 0
@@ -5316,7 +5259,7 @@ GameObject:
   - component: {fileID: 1679963256}
   - component: {fileID: 1679963258}
   - component: {fileID: 1679963257}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SoundManagement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6515,7 +6458,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

@@ -188,9 +188,14 @@ public class NeoMovement : MonoBehaviour
             col.GetComponent<Animator>().SetTrigger("get");
             Destroy(col.gameObject, 1.5f);
         }
+        
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
         if (col.gameObject.name.Substring(0,3)=="Min")
         {
-            Debug.Log(neoState.currentPlayerState);
             //Neo has been damaged by Leader Minion
             if(neoState.currentPlayerState!=PlayerState.Invincibility){
                 neoState.TakeDamage(1);
@@ -206,7 +211,6 @@ public class NeoMovement : MonoBehaviour
         }
         //Neo damaged by Boss.
         if(col.gameObject.name=="TheBoss"){
-            Debug.Log(neoState.currentPlayerState);
             if(neoState.currentPlayerState!=PlayerState.Invincibility){
                 neoState.TakeDamage(1);
             }
@@ -219,7 +223,6 @@ public class NeoMovement : MonoBehaviour
         }
         //Neo damaged by following minion.
         if(col.gameObject.name.Substring(0,3)=="Flo"){
-            Debug.Log(neoState.currentPlayerState);
             if(neoState.currentPlayerState!=PlayerState.Invincibility){
                 neoState.TakeDamage(1);
             }
@@ -230,7 +233,6 @@ public class NeoMovement : MonoBehaviour
             }
         }
     }
-
     //Shoot function
     void Shoot(){
         GameObject bullet = Instantiate(bulletPrefab,firePoint.position,firePoint.rotation);

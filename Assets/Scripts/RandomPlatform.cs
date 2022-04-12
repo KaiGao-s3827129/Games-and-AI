@@ -88,7 +88,7 @@ public class RandomPlatform : MonoBehaviour
         platformParent = GameObject.Find("Platforms").transform;
         leaderMinionNumber = 0;
         platformSpawn();
-        // InvokeRepeating("createMinion", 0, 10f);
+        InvokeRepeating("createMinion", 0, 10f);
         InvokeRepeating("boxSpawn", spawnTime, spawnRepeatingTime);
 
 
@@ -162,7 +162,7 @@ public class RandomPlatform : MonoBehaviour
             float x = Random.Range(platformPos.x - 10f + 4f, platformPos.x + 10f - 4f);
             float y = platformPos.y + 4f;
             boxPos = new Vector2(x, y);
-            Debug.Log("create a skill box on (" + x + "," + y + ")");
+            // Debug.Log("create a skill box on (" + x + "," + y + ")");
             GameObject gameObjectSkillBox = Instantiate(skillBox, boxPos, transform.rotation);
             Destroy(gameObjectSkillBox, destroyTime);
         }
@@ -178,7 +178,7 @@ public class RandomPlatform : MonoBehaviour
             float x = Random.Range(platformPos.x - 10f + 4f, platformPos.x + 10f - 4f);
             float y = platformPos.y + 4f;
             boxPos = new Vector2(x, y);
-            Debug.Log("create a weapon box on (" + x + "," + y + ")");
+            // Debug.Log("create a weapon box on (" + x + "," + y + ")");
             GameObject gameObjectSkillBox = Instantiate(weaponBox, boxPos, transform.rotation);
             Destroy(gameObjectSkillBox, destroyTime);
         }
@@ -265,7 +265,7 @@ public class RandomPlatform : MonoBehaviour
 
             
             float hasForce = Random.value;
-            float threshold = 0.1f;
+            float threshold = 0.05f;
 
             // if(hasForce < threshold){
             //     Debug.DrawLine(agent.transform.position, (Vector3)((Vector2)agent.transform.position + (Vector2)move), Color.white, 0.1f);
@@ -286,7 +286,7 @@ public class RandomPlatform : MonoBehaviour
             }
             
             
-            // if(agent.name == "Agent 7"){
+            // if(agent.name.Substring(0,3) == "Min"){
             //     Debug.Log(context.Count);
             //     force = Vector2.zero;
             //     force += FlockingBehaviors.getWanderVector(agent, context, wanderWeight);
