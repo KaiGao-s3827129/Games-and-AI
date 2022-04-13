@@ -96,7 +96,6 @@ public class Astar : MonoBehaviour
         rb2d.AddForce(forceDirection);
         // UnityEditor.EditorApplication.isPlaying = false;
     }
-
     Vector2 PathSmooth(List<Vector2> oldPath, Vector2 currPos){
         Vector2 nextPos = oldPath[0];
         foreach(Vector2 pos in oldPath){

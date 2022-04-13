@@ -51,7 +51,7 @@ public class RandomPlatform : MonoBehaviour
 
     // [Range(1f, 100f)]
     // public float forceMultiplier = 10f;
-    [Range(1f, 60f)]
+    [Range(1f, 100f)]
     public float maxForceMagnitude = 10f;
     [Range(1f, 20f)]
     public float neighborRadius = 1.5f;

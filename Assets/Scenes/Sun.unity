@@ -2974,17 +2974,18 @@ MonoBehaviour:
   leaderMinionNumber: 0
   followMinionNumber: 0
   leaderMinions: []
+  ant: {fileID: 0}
   agentPrefab: {fileID: 8742687085964862009, guid: d088133f2483cfa43a7737d47bad7f8d, type: 3}
   agents: []
   agentCount: 2
   AgentDensity: 4.46
-  maxForceMagnitude: 20.4
-  neighborRadius: 2.29
+  maxForceMagnitude: 60
+  neighborRadius: 10
   center: {x: 0, y: 0}
   radius: 20
-  avoidanceWeight: 30
-  cohesionWeight: 5
-  cohesionWeightPos: 2
+  avoidanceWeight: 40
+  cohesionWeight: 6
+  cohesionWeightPos: 10
   alignmentWeight: 2
   stayWeight: 0
   wanderWeight: 1
