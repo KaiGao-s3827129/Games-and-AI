@@ -11,6 +11,7 @@ public class RandomPlatform : MonoBehaviour
 {
     //Random create platfrom
     public GameObject platform;
+    private Vector2 platSize;
     public GameObject largerPlatform;
     public float yMin, yMax, xMin, xMax;
     public float spawnTime;

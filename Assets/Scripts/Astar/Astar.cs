@@ -41,17 +41,10 @@ public class Astar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
-    void getPlatformList(){
-        RandomPlatform rp =  GameObject.Find("PlatformController").GetComponent<RandomPlatform>();
-        List<Vector2> list = rp.PlatformList;
-        platformSize = rp.PlatSize;
-        // Debug.Log(platformSize);
-    }
-
-    void Astardo() {
+    void doAstar() {
         target = GameObject.Find("Neo");
         targetPosition = (Vector2)target.transform.position;
         Vector2 currPos = gameObject.transform.position;
