@@ -1996,7 +1996,7 @@ MonoBehaviour:
   getAudio: {fileID: 0}
   mask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 72
   boxHeight: 0.05
   jumpValue: 60
   speed: 20
@@ -2933,7 +2933,7 @@ GameObject:
   - component: {fileID: 595501942}
   - component: {fileID: 595501941}
   - component: {fileID: 1006783389}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Platforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2962,12 +2962,12 @@ MonoBehaviour:
   destroyTime: 6
   layerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 72
   platformList: []
   skillBox: {fileID: 7485881631667402372, guid: 72af46dc158899b408140eebebe35877, type: 3}
   weaponBox: {fileID: 732048550543656259, guid: 4c85ca589a1b04c40a3ba324cb0a4c7a, type: 3}
   boxCount: 1
-  platformCount: 10
+  platformCount: 20
   startingCount: 5
   AgentPrefabs: {fileID: 0}
   minionAgentPrefab: {fileID: 8130398289744179382, guid: 30564c54a77e2b046a29ab1005c7d8a7, type: 3}
@@ -2976,18 +2976,18 @@ MonoBehaviour:
   leaderMinions: []
   agentPrefab: {fileID: 8742687085964862009, guid: d088133f2483cfa43a7737d47bad7f8d, type: 3}
   agents: []
-  agentCount: 2
+  agentCount: 250
   AgentDensity: 5
-  maxForceMagnitude: 20.67
+  maxForceMagnitude: 10
   neighborRadius: 1.5
   center: {x: 0, y: 0}
-  radius: 20
-  avoidanceWeight: 20
-  cohesionWeight: 20
+  radius: 0
+  avoidanceWeight: 0
+  cohesionWeight: 0
   cohesionWeightPos: 0
-  alignmentWeight: 20
+  alignmentWeight: 0
   stayWeight: 0
-  wanderWeight: 1
+  wanderWeight: 0
   randomPos: {x: 0, y: 0}
 --- !u!4 &595501942
 Transform:
@@ -4939,63 +4939,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1 &1483879713
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1483879715}
-  - component: {fileID: 1483879714}
-  m_Layer: 0
-  m_Name: 11111
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1483879714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483879713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 119f9d18a468cb14aab441d7eec9d461, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentPrefab: {fileID: 8742687085964862009, guid: d088133f2483cfa43a7737d47bad7f8d, type: 3}
-  agentCount: 19
-  AgentDensity: 1
-  maxForceMagnitude: 10
-  neighborRadius: 13.01
-  center: {x: 0, y: 0}
-  radius: 18.4
-  avoidanceWeight: 30
-  cohesionWeight: 5
-  cohesionWeightPos: 2
-  alignmentWeight: 2
-  stayWeight: 0
-  wanderWeight: 1
-  randomPos: {x: 0, y: 0}
---- !u!4 &1483879715
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483879713}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.022545, y: 9.342387, z: -10.906097}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1517678793
 GameObject:
   m_ObjectHideFlags: 0
@@ -5365,7 +5308,7 @@ AudioSource:
   m_GameObject: {fileID: 1679963255}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 2d8b0e2cedc5686408921c027b0d2442, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

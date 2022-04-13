@@ -374,4 +374,9 @@ public class RandomPlatform : MonoBehaviour
         return context;
     }
 
+    List<Vector2> GetPosList()
+    {
+        return platformList;
+    }
+
 }
