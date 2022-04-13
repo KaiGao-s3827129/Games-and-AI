@@ -20,7 +20,6 @@ public class Astar : MonoBehaviour
     private MyGrid grid;
 
     public MyGrid Grid{ get { return grid; } }
-
     private Vector2 platformSize;
     void Start()
     {
@@ -36,25 +35,16 @@ public class Astar : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         // bombsParent = GameObject.Find("Bombs").transform;
 
-        // Invoke("getPlatformList", 0.1f);
-        InvokeRepeating("Astardo", 0.5f, 0.1f);
-        
+        InvokeRepeating("doAstar", 1f, 1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
-    void getPlatformList(){
-        RandomPlatform rp =  GameObject.Find("PlatformController").GetComponent<RandomPlatform>();
-        List<Vector2> list = rp.PlatformList;
-        platformSize = rp.PlatSize;
-        // Debug.Log(platformSize);
-    }
-
-    void Astardo() {
+    void doAstar() {
         target = GameObject.Find("Neo");
         targetPosition = (Vector2)target.transform.position;
         Vector2 currPos = gameObject.transform.position;
@@ -68,10 +58,10 @@ public class Astar : MonoBehaviour
         }else{
             // nextPosition = posList[0];
             nextPosition = PathSmooth(posList, currPos);
-            
+            // Debug.DrawLine(currPos, nextPosition, Color.white, 0.1f);
         }
         
-        Debug.Log("next position is " + nextPosition);
+        // Debug.Log("next position is " + nextPosition);
         // Vector2 nextPosition = new Vector2(0f, 0f);
         Vector2 offset = nextPosition - currPos;
 
@@ -138,9 +128,9 @@ public class Astar : MonoBehaviour
             path = element.Item2;
             cost = element.Item3;
             
-            Debug.Log("Distance is " + Vector2.Distance(position, targetPosition));
+            // Debug.Log("Distance is " + Vector2.Distance(position, targetPosition));
             if (Vector2.Distance(position, targetPosition) < 1.2f){
-                Debug.Log("return the path");
+                // Debug.Log("return the path");
                 return path;
             }
 

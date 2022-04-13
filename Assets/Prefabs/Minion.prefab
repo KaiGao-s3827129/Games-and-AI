@@ -154,7 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3dc96e7c140fd64da256a87cf5214ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 60
+  arrivalDistance: 0
+  speedMultiplier: 400
   height: 60
   width: 90
   layerMask:

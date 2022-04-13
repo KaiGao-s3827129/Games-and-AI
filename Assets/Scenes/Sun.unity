@@ -2953,6 +2953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platform: {fileID: 8253584797741033124, guid: a274699558325cf4b8da27cee58de391, type: 3}
+  largerPlatform: {fileID: 8253584797741033124, guid: ba3db9cc36990ac419c534ebf644d74b, type: 3}
   yMin: -40
   yMax: 30
   xMin: -70
@@ -6198,22 +6199,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 934834669081122427, guid: 30564c54a77e2b046a29ab1005c7d8a7, type: 3}
-      propertyPath: width
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 934834669081122427, guid: 30564c54a77e2b046a29ab1005c7d8a7, type: 3}
-      propertyPath: height
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 934834669081122427, guid: 30564c54a77e2b046a29ab1005c7d8a7, type: 3}
-      propertyPath: speedMultiplier
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 934834669081122427, guid: 30564c54a77e2b046a29ab1005c7d8a7, type: 3}
-      propertyPath: layerMask.m_Bits
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 8130398289744179377, guid: 30564c54a77e2b046a29ab1005c7d8a7, type: 3}
       propertyPath: m_RootOrder
       value: 1

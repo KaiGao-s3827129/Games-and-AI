@@ -19,8 +19,6 @@ public class Minion : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         max_velocity = 1;
-        // ant.GetComponent<Astar>().enabled = false;
-        // ant.GetComponent<FlockingBehaviors>().enabled = true;
     }
 
     // Update is called once per frame
@@ -39,23 +37,27 @@ public class Minion : MonoBehaviour
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         float distance = toTarget.magnitude;
         //Chase state
-        // Debug.Log(minionState.currentState);
-        // if (minionState.currentState == State.Walk)
-        // {
-        //     ant.GetComponent<Astar>().enabled = true;
-        //     ant.GetComponent<FlockingBehaviors>().enabled = false;
-        // }
-        // else if (minionState.currentState == State.Run)
-        // {
-        //     ant.GetComponent<Astar>().enabled = true;
-        //     ant.GetComponent<FlockingBehaviors>().enabled = false;
-        // }
-        // else if (minionState.currentState == State.Patrol)
-        // {
-        //     ant.GetComponent<Astar>().enabled = false;
-        //     ant.GetComponent<FlockingBehaviors>().enabled = true;
-        // }
-        if (minionState.currentState == State.Die) {
+        Debug.Log(minionState.currentState);
+        if (minionState.currentState == State.Walk)
+        {
+            ant.GetComponent<Astar>().enabled = true;
+            ant.GetComponent<FlockingBehaviors>().enabled = false;
+        }
+        else if (minionState.currentState == State.Run)
+        {
+            ant.GetComponent<Astar>().enabled = true;
+            ant.GetComponent<FlockingBehaviors>().enabled = false;
+        }
+        else if (minionState.currentState == State.Patrol)
+        {
+            ant.GetComponent<Astar>().enabled = false;
+            ant.GetComponent<FlockingBehaviors>().enabled = true;
+
+
+
+            
+        }
+        else if (minionState.currentState == State.Die) {
             foreach(string one in randomPlatform.leaderMinions){
                 if(one==ant.name){
                     randomPlatform.leaderMinions.Remove(one);
