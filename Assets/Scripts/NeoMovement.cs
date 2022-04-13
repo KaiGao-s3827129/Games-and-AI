@@ -36,7 +36,7 @@ public class NeoMovement : MonoBehaviour
     void Start()
     {
         ant = GameObject.Find("Neo");
-        
+        neoState = ant.GetComponent<NeoState>();
         neo = GetComponent<Rigidbody2D>();
         playerSize = GetComponent<SpriteRenderer>().bounds.size;
         boxSize = new Vector2(playerSize.x * 0.0f, boxHeight);
@@ -190,27 +190,20 @@ public class NeoMovement : MonoBehaviour
         }
         if (col.gameObject.name.Substring(0,3)=="Min")
         {
-            Debug.Log(neoState.currentPlayerState);
             //Neo has been damaged by Leader Minion
-            if(neoState.currentPlayerState!=PlayerState.Invincibility){
-                neoState.TakeDamage(1);
-            }
-                        if (neoState.currentPlayerState==PlayerState.Die)
+            if (neoState.currentPlayerState == PlayerState.Alive)
             {
-                gameObject.SetActive(false);
-                Destroy(GameObject.Find("sword"));
+                neoState.TakeDamage(1);
+                SoundManage.instance.HurtAudioPlay();
+                neoState.ChangePlayerState(PlayerState.Invincibility);
+            } else if (neoState.currentPlayerState == PlayerState.Invincibility)
+            {
+                neoState.TakeDamage(0);
             }
-            SoundManage.instance.HurtAudioPlay();
-           
-            
         }
         //Neo damaged by Boss.
         if(col.gameObject.name=="TheBoss"){
-            Debug.Log(neoState.currentPlayerState);
-            if(neoState.currentPlayerState!=PlayerState.Invincibility){
-                neoState.TakeDamage(1);
-            }
-            
+            neoState.TakeDamage(1);
             if (neoState.currentPlayerState==PlayerState.Die)
             {
                 gameObject.SetActive(false);
@@ -219,10 +212,7 @@ public class NeoMovement : MonoBehaviour
         }
         //Neo damaged by following minion.
         if(col.gameObject.name.Substring(0,3)=="Flo"){
-            Debug.Log(neoState.currentPlayerState);
-            if(neoState.currentPlayerState!=PlayerState.Invincibility){
-                neoState.TakeDamage(1);
-            }
+            neoState.TakeDamage(1);
             if (neoState.currentPlayerState==PlayerState.Die)
             {
                 gameObject.SetActive(false);

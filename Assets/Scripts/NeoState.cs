@@ -32,7 +32,7 @@ public class NeoState : MonoBehaviour
         currentPlayerState = PlayerState.Alive;
         currentJumpState = JumpState.SingleJump;
         currentAttackState = AttackState.Melee;
-        InvincibilityTime = 0;
+        InvincibilityTime = 5;
     }
 
     void FixedUpdate()
@@ -57,8 +57,10 @@ public class NeoState : MonoBehaviour
                 }
                 if(InvincibilityTime>0){
                     InvincibilityTime--;
-                }else if(InvincibilityTime <= 0 && (healthPoint==previousHealthPoint)){
+                    Debug.Log("invincible time :" + InvincibilityTime);
+                }else if(InvincibilityTime <= 0){
                     ChangePlayerState(PlayerState.Alive);
+                    InvincibilityTime = 5;
                 }
                 break;
         }

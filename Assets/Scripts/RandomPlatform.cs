@@ -17,11 +17,11 @@ public class RandomPlatform : MonoBehaviour
     public float destroyTime;
     public LayerMask layerMask;
     private Transform platformParent;
-    public static List<Vector2> platformList = new List<Vector2>();
+    public List<Vector2> platformList = new List<Vector2>();
     public GameObject skillBox;
     public GameObject weaponBox;
     public int boxCount;
-    public int platformCount = 20;
+    public int platformCount;
     //Create Minion
     private FlockingMinionState flockingMinionState;
     public int startingCount = 5;
@@ -162,7 +162,7 @@ public class RandomPlatform : MonoBehaviour
             float x = Random.Range(platformPos.x - 10f + 4f, platformPos.x + 10f - 4f);
             float y = platformPos.y + 4f;
             boxPos = new Vector2(x, y);
-            Debug.Log("create a skill box on (" + x + "," + y + ")");
+            // Debug.Log("create a skill box on (" + x + "," + y + ")");
             GameObject gameObjectSkillBox = Instantiate(skillBox, boxPos, transform.rotation);
             Destroy(gameObjectSkillBox, destroyTime);
         }
@@ -178,7 +178,7 @@ public class RandomPlatform : MonoBehaviour
             float x = Random.Range(platformPos.x - 10f + 4f, platformPos.x + 10f - 4f);
             float y = platformPos.y + 4f;
             boxPos = new Vector2(x, y);
-            Debug.Log("create a weapon box on (" + x + "," + y + ")");
+            // Debug.Log("create a weapon box on (" + x + "," + y + ")");
             GameObject gameObjectSkillBox = Instantiate(weaponBox, boxPos, transform.rotation);
             Destroy(gameObjectSkillBox, destroyTime);
         }
