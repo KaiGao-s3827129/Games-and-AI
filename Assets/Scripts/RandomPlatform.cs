@@ -22,7 +22,7 @@ public class RandomPlatform : MonoBehaviour
     public GameObject skillBox;
     public GameObject weaponBox;
     public int boxCount;
-    public int platformCount = 20;
+    public int platformCount;
     //Create Minion
     private FlockingMinionState flockingMinionState;
     public int startingCount = 5;
@@ -83,6 +83,10 @@ public class RandomPlatform : MonoBehaviour
 
     private Vector2 move;
 
+    public Vector2 PlatSize{
+        get { return platSize;}
+    }
+
     void Start()
     {
         leaderMinions = new List<string>();
@@ -118,7 +122,7 @@ public class RandomPlatform : MonoBehaviour
         float x;
         Vector2 pos;
         GameObject clone = new GameObject("dummy");
-        Vector2 platformSize;
+        Vector2 platformSize = Vector2.zero;
 
         for (int i = 0; i < platformCount; i++)
         {
@@ -138,6 +142,7 @@ public class RandomPlatform : MonoBehaviour
             clone = new GameObject("dummy");
 
         }
+        platSize = platformSize;
     }
 
     bool hasObstacleAtPosition(Vector2 position, Vector2 size, LayerMask layerMask)
@@ -374,6 +379,11 @@ public class RandomPlatform : MonoBehaviour
             }
         }
         return context;
+    }
+
+    List<Vector2> GetPosList()
+    {
+        return platformList;
     }
 
 }
