@@ -61,7 +61,7 @@ public class MyGrid
     public bool hasObstacleAtPosition(Vector2 position){
         // Collider[] intersection = Physics.OverlapSphere(position, 0.02f, obstacleLayerMask);
         //overlapBox
-        Collider2D[] intersection = Physics2D.OverlapCircleAll(position, 1.1f, obstacleLayerMask);
+        Collider2D[] intersection = Physics2D.OverlapCircleAll(position, 1.3f, obstacleLayerMask);
         // Debug.Log("layermask is " + obstacleLayerMask);
         // Collider2D[] intersection = Physics2D.OverlapCircleAll(position, 2f, obstacleLayerMask);
         if (intersection.Length == 0){

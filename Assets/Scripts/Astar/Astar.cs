@@ -31,7 +31,7 @@ public class Astar : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         // bombsParent = GameObject.Find("Bombs").transform;
 
-        InvokeRepeating("doAstar", 1f, 0.3f);
+        InvokeRepeating("doAstar", 1f, 1f);
     }
 
     // Update is called once per frame
@@ -54,7 +54,7 @@ public class Astar : MonoBehaviour
         }else{
             // nextPosition = posList[0];
             nextPosition = PathSmooth(posList, currPos);
-            Debug.DrawLine(currPos, nextPosition, Color.white, 0.1f);
+            // Debug.DrawLine(currPos, nextPosition, Color.white, 0.1f);
         }
         
         // Debug.Log("next position is " + nextPosition);
@@ -77,6 +77,8 @@ public class Astar : MonoBehaviour
         }
 
         Vector2 forceDirection = new Vector2(moveHorizontal, moveVertical);
+        forceDirection = forceDirection - GetComponent<Rigidbody2D>().velocity;
+        Debug.DrawLine(currPos, nextPosition + forceDirection, Color.white, 0.1f);
         rb2d.AddForce(forceDirection * speedMultiplier);
         // UnityEditor.EditorApplication.isPlaying = false;
     }
@@ -85,7 +87,7 @@ public class Astar : MonoBehaviour
         Vector2 nextPos = oldPath[0];
         foreach(Vector2 pos in oldPath){
             Vector2 circleCastDir = pos - currPos;
-            RaycastHit2D circlecastHit = Physics2D.CircleCast(currPos, 0.6f, circleCastDir, circleCastDir.magnitude, layerMask);
+            RaycastHit2D circlecastHit = Physics2D.CircleCast(currPos, 4f, circleCastDir, circleCastDir.magnitude, layerMask);
             if (circlecastHit.collider == null){
                 nextPos = pos;
             }else{

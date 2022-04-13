@@ -17,7 +17,7 @@ public class RandomPlatform : MonoBehaviour
     public float destroyTime;
     public LayerMask layerMask;
     private Transform platformParent;
-    public static List<Vector2> platformList = new List<Vector2>();
+    private List<Vector2> platformList = new List<Vector2>();
     public GameObject skillBox;
     public GameObject weaponBox;
     public int boxCount;
