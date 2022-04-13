@@ -66,13 +66,20 @@ public class FlockingBehaviors : MonoBehaviour
         // }
         // direction -= (Vector2) agent.transform.position;
         Vector3 leaderPos = new Vector3(0,0,0);
+        float leaderDistance = 1000000f;
         foreach(string one in randomPlatform.leaderMinions){
             if(one.Substring(0,3)=="Min"){
+                float currentDistance=0f;
                 leaderPos = GameObject.Find(one).transform.position;
+                currentDistance = (leaderPos - agent.transform.position).sqrMagnitude;
+                if(currentDistance<leaderDistance){
+                    leaderDistance = currentDistance;
+                    direction = (Vector2)(leaderPos - agent.transform.position);
+                }
             }
         }
         
-        direction = (Vector2)(leaderPos - agent.transform.position);
+        // direction = (Vector2)(leaderPos - agent.transform.position);
         // Debug.Log(direction);
         // direction *= weight;
         // direction = randomPos - (Vector2)agent.transform.position;

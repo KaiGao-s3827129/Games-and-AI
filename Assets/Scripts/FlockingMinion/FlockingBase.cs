@@ -151,9 +151,12 @@ public class FlockingBase : MonoBehaviour
             force += FlockingBehaviors.getCohesionVector(agent, context, cohesionWeight, randomPos, maxForceMagnitude);
         }
         else{
+            Vector2 cohesion = new Vector2(0,0);
+            if(agent.name.Substring(0,3)!="Min"){
+                cohesion = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeightPos, randomPos, maxForceMagnitude);
+            }
             Vector2 alignment = FlockingBehaviors.getAlignmentVector(agent, context, alignmentWeight);
             Vector2 cohesionOld = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeight);
-            Vector2 cohesion = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeightPos, randomPos, maxForceMagnitude);
             Vector2 avoidance = FlockingBehaviors.getAvoidanceVector(agent, context, avoidanceWeight);
             force += alignment + cohesion + avoidance + cohesionOld;
 
