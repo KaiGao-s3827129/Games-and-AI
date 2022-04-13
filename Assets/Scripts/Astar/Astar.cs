@@ -7,9 +7,11 @@ public class Astar : MonoBehaviour
     // Start is called before the first frame update
     // public GameObject bomb;
     // private Transform bombsParent;
+
+    public float arrivalDistance;
     public float speedMultiplier;
     private Rigidbody2D rb2d;
-    private const float MINIMUM_MOUSE_OFFSET = 0.4f;
+    private const float MINIMUM_OFFSET = 0.3f;
     private GameObject target;
     private Vector2 targetPosition;
     public float height;
@@ -18,8 +20,11 @@ public class Astar : MonoBehaviour
     private MyGrid grid;
 
     public MyGrid Grid{ get { return grid; } }
+
+    private Vector2 platformSize;
     void Start()
     {
+        
         // Collider2D[] intersection = Physics2D.OverlapCircleAll(new Vector2(8.86f, -7.99f), 1f);
         // Debug.Log("collider number is " + intersection.Length);
         // UnityEditor.EditorApplication.isPlaying = false;
@@ -31,16 +36,25 @@ public class Astar : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         // bombsParent = GameObject.Find("Bombs").transform;
 
-        InvokeRepeating("doAstar", 1f, 0.3f);
+        // Invoke("getPlatformList", 0.1f);
+        InvokeRepeating("Astardo", 0.5f, 0.1f);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void doAstar() {
+    void getPlatformList(){
+        RandomPlatform rp =  GameObject.Find("PlatformController").GetComponent<RandomPlatform>();
+        List<Vector2> list = rp.PlatformList;
+        platformSize = rp.PlatSize;
+        // Debug.Log(platformSize);
+    }
+
+    void Astardo() {
         target = GameObject.Find("Neo");
         targetPosition = (Vector2)target.transform.position;
         Vector2 currPos = gameObject.transform.position;
@@ -54,7 +68,7 @@ public class Astar : MonoBehaviour
         }else{
             // nextPosition = posList[0];
             nextPosition = PathSmooth(posList, currPos);
-            Debug.DrawLine(currPos, nextPosition, Color.white, 0.1f);
+            
         }
         
         Debug.Log("next position is " + nextPosition);
@@ -66,7 +80,7 @@ public class Astar : MonoBehaviour
 
         float moveHorizontal;
         float moveVertical;
-        if (offset.magnitude < MINIMUM_MOUSE_OFFSET)
+        if (offset.magnitude < MINIMUM_OFFSET)
         {
             moveHorizontal = 0.0f;
             moveVertical = 0.0f;
@@ -77,7 +91,19 @@ public class Astar : MonoBehaviour
         }
 
         Vector2 forceDirection = new Vector2(moveHorizontal, moveVertical);
-        rb2d.AddForce(forceDirection * speedMultiplier);
+        float distance = forceDirection.magnitude;
+        forceDirection *= speedMultiplier;
+
+        if (distance < arrivalDistance){
+            forceDirection = forceDirection * (distance/arrivalDistance);
+        }
+        forceDirection = forceDirection - GetComponent<Rigidbody2D>().velocity;
+        
+        
+        Debug.DrawLine(currPos, currPos + forceDirection, Color.white, 0.1f);
+        // Debug.DrawLine(currPos, nextPosition + forceDirection, Color.white, 0.1f);
+        // rb2d.AddForce(forceDirection * speedMultiplier);
+        rb2d.AddForce(forceDirection);
         // UnityEditor.EditorApplication.isPlaying = false;
     }
 
@@ -85,7 +111,7 @@ public class Astar : MonoBehaviour
         Vector2 nextPos = oldPath[0];
         foreach(Vector2 pos in oldPath){
             Vector2 circleCastDir = pos - currPos;
-            RaycastHit2D circlecastHit = Physics2D.CircleCast(currPos, 0.6f, circleCastDir, circleCastDir.magnitude, layerMask);
+            RaycastHit2D circlecastHit = Physics2D.CircleCast(currPos, 1.5f, circleCastDir, circleCastDir.magnitude, layerMask);
             if (circlecastHit.collider == null){
                 nextPos = pos;
             }else{
