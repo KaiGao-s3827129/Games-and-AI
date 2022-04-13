@@ -34,7 +34,8 @@ public class RandomPlatform : MonoBehaviour
     public List<string> leaderMinions;
 
 
-
+    public GameObject ant;
+    private MinionState minionState;
 
 
     //flocking
@@ -60,9 +61,9 @@ public class RandomPlatform : MonoBehaviour
     // [Range(0f, 1f)]
     // public float avoidanceRadiusMultiplier = 0.8f;
     // public float WanderDistance;
-	// public float WanderJitter;
+    // public float WanderJitter;
 
-	// private Vector2 m_vWanderTarget;
+    // private Vector2 m_vWanderTarget;
 
     public float avoidanceWeight;
 
@@ -90,11 +91,6 @@ public class RandomPlatform : MonoBehaviour
         platformSpawn();
         InvokeRepeating("createMinion", 0, 10f);
         InvokeRepeating("boxSpawn", spawnTime, spawnRepeatingTime);
-
-
-
-
-
         // for (int i = 0; i < agentCount; i++)
         // {
         //     GameObject newAgent = Instantiate(
@@ -110,7 +106,11 @@ public class RandomPlatform : MonoBehaviour
         //     // InvokeRepeating("FlockingBehaviors.getWanderVector", 1f, 1f);
         // }
     }
-
+    void Update()
+    {
+        ant = GameObject.Find(gameObject.name);
+        minionState = ant.GetComponent<MinionState>();
+    }
     void platformSpawn()
     {
         float y;
@@ -166,7 +166,7 @@ public class RandomPlatform : MonoBehaviour
             GameObject gameObjectSkillBox = Instantiate(skillBox, boxPos, transform.rotation);
             Destroy(gameObjectSkillBox, destroyTime);
         }
-        
+
         for (int i = 0; i < boxCount; i++)
         {
             do
@@ -187,7 +187,8 @@ public class RandomPlatform : MonoBehaviour
 
     void createMinion()
     {
-        if(leaderMinions.Count<=1){
+        if (leaderMinions.Count <= 1)
+        {
             float x, y;
             Vector2 boxPos;
             int platformNo;
@@ -211,10 +212,10 @@ public class RandomPlatform : MonoBehaviour
             );
             minAgent.name = "Minion" + leaderMinionNumber;
             agents.Add(minAgent);
-            boxPos.y +=1;
-            for (int i = followMinionNumber; i < followMinionNumber+2; i++)
+            boxPos.y += 1;
+            for (int i = followMinionNumber; i < followMinionNumber + 2; i++)
             {
-                boxPos.x+=5f;
+                boxPos.x += 5f;
                 GameObject newAgent = Instantiate(
                     agentPrefab,
                     boxPos,
@@ -224,11 +225,11 @@ public class RandomPlatform : MonoBehaviour
                 newAgent.name = "Flocking " + i;
                 agents.Add(newAgent);
             }
-            followMinionNumber +=2;
+            followMinionNumber += 2;
             boxPos.x -= 10f;
-            for (int i = followMinionNumber; i < followMinionNumber+2; i++)
+            for (int i = followMinionNumber; i < followMinionNumber + 2; i++)
             {
-                boxPos.x-=5f;
+                boxPos.x -= 5f;
                 GameObject newAgent = Instantiate(
                     agentPrefab,
                     boxPos,
@@ -237,19 +238,19 @@ public class RandomPlatform : MonoBehaviour
                     );
                 newAgent.name = "Flocking " + i;
                 agents.Add(newAgent);
-                
+
             }
-            followMinionNumber +=2;
-            boxPos.x+=10f;
-            boxPos.y+=5f;
+            followMinionNumber += 2;
+            boxPos.x += 10f;
+            boxPos.y += 5f;
             GameObject newUpAgent = Instantiate(
                     agentPrefab,
                     boxPos,
                     Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
                     transform
                     );
-                newUpAgent.name = "Flocking " + followMinionNumber;
-                agents.Add(newUpAgent);
+            newUpAgent.name = "Flocking " + followMinionNumber;
+            agents.Add(newUpAgent);
             followMinionNumber++;
         }
     }
@@ -257,35 +258,42 @@ public class RandomPlatform : MonoBehaviour
 
 
 
-    void FixedUpdate() {
-        foreach(GameObject agent in agents){
-            List<GameObject> context = GetNearbyObjects(agent);
-            // agent.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, context.Count / 3f);
-            move = getDir(agent, context);
+    void FixedUpdate()
+    {
+        foreach (GameObject agent in agents)
+        {
+            if (agent.name.Substring(0,3)=="Flo" || (agent.name.Substring(0,3)=="Min" && agent.GetComponent<MinionState>().currentState == State.Patrol))
+            {
+                List<GameObject> context = GetNearbyObjects(agent);
+                // agent.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, context.Count / 3f);
+                move = getDir(agent, context);
 
-            
-            float hasForce = Random.value;
-            float threshold = 0.05f;
 
-            // if(hasForce < threshold){
-            //     Debug.DrawLine(agent.transform.position, (Vector3)((Vector2)agent.transform.position + (Vector2)move), Color.white, 0.1f);
-            //     agent.GetComponent<Rigidbody2D>().AddForce(move);
-            // }
+                float hasForce = Random.value;
+                float threshold = 0.05f;
 
-            Vector2 steeringForce = new Vector2(0, 0);
-            if(hasForce < threshold){
-                float slowDownRadius = 1.1f;
-                
-                Vector2 toTarget = (Vector3)((Vector2)agent.transform.position + (Vector2)move)-agent.transform.position;
-                float distance = toTarget.magnitude;
-                Vector2 desiredVelocity = (toTarget).normalized * (distance / slowDownRadius);
-                steeringForce = desiredVelocity - agent.GetComponent<Rigidbody2D>().velocity;
-                Debug.DrawLine(agent.transform.position, (Vector3)((Vector2)agent.transform.position + (Vector2)move), Color.white, 0.1f);
+                // if(hasForce < threshold){
+                //     Debug.DrawLine(agent.transform.position, (Vector3)((Vector2)agent.transform.position + (Vector2)move), Color.white, 0.1f);
+                //     agent.GetComponent<Rigidbody2D>().AddForce(move);
+                // }
 
-                agent.GetComponent<Rigidbody2D>().AddForce(steeringForce);
+                Vector2 steeringForce = new Vector2(0, 0);
+                if (hasForce < threshold)
+                {
+                    float slowDownRadius = 1.1f;
+
+                    Vector2 toTarget = (Vector3)((Vector2)agent.transform.position + (Vector2)move) - agent.transform.position;
+                    float distance = toTarget.magnitude;
+                    Vector2 desiredVelocity = (toTarget).normalized * (distance / slowDownRadius);
+                    steeringForce = desiredVelocity - agent.GetComponent<Rigidbody2D>().velocity;
+                    Debug.DrawLine(agent.transform.position, (Vector3)((Vector2)agent.transform.position + (Vector2)move), Color.white, 0.1f);
+
+                    agent.GetComponent<Rigidbody2D>().AddForce(steeringForce);
+                }
             }
-            
-            
+
+
+
             // if(agent.name.Substring(0,3) == "Min"){
             //     Debug.Log(context.Count);
             //     force = Vector2.zero;
@@ -303,7 +311,8 @@ public class RandomPlatform : MonoBehaviour
         }
     }
 
-    void getRandomPos(){
+    void getRandomPos()
+    {
         randomPos = new Vector2(Random.Range(-60f, 60f), Random.Range(-60f, 60f));
     }
 
@@ -311,14 +320,17 @@ public class RandomPlatform : MonoBehaviour
 
 
 
-    Vector2 getDir(GameObject agent, List<GameObject> context){
+    Vector2 getDir(GameObject agent, List<GameObject> context)
+    {
         force = Vector2.zero;
-        if(context.Count == 0){
+        if (context.Count == 0)
+        {
             // force += new Vector2(-agent.transform.position.x, -agent.transform.position.y) * wanderWeight;
             force = Vector2.zero;
             force += FlockingBehaviors.getCohesionVector(agent, context, cohesionWeight, randomPos, maxForceMagnitude);
         }
-        else{
+        else
+        {
             Vector2 alignment = FlockingBehaviors.getAlignmentVector(agent, context, alignmentWeight);
             Vector2 cohesionOld = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeight);
             Vector2 cohesion = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeightPos, randomPos, maxForceMagnitude);
@@ -343,31 +355,36 @@ public class RandomPlatform : MonoBehaviour
         // return seekForce;
     }
 
-    private Vector2 AccForce(float SteeringMag,Vector2 ForceToAdd){
+    private Vector2 AccForce(float SteeringMag, Vector2 ForceToAdd)
+    {
 
-		Vector2 returnForce = new Vector2(0,0);
-		float ForceToAddMag = ForceToAdd.magnitude;
-		float RemainingForceMag = maxForceMagnitude - SteeringMag;
+        Vector2 returnForce = new Vector2(0, 0);
+        float ForceToAddMag = ForceToAdd.magnitude;
+        float RemainingForceMag = maxForceMagnitude - SteeringMag;
 
-		if(RemainingForceMag <=  0)
-			return returnForce;
+        if (RemainingForceMag <= 0)
+            return returnForce;
 
-		if (ForceToAddMag < RemainingForceMag){
+        if (ForceToAddMag < RemainingForceMag)
+        {
             return ForceToAdd;
         }
-		else{
+        else
+        {
             return (ForceToAdd.normalized * RemainingForceMag);
         }
-						
 
-	}
 
-    List<GameObject> GetNearbyObjects(GameObject agent){
+    }
+
+    List<GameObject> GetNearbyObjects(GameObject agent)
+    {
         List<GameObject> context = new List<GameObject>();
         Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighborRadius);
         foreach (Collider2D collider in contextColliders)
         {
-            if ( collider != agent.GetComponent<Collider2D>()){
+            if (collider != agent.GetComponent<Collider2D>())
+            {
                 context.Add(collider.gameObject);
             }
         }

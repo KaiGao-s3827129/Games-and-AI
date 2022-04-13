@@ -13,11 +13,13 @@ public class Astar : MonoBehaviour
     private GameObject target;
     private Vector2 targetPosition;
     public float height;
-    public float width; 
+    public float width;
     public LayerMask layerMask;
     private MyGrid grid;
 
-    public MyGrid Grid{ get { return grid; } }
+    public MyGrid Grid { get { return grid; } }
+    public GameObject ant;
+    private MinionState minionState;
     void Start()
     {
         // Collider2D[] intersection = Physics2D.OverlapCircleAll(new Vector2(8.86f, -7.99f), 1f);
@@ -30,67 +32,81 @@ public class Astar : MonoBehaviour
         // Debug.Log("target position is " + targetPosition);
         rb2d = GetComponent<Rigidbody2D>();
         // bombsParent = GameObject.Find("Bombs").transform;
-
         InvokeRepeating("doAstar", 1f, 1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        ant = GameObject.Find(gameObject.name);
+        minionState = ant.GetComponent<MinionState>();
     }
 
-    void doAstar() {
-        target = GameObject.Find("Neo");
-        targetPosition = (Vector2)target.transform.position;
-        Vector2 currPos = gameObject.transform.position;
-        // List<(Vector2, float)> neighbors = grid.getNeighbors(currPos);
-        // Debug.Log(neighbors.Count + " neighbors found");
-        Vector2 nextPosition;
-        List<Vector2> posList = AstarCore();
-        if (posList.Count == 0){
-            // nextPosition = new Vector2(0f, 0f);
-            return;
-        }else{
-            // nextPosition = posList[0];
-            nextPosition = PathSmooth(posList, currPos);
-            // Debug.DrawLine(currPos, nextPosition, Color.white, 0.1f);
-        }
-        
-        // Debug.Log("next position is " + nextPosition);
-        // Vector2 nextPosition = new Vector2(0f, 0f);
-        Vector2 offset = nextPosition - currPos;
-
-        // transform.position = Vector2.Lerp(currPos, nextPosition, 1);
-        // Vector2.MoveTowards(currPos, nextPosition);
-
-        float moveHorizontal;
-        float moveVertical;
-        if (offset.magnitude < MINIMUM_MOUSE_OFFSET)
+    void doAstar()
+    {
+        if (minionState.currentState == State.Walk || minionState.currentState == State.Run)
         {
-            moveHorizontal = 0.0f;
-            moveVertical = 0.0f;
-        }else{
-            offset.Normalize();
-            moveHorizontal = offset.x;
-            moveVertical = offset.y;
+            target = GameObject.Find("Neo");
+            targetPosition = (Vector2)target.transform.position;
+            Vector2 currPos = gameObject.transform.position;
+            // List<(Vector2, float)> neighbors = grid.getNeighbors(currPos);
+            // Debug.Log(neighbors.Count + " neighbors found");
+            Vector2 nextPosition;
+            List<Vector2> posList = AstarCore();
+            if (posList.Count == 0)
+            {
+                // nextPosition = new Vector2(0f, 0f);
+                return;
+            }
+            else
+            {
+                // nextPosition = posList[0];
+                nextPosition = PathSmooth(posList, currPos);
+                // Debug.DrawLine(currPos, nextPosition, Color.white, 0.1f);
+            }
+
+            // Debug.Log("next position is " + nextPosition);
+            // Vector2 nextPosition = new Vector2(0f, 0f);
+            Vector2 offset = nextPosition - currPos;
+
+            // transform.position = Vector2.Lerp(currPos, nextPosition, 1);
+            // Vector2.MoveTowards(currPos, nextPosition);
+
+            float moveHorizontal;
+            float moveVertical;
+            if (offset.magnitude < MINIMUM_MOUSE_OFFSET)
+            {
+                moveHorizontal = 0.0f;
+                moveVertical = 0.0f;
+            }
+            else
+            {
+                offset.Normalize();
+                moveHorizontal = offset.x;
+                moveVertical = offset.y;
+            }
+            Vector2 forceDirection = new Vector2(moveHorizontal, moveVertical);
+            forceDirection = forceDirection - GetComponent<Rigidbody2D>().velocity;
+            Debug.DrawLine(currPos, nextPosition + forceDirection, Color.white, 0.1f);
+            rb2d.AddForce(forceDirection * speedMultiplier);
+            // UnityEditor.EditorApplication.isPlaying = false;
         }
 
-        Vector2 forceDirection = new Vector2(moveHorizontal, moveVertical);
-        forceDirection = forceDirection - GetComponent<Rigidbody2D>().velocity;
-        Debug.DrawLine(currPos, nextPosition + forceDirection, Color.white, 0.1f);
-        rb2d.AddForce(forceDirection * speedMultiplier);
-        // UnityEditor.EditorApplication.isPlaying = false;
     }
 
-    Vector2 PathSmooth(List<Vector2> oldPath, Vector2 currPos){
+    Vector2 PathSmooth(List<Vector2> oldPath, Vector2 currPos)
+    {
         Vector2 nextPos = oldPath[0];
-        foreach(Vector2 pos in oldPath){
+        foreach (Vector2 pos in oldPath)
+        {
             Vector2 circleCastDir = pos - currPos;
             RaycastHit2D circlecastHit = Physics2D.CircleCast(currPos, 4f, circleCastDir, circleCastDir.magnitude, layerMask);
-            if (circlecastHit.collider == null){
+            if (circlecastHit.collider == null)
+            {
                 nextPos = pos;
-            }else{
+            }
+            else
+            {
                 return nextPos;
             }
         }
@@ -98,31 +114,36 @@ public class Astar : MonoBehaviour
         return nextPos;
     }
 
-    List<Vector2> AstarCore(){
+    List<Vector2> AstarCore()
+    {
         PriorityQueue<(Vector2, List<Vector2>, float)> pQ = new PriorityQueue<(Vector2, List<Vector2>, float)>();
         HashSet<Vector2> visited = new HashSet<Vector2>();
         List<Vector2> path = new List<Vector2>();
         Vector2 position = gameObject.transform.position;
         float cost = 0f;
-        pQ.Enqueue((position, path, cost),cost);
+        pQ.Enqueue((position, path, cost), cost);
 
         int counter = 0;
         // while (!pQ.isEmpty()){
-        while (!pQ.isEmpty()){
+        while (!pQ.isEmpty())
+        {
             (Vector2, List<Vector2>, float) element = pQ.DeQueue();
             position = element.Item1;
             path = element.Item2;
             cost = element.Item3;
-            
+
             // Debug.Log("Distance is " + Vector2.Distance(position, targetPosition));
-            if (Vector2.Distance(position, targetPosition) < 1.2f){
+            if (Vector2.Distance(position, targetPosition) < 1.2f)
+            {
                 // Debug.Log("return the path");
                 return path;
             }
 
             List<(Vector2, float)> neighbors = grid.getNeighbors(position);
-            foreach ((Vector2, float) neighbor in neighbors){
-                if (!visited.Contains(neighbor.Item1)){
+            foreach ((Vector2, float) neighbor in neighbors)
+            {
+                if (!visited.Contains(neighbor.Item1))
+                {
                     visited.Add(neighbor.Item1);
                     Vector2 neighborPosition = neighbor.Item1;
                     float neighborCost = neighbor.Item2;
@@ -136,10 +157,10 @@ public class Astar : MonoBehaviour
                     pQ.Enqueue(element, totalCost);
                 }
             }
-            counter ++;
+            counter++;
         }
         // Debug.Log("return empty");
         return new List<Vector2>();
-        
+
     }
 }
