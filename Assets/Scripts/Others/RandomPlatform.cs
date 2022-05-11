@@ -220,45 +220,45 @@ public class RandomPlatform : MonoBehaviour
             minAgent.name = "Minion" + leaderMinionNumber;
             agents.Add(minAgent);
             boxPos.y +=1;
-            for (int i = followMinionNumber; i < followMinionNumber+2; i++)
-            {
-                boxPos.x+=5f;
-                GameObject newAgent = Instantiate(
-                    agentPrefab,
-                    boxPos,
-                    Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
-                    transform
-                    );
-                newAgent.name = "Flocking " + i;
-                agents.Add(newAgent);
-            }
-            followMinionNumber +=2;
-            boxPos.x -= 10f;
-            for (int i = followMinionNumber; i < followMinionNumber+2; i++)
-            {
-                boxPos.x-=5f;
-                GameObject newAgent = Instantiate(
-                    agentPrefab,
-                    boxPos,
-                    Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
-                    transform
-                    );
-                newAgent.name = "Flocking " + i;
-                agents.Add(newAgent);
+            // for (int i = followMinionNumber; i < followMinionNumber+2; i++)
+            // {
+            //     boxPos.x+=5f;
+            //     GameObject newAgent = Instantiate(
+            //         agentPrefab,
+            //         boxPos,
+            //         Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
+            //         transform
+            //         );
+            //     newAgent.name = "Flocking " + i;
+            //     agents.Add(newAgent);
+            // }
+            // followMinionNumber +=2;
+            // boxPos.x -= 10f;
+            // for (int i = followMinionNumber; i < followMinionNumber+2; i++)
+            // {
+            //     boxPos.x-=5f;
+            //     GameObject newAgent = Instantiate(
+            //         agentPrefab,
+            //         boxPos,
+            //         Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
+            //         transform
+            //         );
+            //     newAgent.name = "Flocking " + i;
+            //     agents.Add(newAgent);
                 
-            }
-            followMinionNumber +=2;
-            boxPos.x+=10f;
-            boxPos.y+=5f;
-            GameObject newUpAgent = Instantiate(
-                    agentPrefab,
-                    boxPos,
-                    Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
-                    transform
-                    );
-                newUpAgent.name = "Flocking " + followMinionNumber;
-                agents.Add(newUpAgent);
-            followMinionNumber++;
+            // }
+            // followMinionNumber +=2;
+            // boxPos.x+=10f;
+            // boxPos.y+=5f;
+            // GameObject newUpAgent = Instantiate(
+            //         agentPrefab,
+            //         boxPos,
+            //         Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
+            //         transform
+            //         );
+            //     newUpAgent.name = "Flocking " + followMinionNumber;
+            //     agents.Add(newUpAgent);
+            // followMinionNumber++;
         }
     }
 

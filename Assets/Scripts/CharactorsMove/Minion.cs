@@ -50,8 +50,8 @@ public class Minion : MonoBehaviour
         }
         else if (minionState.currentState == State.Patrol)
         {
-            ant.GetComponent<Astar>().enabled = false;
-            ant.GetComponent<FlockingBehaviors>().enabled = true;
+            ant.GetComponent<Astar>().enabled = true;
+            // ant.GetComponent<FlockingBehaviors>().enabled = true;
 
 
 
