@@ -8,7 +8,7 @@ public class Minion : MonoBehaviour
     public float max_velocity;
     public GameObject Neo;
     public Vector2 velocity;
-    private Rigidbody2D rb2d;
+    // private Rigidbody2D rb2d;
     public float slowDownRadius;
     public GameObject ant;
     private MinionState minionState;
@@ -17,7 +17,7 @@ public class Minion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        // rb2d = GetComponent<Rigidbody2D>();
         max_velocity = 1;
     }
 
@@ -37,27 +37,27 @@ public class Minion : MonoBehaviour
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         float distance = toTarget.magnitude;
         //Chase state
-        Debug.Log(minionState.currentState);
-        if (minionState.currentState == State.Walk)
-        {
-            ant.GetComponent<Astar>().enabled = true;
-            ant.GetComponent<FlockingBehaviors>().enabled = false;
-        }
-        else if (minionState.currentState == State.Run)
-        {
-            ant.GetComponent<Astar>().enabled = true;
-            ant.GetComponent<FlockingBehaviors>().enabled = false;
-        }
-        else if (minionState.currentState == State.Patrol)
-        {
-            ant.GetComponent<Astar>().enabled = false;
-            ant.GetComponent<FlockingBehaviors>().enabled = true;
+        // Debug.Log(minionState.currentState);
+        // if (minionState.currentState == State.Walk)
+        // {
+        //     ant.GetComponent<Astar>().enabled = true;
+        //     ant.GetComponent<FlockingBehaviors>().enabled = false;
+        // }
+        // else if (minionState.currentState == State.Run)
+        // {
+        //     ant.GetComponent<Astar>().enabled = true;
+        //     ant.GetComponent<FlockingBehaviors>().enabled = false;
+        // }
+        // else if (minionState.currentState == State.Patrol)
+        // {
+        //     ant.GetComponent<Astar>().enabled = false;
+        //     ant.GetComponent<FlockingBehaviors>().enabled = true;
 
 
 
             
-        }
-        else if (minionState.currentState == State.Die) {
+        // }
+        if (minionState.currentState == State.Die) {
             foreach(string one in randomPlatform.leaderMinions){
                 if(one==ant.name){
                     randomPlatform.leaderMinions.Remove(one);

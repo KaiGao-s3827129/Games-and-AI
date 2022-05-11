@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class NeoMovement : MonoBehaviour
 {
     public Transform firePoint;
@@ -168,7 +169,7 @@ public class NeoMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         //Get WeaponBox can shoot
         if (col.tag == "WeaponBox" && !isGetWeapon)
@@ -188,7 +189,6 @@ public class NeoMovement : MonoBehaviour
             col.GetComponent<Animator>().SetTrigger("get");
             Destroy(col.gameObject, 1.5f);
         }
-        
     }
 
 
@@ -196,11 +196,12 @@ public class NeoMovement : MonoBehaviour
     {
         if (col.gameObject.name.Substring(0,3)=="Min")
         {
+            col.gameObject.GetComponent<MinionAgent>().HandleGetNeo();
             //Neo has been damaged by Leader Minion
             if(neoState.currentPlayerState!=PlayerState.Invincibility){
-                neoState.TakeDamage(1);
+                // neoState.TakeDamage(1);
             }
-                        if (neoState.currentPlayerState==PlayerState.Die)
+            if (neoState.currentPlayerState==PlayerState.Die)
             {
                 gameObject.SetActive(false);
                 Destroy(GameObject.Find("sword"));
@@ -238,5 +239,7 @@ public class NeoMovement : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab,firePoint.position,firePoint.rotation);
         Destroy(bullet,3f);
     }
+
+
 
 }

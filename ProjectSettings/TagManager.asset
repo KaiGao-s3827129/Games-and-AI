@@ -9,6 +9,7 @@ TagManager:
   - SkillBox
   - trench
   - GlobalUIMusic
+  - Minion
   layers:
   - Default
   - TransparentFX
