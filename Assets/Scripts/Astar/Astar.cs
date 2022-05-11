@@ -151,7 +151,7 @@ public class Astar : MonoBehaviour
             }
             counter ++;
         }
-        Debug.Log("return empty");
+        // Debug.Log("return empty");
         return new List<Vector2>();
         
     }

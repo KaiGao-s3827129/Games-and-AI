@@ -324,14 +324,14 @@ public class RandomPlatform : MonoBehaviour
         if(context.Count == 0){
             // force += new Vector2(-agent.transform.position.x, -agent.transform.position.y) * wanderWeight;
             force = Vector2.zero;
-            force += FlockingBehaviors.getCohesionVector(agent, context, cohesionWeight, randomPos, maxForceMagnitude);
+            // force += FlockingBehaviors.getCohesionVector(agent, context, cohesionWeight, randomPos, maxForceMagnitude);
         }
         else{
             Vector2 alignment = FlockingBehaviors.getAlignmentVector(agent, context, alignmentWeight);
             Vector2 cohesionOld = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeight);
-            Vector2 cohesion = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeightPos, randomPos, maxForceMagnitude);
+            // Vector2 cohesion = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeightPos, randomPos, maxForceMagnitude);
             Vector2 avoidance = FlockingBehaviors.getAvoidanceVector(agent, context, avoidanceWeight);
-            force += alignment + cohesion + avoidance + cohesionOld;
+            force += alignment + avoidance + cohesionOld;
 
             // force += AccForce(0f, avoidance);
             // force += AccForce(force.magnitude, cohesion);

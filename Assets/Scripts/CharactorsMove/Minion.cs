@@ -17,7 +17,7 @@ public class Minion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        // rb2d = GetComponent<Rigidbody2D>();
         max_velocity = 1;
     }
 
@@ -37,7 +37,7 @@ public class Minion : MonoBehaviour
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         float distance = toTarget.magnitude;
         //Chase state
-        Debug.Log(minionState.currentState);
+        // Debug.Log(minionState.currentState);
         if (minionState.currentState == State.Walk)
         {
             ant.GetComponent<Astar>().enabled = true;
@@ -50,7 +50,7 @@ public class Minion : MonoBehaviour
         }
         else if (minionState.currentState == State.Patrol)
         {
-            ant.GetComponent<Astar>().enabled = true;
+            ant.GetComponent<Astar>().enabled = false;
             // ant.GetComponent<FlockingBehaviors>().enabled = true;
 
 

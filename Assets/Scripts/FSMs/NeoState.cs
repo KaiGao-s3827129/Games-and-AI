@@ -111,6 +111,6 @@ public class NeoState : MonoBehaviour
     }
 
     public void TakeDamage(int damage){
-        healthPoint -= damage;
+        // healthPoint -= damage;
     }
 }
