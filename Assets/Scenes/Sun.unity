@@ -2074,9 +2074,9 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 200
+  MaxStep: 3000
   facingRight: 1
-  sword: {fileID: 0}
+  sword: {fileID: 1326709619}
 --- !u!114 &292721650
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -58,14 +58,14 @@ public class Minion : MonoBehaviour
             
         }
         else if (minionState.currentState == State.Die) {
-            foreach(string one in randomPlatform.leaderMinions){
-                if(one==ant.name){
-                    randomPlatform.leaderMinions.Remove(one);
+            for (int i=0; i<randomPlatform.leaderMinions.Count; i++){
+                if(randomPlatform.leaderMinions[i]==ant.name){
+                    randomPlatform.leaderMinions.RemoveAt(i);
                 }
             }
-            foreach(GameObject one in randomPlatform.agents){
-                if(one.name==ant.name){
-                    randomPlatform.agents.Remove(one);
+            for (int i=0; i<randomPlatform.agents.Count; i++ ){
+                if(randomPlatform.agents[i].name==ant.name){
+                    randomPlatform.agents.RemoveAt(i);
                 }
             }
 

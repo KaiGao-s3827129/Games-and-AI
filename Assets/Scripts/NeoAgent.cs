@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
+using UnityEngine.SceneManagement;
 
 public class NeoAgent : Agent
 {
@@ -22,8 +23,15 @@ public class NeoAgent : Agent
         neoStartPos = transform.position;
     }
 
+    public void RestartScene()
+    {    
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1f;
+    }
     public override void OnEpisodeBegin(){
-        Debug.Log("An episode began");
+        Debug.Log("episode began");
+        // RestartScene();
+        transform.position = neoStartPos;
     }
 
     public override void CollectObservations(VectorSensor sensor)

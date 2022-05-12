@@ -124,11 +124,11 @@ public class NeoMovement : MonoBehaviour
             neo.gravityScale = 10f;
         }
         //Click J to shoot.
-        if(neoState.currentAttackState==AttackState.Remote){
-            if(Input.GetKey(KeyCode.J)){
-                Shoot();
-            }
-        }
+        // if(neoState.currentAttackState==AttackState.Remote){
+        //     if(Input.GetKey(KeyCode.J)){
+        //         Shoot();
+        //     }
+        // }
     }
     
     private void Run()
