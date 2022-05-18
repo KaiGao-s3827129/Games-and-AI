@@ -41,12 +41,12 @@ public class Minion : MonoBehaviour
         if (minionState.currentState == State.Walk)
         {
             ant.GetComponent<Astar>().enabled = true;
-            ant.GetComponent<FlockingBehaviors>().enabled = false;
+            // ant.GetComponent<FlockingBehaviors>().enabled = false;
         }
         else if (minionState.currentState == State.Run)
         {
             ant.GetComponent<Astar>().enabled = true;
-            ant.GetComponent<FlockingBehaviors>().enabled = false;
+            // ant.GetComponent<FlockingBehaviors>().enabled = false;
         }
         else if (minionState.currentState == State.Patrol)
         {
@@ -61,11 +61,13 @@ public class Minion : MonoBehaviour
             for (int i=0; i<randomPlatform.leaderMinions.Count; i++){
                 if(randomPlatform.leaderMinions[i]==ant.name){
                     randomPlatform.leaderMinions.RemoveAt(i);
+                    i--;
                 }
             }
             for (int i=0; i<randomPlatform.agents.Count; i++ ){
                 if(randomPlatform.agents[i].name==ant.name){
                     randomPlatform.agents.RemoveAt(i);
+                    i--;
                 }
             }
 

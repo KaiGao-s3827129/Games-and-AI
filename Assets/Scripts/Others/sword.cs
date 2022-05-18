@@ -39,7 +39,7 @@ public class sword : MonoBehaviour
             float step = speed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, newLocation, step);
         }
-        Attack();
+        // Attack();
     }
 
     public void Attack()
@@ -57,6 +57,10 @@ public class sword : MonoBehaviour
             anim.SetTrigger("AttackLeft");
         }
         Collider2D[] Minions = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
+        if (Minions.Length == 0){
+            ant.GetComponent<NeoAgent>().handleSwordNotAttack();
+            return;
+        }
         for (int i = 0; i < Minions.Length; i++)
         {
             //Attack different enemy
@@ -69,7 +73,6 @@ public class sword : MonoBehaviour
             {
                 Minions[i].GetComponent<BossState>().TakeDamage(damage);
             }
-
         }
 
     }

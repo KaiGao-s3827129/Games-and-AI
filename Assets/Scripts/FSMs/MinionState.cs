@@ -23,7 +23,7 @@ public class MinionState : MonoBehaviour
     {
         Vector2 toTarget = GameObject.Find("Neo").transform.position - this.transform.position;
         currentState = State.Patrol;
-        HP = 100;
+        HP = 30;
         distance = toTarget.magnitude;
         availableTime = 0;
     }

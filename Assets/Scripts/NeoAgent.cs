@@ -14,6 +14,8 @@ public class NeoAgent : Agent
     public bool facingRight = true;
     public GameObject sword;
     private Vector3 neoStartPos;
+    private RandomPlatform randomPlatform;
+    private int deadMinionNum;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,17 +23,26 @@ public class NeoAgent : Agent
         neo = GetComponent<Rigidbody2D>();
         sword = GameObject.Find("sword");
         neoStartPos = transform.position;
+        randomPlatform = GameObject.Find("Platforms").GetComponent<RandomPlatform>();
+        // minions = randomPlatform.agents;
+        // minionNames = randomPlatform.leaderMinions;
     }
 
-    public void RestartScene()
+    public void Restart()
     {    
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Time.timeScale = 1f;
+        deadMinionNum = 0;
+        transform.position = neoStartPos;
+        for(int i = 0; i < randomPlatform.agents.Count; i++)
+        {
+            Destroy(randomPlatform.agents[i]);
+        }
+        randomPlatform.agents.Clear();
+        randomPlatform.leaderMinions.Clear();
+        
     }
     public override void OnEpisodeBegin(){
         Debug.Log("episode began");
-        // RestartScene();
-        transform.position = neoStartPos;
+        Restart();
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -97,8 +108,18 @@ public class NeoAgent : Agent
     }
 
     public void handleSwordAttack(){
-        Debug.Log(11111111);
-        AddReward(1.0f);
+        Debug.Log("hit!");
+        AddReward(100.0f);
+        deadMinionNum ++;
+        if (deadMinionNum == 10){
+            Debug.Log("slayed ten minions!");
+            EndEpisode();
+        }
+    }
+
+    public void handleSwordNotAttack(){
+        Debug.Log("doesnt hit anything");
+        AddReward(-1.0f);
     }
 
 }

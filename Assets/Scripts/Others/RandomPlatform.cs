@@ -27,17 +27,13 @@ public class RandomPlatform : MonoBehaviour
     //Create Minion
     private FlockingMinionState flockingMinionState;
     public int startingCount = 5;
-    public FlockingMinionMovement AgentPrefabs;
+    // public FlockingMinionMovement AgentPrefabs;
     public GameObject minionAgentPrefab;
 
 
     public int leaderMinionNumber;
     public int followMinionNumber;
     public List<string> leaderMinions;
-
-
-
-
 
     //flocking
     public GameObject agentPrefab;
@@ -94,7 +90,7 @@ public class RandomPlatform : MonoBehaviour
         platformParent = GameObject.Find("Platforms").transform;
         leaderMinionNumber = 0;
         platformSpawn();
-        InvokeRepeating("createMinion", 0, 10f);
+        InvokeRepeating("createMinion", 0, 20f);
         InvokeRepeating("boxSpawn", spawnTime, spawnRepeatingTime);
 
 
@@ -119,31 +115,35 @@ public class RandomPlatform : MonoBehaviour
 
     void platformSpawn()
     {
-        float y;
-        float x;
-        Vector2 pos;
-        GameObject clone = new GameObject("dummy");
-        Vector2 platformSize = Vector2.zero;
+        // float y;
+        // float x;
+        // Vector2 pos;
+        // GameObject clone = new GameObject("dummy");
+        // Vector2 platformSize = Vector2.zero;
 
-        for (int i = 0; i < platformCount; i++)
-        {
-            do
-            {
-                Destroy(clone);
-                y = Random.Range(yMin, yMax);
-                x = Random.Range(xMin, xMax);
-                pos = new Vector2(x, y);
-                clone = Instantiate(platform, pos, transform.rotation);
-                platformSize = clone.GetComponent<Collider2D>().bounds.size;
-                clone.transform.SetParent(platformParent);
-            }
-            while (hasObstacleAtPosition(pos, platformSize, layerMask));
-            platformList.Add(pos);
-            Instantiate(largerPlatform, pos, transform.rotation);
-            clone = new GameObject("dummy");
+        // for (int i = 0; i < platformCount; i++)
+        // {
+        //     do
+        //     {
+        //         Destroy(clone);
+        //         y = Random.Range(yMin, yMax);
+        //         x = Random.Range(xMin, xMax);
+        //         pos = new Vector2(x, y);
+        //         clone = Instantiate(platform, pos, transform.rotation);
+        //         platformSize = clone.GetComponent<Collider2D>().bounds.size;
+        //         clone.transform.SetParent(platformParent);
+        //     }
+        //     while (hasObstacleAtPosition(pos, platformSize, layerMask));
+        //     platformList.Add(pos);
+        //     Instantiate(largerPlatform, pos, transform.rotation);
+        //     clone = new GameObject("dummy");
+        // }
+        // platSize = platformSize;
 
+        Transform platforms = GameObject.Find("allPlatforms").transform;
+        foreach(Transform child in platforms){
+            platformList.Add(child.position);
         }
-        platSize = platformSize;
     }
 
     bool hasObstacleAtPosition(Vector2 position, Vector2 size, LayerMask layerMask)
@@ -195,7 +195,7 @@ public class RandomPlatform : MonoBehaviour
 
     void createMinion()
     {
-        if(leaderMinions.Count<=1){
+        if(agents.Count<=1){
             float x, y;
             Vector2 boxPos;
             int platformNo;
@@ -266,32 +266,32 @@ public class RandomPlatform : MonoBehaviour
 
 
     void FixedUpdate() {
-        foreach(GameObject agent in agents){
-            List<GameObject> context = GetNearbyObjects(agent);
+        // foreach(GameObject agent in agents){
+        //     List<GameObject> context = GetNearbyObjects(agent);
             // agent.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, context.Count / 3f);
-            move = getDir(agent, context);
+            // move = getDir(agent, context);
 
             
-            float hasForce = Random.value;
-            float threshold = 0.05f;
+            // float hasForce = Random.value;
+            // float threshold = 0.05f;
 
             // if(hasForce < threshold){
             //     Debug.DrawLine(agent.transform.position, (Vector3)((Vector2)agent.transform.position + (Vector2)move), Color.white, 0.1f);
             //     agent.GetComponent<Rigidbody2D>().AddForce(move);
             // }
 
-            Vector2 steeringForce = new Vector2(0, 0);
-            if(hasForce < threshold){
-                float slowDownRadius = 1.1f;
+            // Vector2 steeringForce = new Vector2(0, 0);
+            // if(hasForce < threshold){
+            //     float slowDownRadius = 1.1f;
                 
-                Vector2 toTarget = (Vector3)((Vector2)agent.transform.position + (Vector2)move)-agent.transform.position;
-                float distance = toTarget.magnitude;
-                Vector2 desiredVelocity = (toTarget).normalized * (distance / slowDownRadius);
-                steeringForce = desiredVelocity - agent.GetComponent<Rigidbody2D>().velocity;
-                Debug.DrawLine(agent.transform.position, (Vector3)((Vector2)agent.transform.position + (Vector2)move), Color.white, 0.1f);
+            //     Vector2 toTarget = (Vector3)((Vector2)agent.transform.position + (Vector2)move)-agent.transform.position;
+            //     float distance = toTarget.magnitude;
+            //     Vector2 desiredVelocity = (toTarget).normalized * (distance / slowDownRadius);
+            //     steeringForce = desiredVelocity - agent.GetComponent<Rigidbody2D>().velocity;
+            //     Debug.DrawLine(agent.transform.position, (Vector3)((Vector2)agent.transform.position + (Vector2)move), Color.white, 0.1f);
 
-                agent.GetComponent<Rigidbody2D>().AddForce(steeringForce);
-            }
+            //     agent.GetComponent<Rigidbody2D>().AddForce(steeringForce);
+            // }
             
             
             // if(agent.name.Substring(0,3) == "Min"){
@@ -308,7 +308,7 @@ public class RandomPlatform : MonoBehaviour
             // if (move.sqrMagnitude > squareMaxForce){
             //     move = move.normalized * maxForce;
             // }  
-        }
+        // }
     }
 
     void getRandomPos(){
@@ -319,37 +319,37 @@ public class RandomPlatform : MonoBehaviour
 
 
 
-    Vector2 getDir(GameObject agent, List<GameObject> context){
-        force = Vector2.zero;
-        if(context.Count == 0){
-            // force += new Vector2(-agent.transform.position.x, -agent.transform.position.y) * wanderWeight;
-            force = Vector2.zero;
-            // force += FlockingBehaviors.getCohesionVector(agent, context, cohesionWeight, randomPos, maxForceMagnitude);
-        }
-        else{
-            Vector2 alignment = FlockingBehaviors.getAlignmentVector(agent, context, alignmentWeight);
-            Vector2 cohesionOld = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeight);
-            // Vector2 cohesion = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeightPos, randomPos, maxForceMagnitude);
-            Vector2 avoidance = FlockingBehaviors.getAvoidanceVector(agent, context, avoidanceWeight);
-            force += alignment + avoidance + cohesionOld;
+    // Vector2 getDir(GameObject agent, List<GameObject> context){
+    //     force = Vector2.zero;
+    //     if(context.Count == 0){
+    //         // force += new Vector2(-agent.transform.position.x, -agent.transform.position.y) * wanderWeight;
+    //         force = Vector2.zero;
+    //         // force += FlockingBehaviors.getCohesionVector(agent, context, cohesionWeight, randomPos, maxForceMagnitude);
+    //     }
+    //     else{
+    //         Vector2 alignment = FlockingBehaviors.getAlignmentVector(agent, context, alignmentWeight);
+    //         Vector2 cohesionOld = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeight);
+    //         // Vector2 cohesion = FlockingBehaviors.getCohesionVector(agent, context, cohesionWeightPos, randomPos, maxForceMagnitude);
+    //         Vector2 avoidance = FlockingBehaviors.getAvoidanceVector(agent, context, avoidanceWeight);
+    //         force += alignment + avoidance + cohesionOld;
 
-            // force += AccForce(0f, avoidance);
-            // force += AccForce(force.magnitude, cohesion);
-            // force += AccForce(force.magnitude, alignment);
+    //         // force += AccForce(0f, avoidance);
+    //         // force += AccForce(force.magnitude, cohesion);
+    //         // force += AccForce(force.magnitude, alignment);
 
-        }
+    //     }
 
-        // force += FlockingBehaviors.getWanderVector(agent, context, wanderWeight);
+    //     // force += FlockingBehaviors.getWanderVector(agent, context, wanderWeight);
 
-        // force += FlockingBehaviors.getStayVector(agent, stayWeight, center, radius);
+    //     // force += FlockingBehaviors.getStayVector(agent, stayWeight, center, radius);
 
-        // Debug.DrawLine(agent.transform.position, (Vector3)((Vector2)agent.transform.position + (Vector2)force), Color.white, 0.1f);
-        return force;
+    //     // Debug.DrawLine(agent.transform.position, (Vector3)((Vector2)agent.transform.position + (Vector2)force), Color.white, 0.1f);
+    //     return force;
 
-        // Vector2 seekForce = Seek(agent, force);
-        // Debug.DrawLine(agent.transform.position, agent.transform.position + (Vector3)seekForce, Color.white, 0.1f);
-        // return seekForce;
-    }
+    //     // Vector2 seekForce = Seek(agent, force);
+    //     // Debug.DrawLine(agent.transform.position, agent.transform.position + (Vector3)seekForce, Color.white, 0.1f);
+    //     // return seekForce;
+    // }
 
     private Vector2 AccForce(float SteeringMag,Vector2 ForceToAdd){
 
