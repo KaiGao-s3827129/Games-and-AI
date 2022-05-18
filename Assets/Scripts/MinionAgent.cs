@@ -11,6 +11,8 @@ public class MinionAgent : Agent
     private Rigidbody2D rb2d;
     private SpriteRenderer sr;
     private Vector3 minionStartPos; 
+    public GameObject platforms;
+    public RandomPlatform randomPlatform;
     [SerializeField] private Transform targetTransform;
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,8 @@ public class MinionAgent : Agent
         rb2d = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         minionStartPos = transform.position;
+        platforms = GameObject.Find("Platforms");
+        randomPlatform  = platforms.GetComponent<RandomPlatform>();
 
     }
 
@@ -39,6 +43,9 @@ public class MinionAgent : Agent
     {
         sensor.AddObservation(transform.position);
         sensor.AddObservation(targetTransform.position);
+        foreach(var one in randomPlatform.platformList){
+            sensor.AddObservation(one);
+        }
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -76,7 +83,17 @@ public class MinionAgent : Agent
 
     public void HandleGetNeo(){
         Debug.Log(11111111111);
-        AddReward(20.0f);
+        AddReward(10.0f);
+        OnEpisodeBegin();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other){
+        Debug.Log(other.name);
+        Debug.Log(2222222222);
+        if(other.TryGetComponent<PlatForm>(out PlatForm platformPrefab)){
+            AddReward(-0.01f);
+            // EndEpisode();
+        }  
     }
 
 }
