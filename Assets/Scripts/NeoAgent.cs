@@ -109,7 +109,7 @@ public class NeoAgent : Agent
 
     public void handleSwordAttack(){
         Debug.Log("hit!");
-        AddReward(100.0f);
+        AddReward(30.0f);
         deadMinionNum ++;
         if (deadMinionNum == 10){
             Debug.Log("slayed ten minions!");

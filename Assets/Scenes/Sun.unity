@@ -2162,7 +2162,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 8d28760c7e95b774bb449eeec1146b02, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 53306b5b01fe6ed4c886f9f40422c358, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: NeoBehavior
@@ -2185,7 +2185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: RayPerceptionSensor
   m_DetectableTags: []
-  m_RaysPerDirection: 40
+  m_RaysPerDirection: 45
   m_MaxRayDegrees: 180
   m_SphereCastRadius: 0.5
   m_RayLength: 125
@@ -4699,8 +4699,8 @@ MonoBehaviour:
   attackPos: {fileID: 616272534}
   whatIsEnemies:
     serializedVersion: 2
-    m_Bits: 768
-  attackRange: 6.07
+    m_Bits: 512
+  attackRange: 10
   damage: 0
 --- !u!212 &1326709621
 SpriteRenderer:
@@ -4761,8 +4761,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1326709619}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -73.1, y: -30.9, z: 0}
-  m_LocalScale: {x: 3.1427703, y: 3.4443362, z: 5}
+  m_LocalPosition: {x: -71.9825, y: -29.0788, z: 0}
+  m_LocalScale: {x: 5.251255, y: 4.55479, z: 5}
   m_Children:
   - {fileID: 616272534}
   m_Father: {fileID: 0}
@@ -7486,7 +7486,7 @@ GameObject:
   - component: {fileID: 2131857721}
   - component: {fileID: 2131857720}
   - component: {fileID: 2131857723}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: TheBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
