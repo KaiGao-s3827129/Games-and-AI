@@ -19,6 +19,7 @@ public class NeoAgent : Agent
     // Start is called before the first frame update
     void Start()
     {
+        Application.runInBackground = true;
         // anim = GetComponent<Animator>();
         neo = GetComponent<Rigidbody2D>();
         sword = GameObject.Find("sword");
@@ -53,9 +54,10 @@ public class NeoAgent : Agent
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         //Debug.Log("Action taken was: " + actionBuffers.DiscreteActions[0]);
-        int action_chosen = actionBuffers.DiscreteActions[0];
+        int move_action = actionBuffers.DiscreteActions[0];
+        int jump_action = actionBuffers.DiscreteActions[1];
         float moveHorizontal = 0.0f;
-        switch(action_chosen){
+        switch(move_action){
             case 0:
                 sword.GetComponent<sword>().Attack();
                 break;
@@ -66,6 +68,18 @@ public class NeoAgent : Agent
                 moveHorizontal = 1.0f;
                 break;
         }
+
+        switch(jump_action){
+            case 0:
+                sword.GetComponent<sword>().Attack();
+                break;
+            case 1:
+                moveHorizontal = -1.0f;
+                break;
+            
+        }
+
+
 
         neo.velocity = new Vector2(moveHorizontal * 20f, neo.velocity.y);
         
@@ -109,7 +123,7 @@ public class NeoAgent : Agent
 
     public void handleSwordAttack(){
         Debug.Log("hit!");
-        AddReward(30.0f);
+        AddReward(3.0f);
         deadMinionNum ++;
         if (deadMinionNum == 10){
             Debug.Log("slayed ten minions!");

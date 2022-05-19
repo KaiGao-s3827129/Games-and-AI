@@ -1916,6 +1916,7 @@ GameObject:
   - component: {fileID: 292721649}
   - component: {fileID: 292721647}
   - component: {fileID: 292721651}
+  - component: {fileID: 292721652}
   m_Layer: 10
   m_Name: Neo
   m_TagString: Player
@@ -2070,6 +2071,7 @@ MonoBehaviour:
   lowJumpMulti: 25
   jumpCount: 1
   isJump: 0
+  jumpRequest: 0
   ant: {fileID: 0}
   facingRight: 1
 --- !u!95 &292721646
@@ -2157,12 +2159,12 @@ MonoBehaviour:
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
-      BranchSizes: 03000000
-    VectorActionSize: 03000000
+      BranchSizes: 0300000002000000
+    VectorActionSize: 0300000002000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 53306b5b01fe6ed4c886f9f40422c358, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: NeoBehavior
@@ -2183,7 +2185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67c7e722ba14acd9153bb4488bff6e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SensorName: RayPerceptionSensor
+  m_SensorName: RayPerceptionSensorEnemy
   m_DetectableTags: []
   m_RaysPerDirection: 45
   m_MaxRayDegrees: 180
@@ -2194,6 +2196,30 @@ MonoBehaviour:
     m_Bits: 512
   m_ObservationStacks: 1
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &292721652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292721639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f67c7e722ba14acd9153bb4488bff6e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: RayPerceptionSensorPlatform
+  m_DetectableTags: []
+  m_RaysPerDirection: 45
+  m_MaxRayDegrees: 180
+  m_SphereCastRadius: 0.5
+  m_RayLength: 125
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ObservationStacks: 1
+  rayHitColor: {r: 0, g: 0.4457605, b: 1, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &300164154
 GameObject:

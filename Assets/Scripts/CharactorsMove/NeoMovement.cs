@@ -26,7 +26,7 @@ public class NeoMovement : MonoBehaviour
     private Vector2 playerSize;
     private Vector2 boxSize;
     private float horizontalMove;
-    private bool jumpRequest = false;
+    public bool jumpRequest = false;
     private bool isGround = false;
     public GameObject ant;
     private NeoState neoState;
