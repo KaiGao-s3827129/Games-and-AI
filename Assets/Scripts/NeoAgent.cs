@@ -16,12 +16,15 @@ public class NeoAgent : Agent
     private Vector3 neoStartPos;
     private RandomPlatform randomPlatform;
     private int deadMinionNum;
+    public GameObject Neo;
+
     // Start is called before the first frame update
     void Start()
     {
         Application.runInBackground = true;
         // anim = GetComponent<Animator>();
         neo = GetComponent<Rigidbody2D>();
+        Neo = GameObject.Find("Neo");
         sword = GameObject.Find("sword");
         neoStartPos = transform.position;
         randomPlatform = GameObject.Find("Platforms").GetComponent<RandomPlatform>();
@@ -86,9 +89,9 @@ public class NeoAgent : Agent
         if (moveHorizontal != 0)
         {
             if(moveHorizontal>0){
-                facingRight = true;
+                Neo.GetComponent<NeoMovement>().facingRight=true;
             }else{
-                facingRight = false;
+                Neo.GetComponent<NeoMovement>().facingRight=false;
             }
             transform.localScale = new Vector3(moveHorizontal, 1, 1);
         }
