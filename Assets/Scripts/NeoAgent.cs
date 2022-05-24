@@ -74,10 +74,12 @@ public class NeoAgent : Agent
 
         switch(jump_action){
             case 0:
-                sword.GetComponent<sword>().Attack();
+                if(Neo.GetComponent<NeoMovement>().isGround){
+                    Neo.GetComponent<NeoMovement>().jumpRequest=true;
+                } 
                 break;
             case 1:
-                moveHorizontal = -1.0f;
+                
                 break;
             
         }
@@ -134,9 +136,19 @@ public class NeoAgent : Agent
         }
     }
 
+    public void handleSwordAttackBoss(){
+        AddReward(10.0f);
+    }
+
+
     public void handleSwordNotAttack(){
         Debug.Log("doesnt hit anything");
-        AddReward(-1.0f);
+        AddReward(-0.1f);
+    }
+
+
+    public void closeToBoss(){
+        AddReward(5.0f);
     }
 
 }

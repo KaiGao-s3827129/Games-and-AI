@@ -15,7 +15,7 @@ public class NeoMovement : MonoBehaviour
     
     public LayerMask mask;
     public float boxHeight = 0.05f;
-    public float jumpValue = 60f;
+    public float jumpValue = 150f;
     public float speed = 20f;
     public float fallMulti = 20f;
     public float lowJumpMulti = 25f;
@@ -27,7 +27,7 @@ public class NeoMovement : MonoBehaviour
     private Vector2 boxSize;
     private float horizontalMove;
     public bool jumpRequest = false;
-    private bool isGround = false;
+    public bool isGround = false;
     public GameObject ant;
     private NeoState neoState;
     public bool facingRight = true;
@@ -194,6 +194,9 @@ public class NeoMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
+        if(col.gameObject.name.Substring(0,9)=="largerPlatformPrefab"){
+
+        }
         if (col.gameObject.name.Substring(0,3)=="Min")
         {
             //Neo has been damaged by Leader Minion

@@ -72,6 +72,7 @@ public class sword : MonoBehaviour
             if (Minions[i].name == "TheBoss")
             {
                 Minions[i].GetComponent<BossState>().TakeDamage(damage);
+                ant.GetComponent<NeoAgent>().handleSwordAttackBoss();
             }
         }
 
