@@ -30,12 +30,12 @@ public class BossState : MonoBehaviour
     {
         Neo.GetComponent<NeoAgent>().nearByBoss(gameObject.transform.position-Neo.transform.position);
         //Decide the boss die.
-        if (healthPoint <= 0)
-        {
-            Destroy(gameObject);
-            winMenu.SetActive(true);
-            Time.timeScale = 0f;
-        }
+        // if (healthPoint <= 0)
+        // {
+        //     Destroy(gameObject);
+        //     // winMenu.SetActive(true);
+        //     Time.timeScale = 0f;
+        // }
         ant = new List<GameObject>();
         foreach (string one in randomPlatform.leaderMinions)
         {

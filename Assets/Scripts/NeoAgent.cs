@@ -17,7 +17,9 @@ public class NeoAgent : Agent
     private RandomPlatform randomPlatform;
     private int deadMinionNum;
     public GameObject Neo;
+    public GameObject Boss;
     public Transform coinLocations;
+    public float previousHeight;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,8 @@ public class NeoAgent : Agent
         neo = GetComponent<Rigidbody2D>();
         Neo = GameObject.Find("Neo");
         sword = GameObject.Find("sword");
+        Boss = GameObject.Find("TheBoss");
+        previousHeight = Neo.transform.position.y;
         neoStartPos = transform.position;
         randomPlatform = GameObject.Find("Platforms").GetComponent<RandomPlatform>();
         // minions = randomPlatform.agents;
@@ -41,6 +45,8 @@ public class NeoAgent : Agent
         {
             Destroy(randomPlatform.agents[i]);
         }
+        Boss.GetComponent<BossState>().healthPoint=500;
+        Boss.GetComponent<BossState>().healthBar.SetHealth(500);
         randomPlatform.agents.Clear();
         randomPlatform.leaderMinions.Clear();
         foreach(Transform coin in coinLocations){
@@ -127,7 +133,7 @@ public class NeoAgent : Agent
     // Update is called once per frame
     void Update()
     {
-        
+        // SetReward(Neo.transform.position.y);
     }
 
     public void handleSwordAttack(){
@@ -151,25 +157,24 @@ public class NeoAgent : Agent
     }
 
     public void handleOnPlatfrom(){
-        AddReward(0.2f);
+        AddReward(0.1f);
         
     }
 
     private void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.name=="Square"){
-            Debug.Log(11111111);
             handleOnPlatfrom();
         }
     }
 
     public void nearByBoss(Vector3 distance){
         float distanceToTarget = 1/(distance.magnitude);
-        Debug.Log(distanceToTarget);
-        // SetReward(distanceToTarget);
+        // Debug.Log(distanceToTarget);
+        // SetReward(distanceToTarget/10);
     }
 
     public void HandleCollectCoin(){
-        AddReward(10.0f);
+        AddReward(2.0f);
     }
 
 }
