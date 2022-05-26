@@ -17,6 +17,7 @@ public class NeoAgent : Agent
     private RandomPlatform randomPlatform;
     private int deadMinionNum;
     public GameObject Neo;
+    public Transform coinLocations;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +43,9 @@ public class NeoAgent : Agent
         }
         randomPlatform.agents.Clear();
         randomPlatform.leaderMinions.Clear();
+        foreach(Transform coin in coinLocations){
+            coin.gameObject.SetActive(true);
+        }
         
     }
     public override void OnEpisodeBegin(){
@@ -146,9 +150,26 @@ public class NeoAgent : Agent
         AddReward(-0.1f);
     }
 
+    public void handleOnPlatfrom(){
+        AddReward(0.2f);
+        
+    }
 
-    public void closeToBoss(){
-        AddReward(5.0f);
+    private void OnTriggerEnter2D(Collider2D other){
+        if(other.gameObject.name=="Square"){
+            Debug.Log(11111111);
+            handleOnPlatfrom();
+        }
+    }
+
+    public void nearByBoss(Vector3 distance){
+        float distanceToTarget = 1/(distance.magnitude);
+        Debug.Log(distanceToTarget);
+        // SetReward(distanceToTarget);
+    }
+
+    public void HandleCollectCoin(){
+        AddReward(10.0f);
     }
 
 }

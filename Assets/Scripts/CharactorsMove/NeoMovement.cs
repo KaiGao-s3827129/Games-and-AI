@@ -194,9 +194,7 @@ public class NeoMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.name.Substring(0,9)=="largerPlatformPrefab"){
 
-        }
         if (col.gameObject.name.Substring(0,3)=="Min")
         {
             //Neo has been damaged by Leader Minion

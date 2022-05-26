@@ -2,22 +2,31 @@
     "NeoBehavior": {
         "checkpoints": [
             {
-                "steps": 29099,
-                "file_path": "results\\testJump\\NeoBehavior\\NeoBehavior-29099.onnx",
-                "reward": null,
-                "creation_time": 1653307921.2217543,
+                "steps": 30262,
+                "file_path": "results\\testJump\\NeoBehavior\\NeoBehavior-30262.onnx",
+                "reward": 145.5999990105629,
+                "creation_time": 1653488855.031998,
                 "auxillary_file_paths": [
-                    "results\\testJump\\NeoBehavior\\NeoBehavior-29099.pt"
+                    "results\\testJump\\NeoBehavior\\NeoBehavior-30262.pt"
+                ]
+            },
+            {
+                "steps": 34847,
+                "file_path": "results\\testJump\\NeoBehavior\\NeoBehavior-34847.onnx",
+                "reward": 127.39999979734421,
+                "creation_time": 1653491186.4297743,
+                "auxillary_file_paths": [
+                    "results\\testJump\\NeoBehavior\\NeoBehavior-34847.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 29099,
+            "steps": 34847,
             "file_path": "results\\testJump\\NeoBehavior.onnx",
-            "reward": null,
-            "creation_time": 1653307921.2217543,
+            "reward": 127.39999979734421,
+            "creation_time": 1653491186.4297743,
             "auxillary_file_paths": [
-                "results\\testJump\\NeoBehavior\\NeoBehavior-29099.pt"
+                "results\\testJump\\NeoBehavior\\NeoBehavior-34847.pt"
             ]
         }
     },

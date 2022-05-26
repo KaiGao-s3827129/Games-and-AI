@@ -1,0 +1,29 @@
+{
+    "NeoBehavior": {
+        "checkpoints": [
+            {
+                "steps": 36621,
+                "file_path": "results\\testJump1\\NeoBehavior\\NeoBehavior-36621.onnx",
+                "reward": 99.3714302607945,
+                "creation_time": 1653490614.627555,
+                "auxillary_file_paths": [
+                    "results\\testJump1\\NeoBehavior\\NeoBehavior-36621.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 36621,
+            "file_path": "results\\testJump1\\NeoBehavior.onnx",
+            "reward": 99.3714302607945,
+            "creation_time": 1653490614.627555,
+            "auxillary_file_paths": [
+                "results\\testJump1\\NeoBehavior\\NeoBehavior-36621.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

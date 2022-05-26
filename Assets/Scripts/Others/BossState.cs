@@ -12,6 +12,7 @@ public class BossState : MonoBehaviour
     public RandomPlatform randomPlatform;
     public HealthBar healthBar;
     public GameObject winMenu;
+    public GameObject Neo;
 
 
     // Start is called before the first frame update
@@ -21,11 +22,13 @@ public class BossState : MonoBehaviour
         ant = new List<GameObject>();
         platforms = GameObject.Find("Platforms");
         randomPlatform = platforms.GetComponent<RandomPlatform>();
+        Neo = GameObject.Find("Neo");
     }
 
     // Update is called once per frame
     void Update()
     {
+        Neo.GetComponent<NeoAgent>().nearByBoss(gameObject.transform.position-Neo.transform.position);
         //Decide the boss die.
         if (healthPoint <= 0)
         {
