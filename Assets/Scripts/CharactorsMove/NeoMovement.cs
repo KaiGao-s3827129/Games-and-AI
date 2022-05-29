@@ -235,9 +235,11 @@ public class NeoMovement : MonoBehaviour
         }
     }
     //Shoot function
-    void Shoot(){
+    public void Shoot(){
+        if(neoState.currentAttackState==AttackState.Remote){
         GameObject bullet = Instantiate(bulletPrefab,firePoint.position,firePoint.rotation);
         Destroy(bullet,3f);
+        }
     }
 
 }

@@ -61,7 +61,8 @@ public class NeoAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(0.0f);
+
+
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -80,6 +81,9 @@ public class NeoAgent : Agent
             case 2:
                 moveHorizontal = 1.0f;
                 break;
+            // case 3:
+            //     Neo.GetComponent<NeoMovement>().Shoot();
+            //     break;
         }
 
         switch(jump_action){
@@ -91,7 +95,6 @@ public class NeoAgent : Agent
             case 1:
                 
                 break;
-            
         }
 
 
@@ -147,6 +150,9 @@ public class NeoAgent : Agent
     }
 
     public void handleSwordAttackBoss(){
+        if(Boss.GetComponent<BossState>().healthPoint<=0){
+            EndEpisode();
+        }
         AddReward(10.0f);
     }
 
@@ -165,12 +171,16 @@ public class NeoAgent : Agent
         if(other.gameObject.name=="Square"){
             handleOnPlatfrom();
         }
+        if(other.gameObject.name=="LeftBound"|| other.gameObject.name=="RightBound"){
+            Debug.Log(1111111);
+            AddReward(-0.2f);
+        }
     }
 
     public void nearByBoss(Vector3 distance){
         float distanceToTarget = 1/(distance.magnitude);
         // Debug.Log(distanceToTarget);
-        // SetReward(distanceToTarget/10);
+        SetReward(distanceToTarget/10);
     }
 
     public void HandleCollectCoin(){

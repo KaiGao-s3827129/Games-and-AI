@@ -27,15 +27,24 @@
                 "auxillary_file_paths": [
                     "results\\testJump\\NeoBehavior\\NeoBehavior-69053.pt"
                 ]
+            },
+            {
+                "steps": 78305,
+                "file_path": "results\\testJump\\NeoBehavior\\NeoBehavior-78305.onnx",
+                "reward": 37214.20017051697,
+                "creation_time": 1653584354.5691366,
+                "auxillary_file_paths": [
+                    "results\\testJump\\NeoBehavior\\NeoBehavior-78305.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 69053,
+            "steps": 78305,
             "file_path": "results\\testJump\\NeoBehavior.onnx",
-            "reward": 33927.699816942215,
-            "creation_time": 1653579295.184178,
+            "reward": 37214.20017051697,
+            "creation_time": 1653584354.5691366,
             "auxillary_file_paths": [
-                "results\\testJump\\NeoBehavior\\NeoBehavior-69053.pt"
+                "results\\testJump\\NeoBehavior\\NeoBehavior-78305.pt"
             ]
         }
     },
