@@ -5,7 +5,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 using UnityEngine.SceneManagement;
-
+using System;
 public class NeoAgent : Agent
 {
 
@@ -20,10 +20,14 @@ public class NeoAgent : Agent
     public GameObject Boss;
     public Transform coinLocations;
     public float previousHeight;
+    private Vector2 bossLocation1;
+    private Vector2 bossLocation2;
 
     // Start is called before the first frame update
     void Start()
     {
+        bossLocation1 = new Vector2(49.6f,28.2f);
+        bossLocation2 = new Vector2(-56.6f, 36.2f);
         Application.runInBackground = true;
         // anim = GetComponent<Animator>();
         neo = GetComponent<Rigidbody2D>();
@@ -33,14 +37,24 @@ public class NeoAgent : Agent
         previousHeight = Neo.transform.position.y;
         neoStartPos = transform.position;
         randomPlatform = GameObject.Find("Platforms").GetComponent<RandomPlatform>();
+        Boss.transform.position = bossLocation1;
         // minions = randomPlatform.agents;
         // minionNames = randomPlatform.leaderMinions;
     }
 
     public void Restart()
     {    
+        if(Boss.transform.position.x==bossLocation1.x && Boss.transform.position.y==bossLocation1.y){
+            Boss.transform.position = bossLocation2;
+        }else{
+            Boss.transform.position = bossLocation1;
+        }
         deadMinionNum = 0;
-        transform.position = neoStartPos;
+        var random = new System.Random();
+        var list = randomPlatform.platformList;
+        int index = random.Next(list.Count);
+        Vector2 newLocation =  new Vector2(list[index].x,list[index].y+4);
+        transform.position = newLocation;
         for(int i = 0; i < randomPlatform.agents.Count; i++)
         {
             Destroy(randomPlatform.agents[i]);
@@ -141,7 +155,7 @@ public class NeoAgent : Agent
 
     public void handleSwordAttack(){
         Debug.Log("hit!");
-        AddReward(3.0f);
+        AddReward(4.0f);
         deadMinionNum ++;
         if (deadMinionNum == 10){
             Debug.Log("slayed ten minions!");
@@ -170,17 +184,19 @@ public class NeoAgent : Agent
     private void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.name=="Square"){
             handleOnPlatfrom();
+            // Debug.Log(Neo.transform.position.y/10);
+            // AddReward(Neo.transform.position.y/10);
         }
         if(other.gameObject.name=="LeftBound"|| other.gameObject.name=="RightBound"){
-            Debug.Log(1111111);
-            AddReward(-0.2f);
+            
+            AddReward(-0.5f);
         }
     }
 
     public void nearByBoss(Vector3 distance){
         float distanceToTarget = 1/(distance.magnitude);
-        // Debug.Log(distanceToTarget);
-        SetReward(distanceToTarget/10);
+        Debug.Log(distanceToTarget*20);
+        SetReward(distanceToTarget*20);
     }
 
     public void HandleCollectCoin(){

@@ -2410,7 +2410,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292721639}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: -35.4, z: 0}
+  m_LocalPosition: {x: 1.4, y: -35.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1683607789}
@@ -2546,7 +2546,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 3000
+  MaxStep: 6000
   facingRight: 1
   sword: {fileID: 1326709619}
   Neo: {fileID: 0}
@@ -2575,7 +2575,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 588f86c4736cd9a41bdc547c0d3b55a2, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 2d6943edc9042c444af91ffdbf85e67f, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: NeoBehavior
@@ -4280,6 +4280,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 72
+  platformList: []
   skillBox: {fileID: 7485881631667402372, guid: 72af46dc158899b408140eebebe35877, type: 3}
   weaponBox: {fileID: 732048550543656259, guid: 4c85ca589a1b04c40a3ba324cb0a4c7a, type: 3}
   boxCount: 1
@@ -5016,11 +5017,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 642020578700831534, guid: 9c9b434f10387924cb918660e362b1c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 76
+      value: 74.7
       objectReference: {fileID: 0}
     - target: {fileID: 642020578700831534, guid: 9c9b434f10387924cb918660e362b1c1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -15.3
+      value: -14.1
       objectReference: {fileID: 0}
     - target: {fileID: 642020578700831534, guid: 9c9b434f10387924cb918660e362b1c1, type: 3}
       propertyPath: m_LocalPosition.z
