@@ -26,6 +26,7 @@ public class NeoState : MonoBehaviour
     public JumpState currentJumpState;
     public AttackState currentAttackState;
     private int InvincibilityTime;
+    public GameObject neo;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,7 @@ public class NeoState : MonoBehaviour
         currentJumpState = JumpState.SingleJump;
         currentAttackState = AttackState.Melee;
         InvincibilityTime = 0;
+        neo = GameObject.Find("Neo");
     }
 
     void FixedUpdate()
@@ -112,5 +114,6 @@ public class NeoState : MonoBehaviour
 
     public void TakeDamage(int damage){
         // healthPoint -= damage;
+        neo.GetComponent<NeoAgent>().takenDamage();
     }
 }

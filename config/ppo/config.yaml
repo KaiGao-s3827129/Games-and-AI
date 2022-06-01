@@ -23,3 +23,5 @@ behaviors:
     max_steps: 50000000
     time_horizon: 64
     summary_freq: 500
+engine_settings:
+  no_graphics: true

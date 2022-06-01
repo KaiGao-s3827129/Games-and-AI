@@ -17,11 +17,14 @@ public class NeoAgent : Agent
     private RandomPlatform randomPlatform;
     private int deadMinionNum;
     public GameObject Neo;
+    private Vector2 playerSize;
     public GameObject Boss;
     public Transform coinLocations;
     public float previousHeight;
     private Vector2 bossLocation1;
     private Vector2 bossLocation2;
+    public LayerMask mask;
+    private Collider2D standSurface;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +35,7 @@ public class NeoAgent : Agent
         // anim = GetComponent<Animator>();
         neo = GetComponent<Rigidbody2D>();
         Neo = GameObject.Find("Neo");
+        playerSize = GetComponent<SpriteRenderer>().bounds.size;
         sword = GameObject.Find("sword");
         Boss = GameObject.Find("TheBoss");
         previousHeight = Neo.transform.position.y;
@@ -75,7 +79,7 @@ public class NeoAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-
+        // sensor.AddObservation()
 
     }
 
@@ -103,6 +107,7 @@ public class NeoAgent : Agent
         switch(jump_action){
             case 0:
                 if(Neo.GetComponent<NeoMovement>().isGround){
+                    standSurface = getStandSurface();
                     Neo.GetComponent<NeoMovement>().jumpRequest=true;
                 } 
                 break;
@@ -110,8 +115,6 @@ public class NeoAgent : Agent
                 
                 break;
         }
-
-
 
         neo.velocity = new Vector2(moveHorizontal * 20f, neo.velocity.y);
         
@@ -153,14 +156,20 @@ public class NeoAgent : Agent
         // SetReward(Neo.transform.position.y);
     }
 
+    Collider2D getStandSurface(){
+        Vector2 boxCenter = (Vector2) Neo.transform.position + (Vector2.down * playerSize.y * 0.5f);
+        Vector2 boxSize = new Vector2(0f, 0.05f);
+        return Physics2D.OverlapBox(boxCenter, boxSize, 0, mask);
+    }
+
     public void handleSwordAttack(){
         Debug.Log("hit!");
         AddReward(4.0f);
-        deadMinionNum ++;
-        if (deadMinionNum == 10){
-            Debug.Log("slayed ten minions!");
-            EndEpisode();
-        }
+        // deadMinionNum ++;
+        // if (deadMinionNum == 10){
+        //     Debug.Log("slayed ten minions!");
+        //     EndEpisode();
+        // }
     }
 
     public void handleSwordAttackBoss(){
@@ -172,30 +181,51 @@ public class NeoAgent : Agent
 
 
     public void handleSwordNotAttack(){
-        Debug.Log("doesnt hit anything");
+        // Debug.Log("doesnt hit anything");
         AddReward(-0.1f);
     }
 
-    public void handleOnPlatfrom(){
+    public void handleOnDifferentPlatfrom(){
         AddReward(0.1f);
         
     }
 
-    private void OnTriggerEnter2D(Collider2D other){
-        if(other.gameObject.name=="Square"){
-            handleOnPlatfrom();
-            // Debug.Log(Neo.transform.position.y/10);
-            // AddReward(Neo.transform.position.y/10);
-        }
-        if(other.gameObject.name=="LeftBound"|| other.gameObject.name=="RightBound"){
+    public void handleOnSamePlatfrom(){
+        AddReward(-0.1f);
+        
+    }
+
+    public void takenDamage(){
+        AddReward(-1f);
+    }
+
+    // private void OnTriggerEnter2D(Collider2D other){
+    //     if(other.gameObject.name=="Square"){
+    //         handleOnPlatfrom();
+    //         // Debug.Log(Neo.transform.position.y/10);
+    //         // AddReward(Neo.transform.position.y/10);
+    //     }
+    //     // if(other.gameObject.name=="LeftBound"|| other.gameObject.name=="RightBound"){
             
-            AddReward(-0.5f);
+    //     //     AddReward(-0.5f);
+    //     // }
+    // }
+
+    private void OnCollisionEnter2D(Collision2D collider) {
+        // Debug.Log("standSurface 2" + standSurface.gameObject.name);
+        if(collider.transform.parent.gameObject.name == standSurface.gameObject.name){
+            Debug.Log("same platform");
+            handleOnSamePlatfrom();
+        }
+        else if(collider.transform.parent.gameObject.name.Substring(0,4)=="Plat"){
+            handleOnDifferentPlatfrom();
+            Debug.Log("different platform");
         }
     }
 
     public void nearByBoss(Vector3 distance){
         float distanceToTarget = 1/(distance.magnitude);
-        Debug.Log(distanceToTarget*20);
+        // Debug.Log(distanceToTarget*20);
         SetReward(distanceToTarget*20);
     }
 
