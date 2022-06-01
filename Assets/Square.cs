@@ -1,21 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class Square : MonoBehaviour
 {
-    public GameObject ant;
-    // Start is called before the first frame update
-    void Start()
+    public int id;
+
+    public int getId()
     {
-        
+        return id;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void setId(int id)
     {
-        
+        this.id = id;
     }
-
 }

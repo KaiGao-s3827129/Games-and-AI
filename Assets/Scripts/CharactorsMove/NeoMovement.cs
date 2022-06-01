@@ -36,13 +36,14 @@ public class NeoMovement : MonoBehaviour
     void Start()
     {
         ant = GameObject.Find("Neo");
-        
         neo = GetComponent<Rigidbody2D>();
         playerSize = GetComponent<SpriteRenderer>().bounds.size;
         boxSize = new Vector2(playerSize.x * 0.0f, boxHeight);
         anim = GetComponent<Animator>();
         getAudio = GetComponent<AudioSource>();
         // bulletPrefab = GameObject.Find("bulletPrefab");
+        
+
     }
 
     // Update is called once per frame
@@ -201,7 +202,7 @@ public class NeoMovement : MonoBehaviour
             if(neoState.currentPlayerState!=PlayerState.Invincibility){
                 neoState.TakeDamage(1);
             }
-                        if (neoState.currentPlayerState==PlayerState.Die)
+            if (neoState.currentPlayerState==PlayerState.Die)
             {
                 gameObject.SetActive(false);
                 Destroy(GameObject.Find("sword"));
