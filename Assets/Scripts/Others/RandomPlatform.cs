@@ -91,7 +91,7 @@ public class RandomPlatform : MonoBehaviour
         leaderMinionNumber = 0;
         platformSpawn();
         InvokeRepeating("createMinion", 0, 20f);
-        InvokeRepeating("boxSpawn", spawnTime, spawnRepeatingTime);
+        // InvokeRepeating("boxSpawn", spawnTime, spawnRepeatingTime);
 
 
 

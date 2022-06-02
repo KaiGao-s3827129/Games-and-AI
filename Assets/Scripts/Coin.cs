@@ -22,7 +22,7 @@ public class Coin : MonoBehaviour
         if (other.gameObject.name == "Neo")
         {
             //other.gameObject.GetComponent<NeoAgent>().CollectCoin(this.gameObject); // Using "this" is actually unnecessary here, I just think it improves readability
-            other.GetComponent<NeoAgent>().HandleCollectCoin();
+            // other.GetComponent<NeoAgent>().HandleCollectCoin();
             gameObject.SetActive(false);
         }
     }

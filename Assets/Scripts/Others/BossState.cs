@@ -28,7 +28,7 @@ public class BossState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Neo.GetComponent<NeoAgent>().nearByBoss(gameObject.transform.position-Neo.transform.position);
+        // Neo.GetComponent<NeoAgent>().nearByBoss(gameObject.transform.position-Neo.transform.position);
         //Decide the boss die.
         // if (healthPoint <= 0)
         // {

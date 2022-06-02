@@ -31,6 +31,7 @@ public class NeoMovement : MonoBehaviour
     public GameObject ant;
     private NeoState neoState;
     public bool facingRight = true;
+    private (bool, Collider2D) prevStatus;
     
     // Start is called before the first frame update
     void Start()
@@ -43,6 +44,7 @@ public class NeoMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         getAudio = GetComponent<AudioSource>();
         // bulletPrefab = GameObject.Find("bulletPrefab");
+        prevStatus = (false, null);
     }
 
     // Update is called once per frame
@@ -95,14 +97,33 @@ public class NeoMovement : MonoBehaviour
         else
         {
             Vector2 boxCenter = (Vector2) transform.position + (Vector2.down * playerSize.y * 0.5f);
-
-            if (Physics2D.OverlapBox(boxCenter, boxSize, 0, mask) != null)
+            Collider2D currSurface = Physics2D.OverlapBox(boxCenter, boxSize, 0, mask);
+            if (currSurface != null)
             {
                 isGround = true;
                 isJump = false;
+                if (prevStatus.Item1 == false){
+                    if (prevStatus.Item2 != null){
+                        if (prevStatus.Item2.transform.parent.gameObject.name != currSurface.transform.parent.gameObject.name){
+                            Debug.Log("different platform");
+                            ant.GetComponent<NeoAgent>().handleOnDifferentPlatfrom();
+                        }
+                        else{
+                            Debug.Log("same platform");
+                            ant.GetComponent<NeoAgent>().handleOnSamePlatfrom();
+                        }
+                        
+                    }
+                }else{
+                    // Debug.Log("same platform");
+                    ant.GetComponent<NeoAgent>().handleOnSamePlatfrom();
+                }
+                prevStatus.Item2 = currSurface;
+                prevStatus.Item1 = true;
             }
             else
             {
+                prevStatus.Item1 = false;
                 isGround = false;
                 isJump = true;
             }
@@ -174,7 +195,7 @@ public class NeoMovement : MonoBehaviour
         if (col.tag == "WeaponBox" && !isGetWeapon)
         {
             isGetWeapon = true;
-            SoundManage.instance.GetAudioPlay();
+            // SoundManage.instance.GetAudioPlay();
             col.GetComponent<Animator>().SetTrigger("get");
             
             Destroy(col.gameObject, 1.5f);
@@ -206,7 +227,7 @@ public class NeoMovement : MonoBehaviour
                 gameObject.SetActive(false);
                 Destroy(GameObject.Find("sword"));
             }
-            SoundManage.instance.HurtAudioPlay();
+            // SoundManage.instance.HurtAudioPlay();
            
             
         }

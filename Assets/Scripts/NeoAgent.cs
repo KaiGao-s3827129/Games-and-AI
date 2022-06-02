@@ -25,6 +25,7 @@ public class NeoAgent : Agent
     private Vector2 bossLocation2;
     public LayerMask mask;
     private Collider2D standSurface;
+    private GameObject bound;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,7 @@ public class NeoAgent : Agent
         Boss.transform.position = bossLocation1;
         // minions = randomPlatform.agents;
         // minionNames = randomPlatform.leaderMinions;
+        bound = GameObject.Find("Bound");
     }
 
     public void Restart()
@@ -72,6 +74,13 @@ public class NeoAgent : Agent
         }
         
     }
+
+    private void FixedUpdate() {
+        // bound.private void OnCollisionEnter2D(Collision2D other) {
+            
+        // }
+    }
+
     public override void OnEpisodeBegin(){
         Debug.Log("episode began");
         Restart();
@@ -88,6 +97,7 @@ public class NeoAgent : Agent
         //Debug.Log("Action taken was: " + actionBuffers.DiscreteActions[0]);
         int move_action = actionBuffers.DiscreteActions[0];
         int jump_action = actionBuffers.DiscreteActions[1];
+        int attack_action = actionBuffers.DiscreteActions[2];
         float moveHorizontal = 0.0f;
         switch(move_action){
             case 0:
@@ -107,7 +117,7 @@ public class NeoAgent : Agent
         switch(jump_action){
             case 0:
                 if(Neo.GetComponent<NeoMovement>().isGround){
-                    standSurface = getStandSurface();
+                    // standSurface = getStandSurface();
                     Neo.GetComponent<NeoMovement>().jumpRequest=true;
                 } 
                 break;
@@ -164,12 +174,13 @@ public class NeoAgent : Agent
 
     public void handleSwordAttack(){
         Debug.Log("hit!");
-        AddReward(4.0f);
-        // deadMinionNum ++;
-        // if (deadMinionNum == 10){
-        //     Debug.Log("slayed ten minions!");
-        //     EndEpisode();
-        // }
+        AddReward(1.0f);
+        deadMinionNum ++;
+        if (deadMinionNum == 10){
+            Debug.Log("slayed ten minions!");
+            deadMinionNum = 0;
+            EndEpisode();
+        }
     }
 
     public void handleSwordAttackBoss(){
@@ -186,17 +197,17 @@ public class NeoAgent : Agent
     }
 
     public void handleOnDifferentPlatfrom(){
-        AddReward(0.1f);
+        AddReward(2f);
         
     }
 
     public void handleOnSamePlatfrom(){
-        AddReward(-0.1f);
+        AddReward(-0.5f);
         
     }
 
     public void takenDamage(){
-        AddReward(-1f);
+        AddReward(-2.5f);
     }
 
     // private void OnTriggerEnter2D(Collider2D other){
@@ -211,17 +222,17 @@ public class NeoAgent : Agent
     //     // }
     // }
 
-    private void OnCollisionEnter2D(Collision2D collider) {
-        // Debug.Log("standSurface 2" + standSurface.gameObject.name);
-        if(collider.transform.parent.gameObject.name == standSurface.gameObject.name){
-            Debug.Log("same platform");
-            handleOnSamePlatfrom();
-        }
-        else if(collider.transform.parent.gameObject.name.Substring(0,4)=="Plat"){
-            handleOnDifferentPlatfrom();
-            Debug.Log("different platform");
-        }
-    }
+    // private void OnCollisionEnter2D(Collision2D collider) {
+    //     // Debug.Log("standSurface 2" + standSurface.gameObject.name);
+    //     if(collider.transform.parent.gameObject.name == standSurface.gameObject.name){
+    //         Debug.Log("same platform");
+    //         handleOnSamePlatfrom();
+    //     }
+    //     else if(collider.transform.parent.gameObject.name.Substring(0,4)=="Plat"){
+    //         handleOnDifferentPlatfrom();
+    //         Debug.Log("different platform");
+    //     }
+    // }
 
     public void nearByBoss(Vector3 distance){
         float distanceToTarget = 1/(distance.magnitude);
@@ -229,8 +240,8 @@ public class NeoAgent : Agent
         SetReward(distanceToTarget*20);
     }
 
-    public void HandleCollectCoin(){
-        AddReward(2.0f);
-    }
+    // public void HandleCollectCoin(){
+    //     AddReward(2.0f);
+    // }
 
 }
