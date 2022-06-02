@@ -100,9 +100,6 @@ public class NeoAgent : Agent
         int attack_action = actionBuffers.DiscreteActions[2];
         float moveHorizontal = 0.0f;
         switch(move_action){
-            case 0:
-                sword.GetComponent<sword>().Attack();
-                break;
             case 1:
                 moveHorizontal = -1.0f;
                 break;
@@ -122,9 +119,18 @@ public class NeoAgent : Agent
                 } 
                 break;
             case 1:
-                
                 break;
         }
+
+        switch(attack_action){
+            case 0:
+                sword.GetComponent<sword>().Attack();
+                break;
+            case 1:
+                break;
+        }
+
+
 
         neo.velocity = new Vector2(moveHorizontal * 20f, neo.velocity.y);
         
@@ -178,22 +184,22 @@ public class NeoAgent : Agent
         deadMinionNum ++;
         if (deadMinionNum == 10){
             Debug.Log("slayed ten minions!");
-            deadMinionNum = 0;
             EndEpisode();
         }
     }
 
     public void handleSwordAttackBoss(){
         if(Boss.GetComponent<BossState>().healthPoint<=0){
+            AddReward(5.0f);
             EndEpisode();
         }
-        AddReward(10.0f);
+        
     }
 
 
     public void handleSwordNotAttack(){
         // Debug.Log("doesnt hit anything");
-        AddReward(-0.1f);
+        AddReward(-0.5f);
     }
 
     public void handleOnDifferentPlatfrom(){
@@ -202,11 +208,12 @@ public class NeoAgent : Agent
     }
 
     public void handleOnSamePlatfrom(){
-        AddReward(-0.5f);
+        AddReward(-1f);
         
     }
 
     public void takenDamage(){
+        Debug.Log("taken dmg");
         AddReward(-2.5f);
     }
 
