@@ -22,12 +22,14 @@ public class NeoAgent : Agent
     public float previousHeight;
     private Vector2 bossLocation1;
     private Vector2 bossLocation2;
+    public float last = 10000.0f;
+    public float lastDistanceToBoss = 10000.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        bossLocation1 = new Vector2(49.6f,28.2f);
-        bossLocation2 = new Vector2(-56.6f, 36.2f);
+        bossLocation1 = new Vector2(55.6f,22.9f);
+        bossLocation2 = new Vector2(-55.8f, 30.8f);
         Application.runInBackground = true;
         // anim = GetComponent<Animator>();
         neo = GetComponent<Rigidbody2D>();
@@ -40,10 +42,12 @@ public class NeoAgent : Agent
         Boss.transform.position = bossLocation1;
         // minions = randomPlatform.agents;
         // minionNames = randomPlatform.leaderMinions;
+        InvokeRepeating("nearByBoss", 0, 0.5f);
     }
 
     public void Restart()
     {    
+        last = 10000.0f;
         if(Boss.transform.position.x==bossLocation1.x && Boss.transform.position.y==bossLocation1.y){
             Boss.transform.position = bossLocation2;
         }else{
@@ -75,8 +79,14 @@ public class NeoAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-
-
+        sensor.AddObservation(transform.position);
+        sensor.AddObservation(Boss.transform.position);
+        // if(randomPlatform.skillBox.transform.position!=null){
+        //     sensor.AddObservation(randomPlatform.skillBox.transform.position);
+        // }
+        // if(randomPlatform.weaponBox.transform.position!=null){
+        //     sensor.AddObservation(randomPlatform.weaponBox.transform.position);
+        // }
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -84,25 +94,30 @@ public class NeoAgent : Agent
         //Debug.Log("Action taken was: " + actionBuffers.DiscreteActions[0]);
         int move_action = actionBuffers.DiscreteActions[0];
         int jump_action = actionBuffers.DiscreteActions[1];
+        int attack_action = actionBuffers.DiscreteActions[2];
         float moveHorizontal = 0.0f;
         switch(move_action){
             case 0:
-                sword.GetComponent<sword>().Attack();
-                break;
-            case 1:
                 moveHorizontal = -1.0f;
                 break;
-            case 2:
+            case 1:
                 moveHorizontal = 1.0f;
                 break;
             // case 3:
             //     Neo.GetComponent<NeoMovement>().Shoot();
             //     break;
         }
-
+        switch(attack_action){
+            case 0:
+                sword.GetComponent<sword>().Attack();
+                break;
+            case 1:
+                
+                break;
+        }
         switch(jump_action){
             case 0:
-                if(Neo.GetComponent<NeoMovement>().isGround){
+                if(Neo.GetComponent<NeoMovement>().isGround || Neo.GetComponent<NeoMovement>().jumpCount >= 1){
                     Neo.GetComponent<NeoMovement>().jumpRequest=true;
                 } 
                 break;
@@ -150,12 +165,11 @@ public class NeoAgent : Agent
     // Update is called once per frame
     void Update()
     {
-        // SetReward(Neo.transform.position.y);
     }
 
     public void handleSwordAttack(){
-        Debug.Log("hit!");
-        AddReward(4.0f);
+        // Debug.Log("hit!");
+        AddReward(3.0f);
         deadMinionNum ++;
         if (deadMinionNum == 10){
             Debug.Log("slayed ten minions!");
@@ -172,35 +186,68 @@ public class NeoAgent : Agent
 
 
     public void handleSwordNotAttack(){
-        Debug.Log("doesnt hit anything");
+        // Debug.Log("doesnt hit anything");
         AddReward(-0.1f);
     }
 
-    public void handleOnPlatfrom(){
-        AddReward(0.1f);
-        
+
+    public void takenDamage(){
+        Debug.Log("taken dmg");
+        AddReward(-0.1f);
     }
 
     private void OnTriggerEnter2D(Collider2D other){
-        if(other.gameObject.name=="Square"){
-            handleOnPlatfrom();
-            // Debug.Log(Neo.transform.position.y/10);
-            // AddReward(Neo.transform.position.y/10);
-        }
-        if(other.gameObject.name=="LeftBound"|| other.gameObject.name=="RightBound"){
-            
+        // if(other.gameObject.name=="SkillBox(Clone)"){
+        //     Debug.Log("Skill");
+        //     AddReward(3.0f);
+        // }
+        // if(other.gameObject.name=="WeaponBox(Clone)"){
+        //     Debug.Log("Weapon");
+        //     AddReward(3.0f);
+        // }
+        // Debug.Log(other.gameObject.name);
+        if(other.gameObject.name=="Ground"){
             AddReward(-0.5f);
+            last = 10000.0f;
+        }
+        else if(other.gameObject.name=="Square"){
+            Vector2 distance = Boss.transform.position - other.transform.position;
+            float dis = distance.magnitude;
+            if(dis<last){
+                last = dis;
+                AddReward(2.0f);
+            }else if(dis>last){
+                last = dis;
+                AddReward(-2.0f);
+            }
+            else if(dis ==last){
+                last = dis;
+                AddReward(-0.1f);
+            }
         }
     }
 
-    public void nearByBoss(Vector3 distance){
-        float distanceToTarget = 1/(distance.magnitude);
-        Debug.Log(distanceToTarget*20);
-        SetReward(distanceToTarget*20);
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.name=="Bound"){
+            AddReward(-1.0f);
+        }
+    }
+    public void nearByBoss(){
+        Vector2 distance = Boss.transform.position-Neo.transform.position;
+        float distanceToTarget = distance.magnitude;
+        if(distanceToTarget < lastDistanceToBoss){
+            lastDistanceToBoss = distanceToTarget;
+            Debug.Log(111111);
+            AddReward(0.1f);
+        }else{
+            lastDistanceToBoss = distanceToTarget;
+            Debug.Log(22222);
+            AddReward(-0.1f);
+        }
     }
 
     public void HandleCollectCoin(){
-        AddReward(2.0f);
+        AddReward(0.8f);
     }
-
 }

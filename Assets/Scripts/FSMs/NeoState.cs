@@ -23,6 +23,7 @@ public class NeoState : MonoBehaviour
     public int healthPoint = 3;
     public int previousHealthPoint=3;
     public PlayerState currentPlayerState;
+    private GameObject neo;
     public JumpState currentJumpState;
     public AttackState currentAttackState;
     private int InvincibilityTime;
@@ -33,6 +34,7 @@ public class NeoState : MonoBehaviour
         currentJumpState = JumpState.SingleJump;
         currentAttackState = AttackState.Melee;
         InvincibilityTime = 0;
+        neo = GameObject.Find("Neo");
     }
 
     void FixedUpdate()
@@ -112,5 +114,6 @@ public class NeoState : MonoBehaviour
 
     public void TakeDamage(int damage){
         // healthPoint -= damage;
+        neo.GetComponent<NeoAgent>().takenDamage();
     }
 }
