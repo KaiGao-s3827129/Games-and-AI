@@ -1,59 +1,23 @@
 {
-    "NeoBehavior": {
+    "SunTraining": {
         "checkpoints": [
             {
-                "steps": 499948,
-                "file_path": "results\\testJump\\NeoBehavior\\NeoBehavior-499948.onnx",
-                "reward": -173.4973270893097,
-                "creation_time": 1653988417.7724278,
+                "steps": 29169,
+                "file_path": "results\\testJump\\SunTraining\\SunTraining-29169.onnx",
+                "reward": null,
+                "creation_time": 1654446308.4109936,
                 "auxillary_file_paths": [
-                    "results\\testJump\\NeoBehavior\\NeoBehavior-499948.pt"
-                ]
-            },
-            {
-                "steps": 999997,
-                "file_path": "results\\testJump\\NeoBehavior\\NeoBehavior-999997.onnx",
-                "reward": -128.48742365837097,
-                "creation_time": 1653991534.3515072,
-                "auxillary_file_paths": [
-                    "results\\testJump\\NeoBehavior\\NeoBehavior-999997.pt"
-                ]
-            },
-            {
-                "steps": 1499997,
-                "file_path": "results\\testJump\\NeoBehavior\\NeoBehavior-1499997.onnx",
-                "reward": -158.10003757476807,
-                "creation_time": 1653994433.8677242,
-                "auxillary_file_paths": [
-                    "results\\testJump\\NeoBehavior\\NeoBehavior-1499997.pt"
-                ]
-            },
-            {
-                "steps": 1999997,
-                "file_path": "results\\testJump\\NeoBehavior\\NeoBehavior-1999997.onnx",
-                "reward": -177.3470597267151,
-                "creation_time": 1653997395.7727194,
-                "auxillary_file_paths": [
-                    "results\\testJump\\NeoBehavior\\NeoBehavior-1999997.pt"
-                ]
-            },
-            {
-                "steps": 2270317,
-                "file_path": "results\\testJump\\NeoBehavior\\NeoBehavior-2270317.onnx",
-                "reward": -154.4973268508911,
-                "creation_time": 1653998996.128862,
-                "auxillary_file_paths": [
-                    "results\\testJump\\NeoBehavior\\NeoBehavior-2270317.pt"
+                    "results\\testJump\\SunTraining\\SunTraining-29169.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 2270317,
-            "file_path": "results\\testJump\\NeoBehavior.onnx",
-            "reward": -154.4973268508911,
-            "creation_time": 1653998996.128862,
+            "steps": 29169,
+            "file_path": "results\\testJump\\SunTraining.onnx",
+            "reward": null,
+            "creation_time": 1654446308.4109936,
             "auxillary_file_paths": [
-                "results\\testJump\\NeoBehavior\\NeoBehavior-2270317.pt"
+                "results\\testJump\\SunTraining\\SunTraining-29169.pt"
             ]
         }
     },

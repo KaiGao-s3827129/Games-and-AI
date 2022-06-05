@@ -52,14 +52,19 @@ public class NeoMovement : MonoBehaviour
         neoState = ant.GetComponent<NeoState>();
         //movement
         Run();
-        if (Input.GetButtonDown("Jump") && (isGround || jumpCount >= 1) )
+        if (Input.GetButtonDown("Jump") && (isGround || jumpCount > 0) )
         {
             jumpRequest = true;
+        }
+        else
+        {
+            jumpRequest = false;
         }
 
         if (jumpCount <= 0)
         {
             isGetSkill = false;
+            jumpRequest = false;
         }
         if (isGround && jumpCount <= 0)
         {
@@ -116,13 +121,10 @@ public class NeoMovement : MonoBehaviour
             {
                 neo.AddForce(Vector2.up * jumpValue, ForceMode2D.Impulse);
             }
-        } else if (neo.velocity.y > 0 && !Input.GetButton("Jump"))
-        {
-            neo.gravityScale = lowJumpMulti;
         }
         else
         {
-            neo.gravityScale = 10f;
+            neo.gravityScale = lowJumpMulti;
         }
         //Click J to shoot.
         // if(neoState.currentAttackState==AttackState.Remote){

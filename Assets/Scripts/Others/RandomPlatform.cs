@@ -92,7 +92,7 @@ public class RandomPlatform : MonoBehaviour
         
         platformSpawn();
         platformCount = platformList.Count;
-        InvokeRepeating("createMinion", 0, 20f);
+        // InvokeRepeating("createMinion", 0, 20f);
         // InvokeRepeating("boxSpawn", spawnTime, spawnRepeatingTime);
 
 
