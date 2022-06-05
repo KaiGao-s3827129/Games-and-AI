@@ -169,7 +169,7 @@ public class NeoAgent : Agent
 
     public void handleSwordAttack(){
         // Debug.Log("hit!");
-        AddReward(3.0f);
+        AddReward(4.0f);
         deadMinionNum ++;
         if (deadMinionNum == 10){
             Debug.Log("slayed ten minions!");
@@ -247,7 +247,7 @@ public class NeoAgent : Agent
         }
     }
 
-    public void HandleCollectCoin(){
-        AddReward(0.8f);
-    }
+    // public void HandleCollectCoin(){
+    //     AddReward(0.8f);
+    // }
 }
