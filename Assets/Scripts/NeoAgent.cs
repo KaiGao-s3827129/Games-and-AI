@@ -14,11 +14,13 @@ public class NeoAgent : Agent
 {
     // public Animator anim;
     private Rigidbody2D neo;
+    private Rigidbody2D bossRigid;
     public bool facingRight = true;
     public GameObject sword;
     private Vector3 neoStartPos;
+
+    private Vector3 bossPos;
     // private RandomPlatform randomPlatform;
-    private int deadMinionNum;
     public GameObject Neo;
     public GameObject Boss;
     public Transform coinLocations;
@@ -29,7 +31,6 @@ public class NeoAgent : Agent
     private int collectedCoins;
     private int privateCollectedCoints;
     private int jumpedCount;
-    private int privateJumpedCount;
     private int coinCount;
 
     private List<Collider2D> jumpedPlatformsList = new List<Collider2D>();
@@ -44,7 +45,9 @@ public class NeoAgent : Agent
         Neo = GameObject.Find("Neo");
         sword = GameObject.Find("sword");
         Boss = GameObject.Find("TheBoss");
-        neoStartPos = Neo.transform.position;
+        bossRigid = GetComponent<Rigidbody2D>();
+        neoStartPos = randomPosition();
+        bossPos = randomPosition();
         previousHeight = Neo.transform.position.y;
         // randomPlatform = GameObject.Find("Platforms").GetComponent<RandomPlatform>();
 
@@ -52,8 +55,6 @@ public class NeoAgent : Agent
         // minionNames = randomPlatform.leaderMinions;
         privateCollectedCoints = 0;
         collectedCoins = 0;
-        jumpedCount = 0;
-        privateJumpedCount = 0;
         // Get coin count
         foreach (Transform coin in coinLocations)
         {
@@ -63,16 +64,18 @@ public class NeoAgent : Agent
     
     void Update()
     {
-        // if (Time.frameCount % 20== 0)
-        // {
-        //     NoCoinCollect();
-        // }
+        if (Time.frameCount % 180 == 0)
+        {
+            NoCoinCollect();
+        }
     }
 
     public void Restart()
     {
         // initialize Neo state
-        transform.position = neoStartPos;
+        Neo.transform.position = randomPosition();
+        bossRigid.transform.position = randomPosition();
+        
         // for(int i = 0; i < randomPlatform.agents.Count; i++)
         // {
         //     Destroy(randomPlatform.agents[i]);
@@ -80,7 +83,7 @@ public class NeoAgent : Agent
         // initialize boss state
         Boss.GetComponent<BossState>().healthPoint=500;
         Boss.GetComponent<BossState>().healthBar.SetHealth(500);
-        
+
         // clear platforms
         // randomPlatform.agents.Clear();
         // randomPlatform.leaderMinions.Clear();
@@ -97,11 +100,6 @@ public class NeoAgent : Agent
         collectedCoins = 0;
         onSamePlatformTimes = 0;
         coinCount = 0;
-        deadMinionNum = 0;
-        jumpedCount = 0;
-        privateJumpedCount = 0;
-        
-        SetReward(0f);
     }
     
     public override void OnEpisodeBegin(){
@@ -117,10 +115,10 @@ public class NeoAgent : Agent
         //Debug.Log("Action taken was: " + actionBuffers.DiscreteActions[0]);
         int move_action = actionBuffers.DiscreteActions[0];
         int jump_action = actionBuffers.DiscreteActions[1];
+        int attact_action = actionBuffers.DiscreteActions[2];
         float moveHorizontal = 0.0f;
         switch(move_action){
             case 0:
-                sword.GetComponent<sword>().Attack();
                 break;
             case 1:
                 moveHorizontal = 1.0f;
@@ -139,6 +137,15 @@ public class NeoAgent : Agent
             case 0:
                 break;
             
+        }
+
+        switch (attact_action)
+        {
+            case 0:
+                break;
+            case 1:
+                sword.GetComponent<sword>().Attack();
+                break;
         }
 
         neo.velocity = new Vector2(moveHorizontal * 20f, neo.velocity.y);
@@ -175,12 +182,12 @@ public class NeoAgent : Agent
     }
 
     public void handleSwordAttackBoss(){
-        AddReward(10.0f);
+        AddReward(5.0f);
         
         if (Boss.GetComponent<BossState>().healthPoint <= 0)
         {
             Debug.Log("Boss Dead.");
-            AddReward((float)Math.Abs(GetCumulativeReward()));
+            AddReward(2f);
             // Debug.Log(GetCumulativeReward());
             EndEpisode();
         }
@@ -189,8 +196,8 @@ public class NeoAgent : Agent
 
 
     public void handleSwordNotAttack(){
-        // Debug.Log("doesnt hit anything");
-        // AddReward(-1f);
+        Debug.Log("doesnt hit anything");
+        AddReward(-0.1f);
     }
 
     
@@ -214,24 +221,23 @@ public class NeoAgent : Agent
             else if (jumpedPlatformsList.Contains(other))
             {
                 // Debug.Log("Jump this platform before");
-                AddReward(-1f);
+                AddReward(-0.1f);
 
             }
-            // else
-            // {
-            //     onSamePlatformTimes = 0;
-            //     punishTime = 0;
-            //     AddReward(10f);
-            //     jumpedPlatformsList.Add(other);
-            // }
+            else
+            {
+                onSamePlatformTimes = 0;
+                punishTime = 0;
+                AddReward(0.1f);
+                jumpedPlatformsList.Add(other);
+            }
             
             previourPlatform = other;
         }
-
+        
         if (other.name == "Bound")
         {
-            SetReward(-2 * (MaxStep - StepCount));
-            // Debug.Log(GetCumulativeReward());
+            AddReward(-5f);
             Debug.Log("Touch Bound");
             EndEpisode();
         }
@@ -239,20 +245,20 @@ public class NeoAgent : Agent
 
     public void HandleJumpOnSamePlatform()
     {
-        AddReward(-1f);
+        AddReward(-0.2f);
         Debug.Log("On Same Platform!");
         onSamePlatformTimes++;
         if (onSamePlatformTimes >= 5)
         {
             punishTime++;
-            AddReward(-(float)Math.Pow(1.5f, punishTime));
+            AddReward(-1);
             onSamePlatformTimes = 0;
         }
 
         if (punishTime >= 5)
         {
-            SetReward(-2 * (MaxStep - StepCount));
             // Debug.Log(GetCumulativeReward());
+            AddReward(-5f);
             Debug.Log("Punish time over 5");
             EndEpisode();
         }
@@ -268,7 +274,7 @@ public class NeoAgent : Agent
         privateCollectedCoints = collectedCoins;
         collectedCoins++;
         coinCount--;
-        AddReward(5f);
+        AddReward(0.1f);
     }
 
     // No coin get in 5 per frame, then -1 reward
@@ -279,14 +285,14 @@ public class NeoAgent : Agent
             if (privateCollectedCoints == collectedCoins)
             {
                 // Debug.Log("Didn't get coin in 5 frame.");
-                AddReward(-2f);
+                AddReward(-0.5f);
             }
         }
     }
 
     public Vector2 randomPosition()
     {
-        float x = Random.Range(-50f, 40f);
+        float x = Random.Range(-50f, 50f);
         float y = Random.Range(-20f, 60f);
         Vector2 pos = new Vector2(x, y);
         return pos;
