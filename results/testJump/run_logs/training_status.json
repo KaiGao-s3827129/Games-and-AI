@@ -2,22 +2,22 @@
     "SunTraining": {
         "checkpoints": [
             {
-                "steps": 3198,
-                "file_path": "results\\testJump\\SunTraining\\SunTraining-3198.onnx",
-                "reward": -94.30000162124634,
-                "creation_time": 1654491410.7018573,
+                "steps": 30484,
+                "file_path": "results\\testJump\\SunTraining\\SunTraining-30484.onnx",
+                "reward": -5.709523703370776,
+                "creation_time": 1654504963.2873979,
                 "auxillary_file_paths": [
-                    "results\\testJump\\SunTraining\\SunTraining-3198.pt"
+                    "results\\testJump\\SunTraining\\SunTraining-30484.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 3198,
+            "steps": 30484,
             "file_path": "results\\testJump\\SunTraining.onnx",
-            "reward": -94.30000162124634,
-            "creation_time": 1654491410.7018573,
+            "reward": -5.709523703370776,
+            "creation_time": 1654504963.2873979,
             "auxillary_file_paths": [
-                "results\\testJump\\SunTraining\\SunTraining-3198.pt"
+                "results\\testJump\\SunTraining\\SunTraining-30484.pt"
             ]
         }
     },

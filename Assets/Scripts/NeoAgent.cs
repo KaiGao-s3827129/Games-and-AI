@@ -46,8 +46,7 @@ public class NeoAgent : Agent
         sword = GameObject.Find("sword");
         Boss = GameObject.Find("TheBoss");
         bossRigid = GetComponent<Rigidbody2D>();
-        neoStartPos = randomPosition();
-        bossPos = randomPosition();
+        neoStartPos = Neo.transform.position;
         previousHeight = Neo.transform.position.y;
         // randomPlatform = GameObject.Find("Platforms").GetComponent<RandomPlatform>();
 
@@ -73,9 +72,9 @@ public class NeoAgent : Agent
     public void Restart()
     {
         // initialize Neo state
-        Neo.transform.position = randomPosition();
-        bossRigid.transform.position = randomPosition();
-        
+        // transform.position = randomPosition();
+        transform.position = neoStartPos;
+
         // for(int i = 0; i < randomPlatform.agents.Count; i++)
         // {
         //     Destroy(randomPlatform.agents[i]);
@@ -211,8 +210,8 @@ public class NeoAgent : Agent
     // Jump to platforms or ground reward 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.name =="Square"){
-            
+        if(other.tag =="RewardSquare")
+        {
             // Jump on same platform
             if (other == previourPlatform)
             {
@@ -220,9 +219,15 @@ public class NeoAgent : Agent
             }
             else if (jumpedPlatformsList.Contains(other))
             {
-                // Debug.Log("Jump this platform before");
-                AddReward(-0.1f);
-
+                if (previourPlatform.tag == "GroundSquare")
+                {
+                    AddReward(0f);
+                }
+                else
+                {
+                    // Debug.Log("Jump this platform before");
+                    AddReward(-0.1f);
+                }
             }
             else
             {
@@ -231,8 +236,11 @@ public class NeoAgent : Agent
                 AddReward(0.1f);
                 jumpedPlatformsList.Add(other);
             }
-            
             previourPlatform = other;
+        } 
+        else if (other.tag == "GroundSquare")
+        {
+            AddReward(-0.2f);
         }
         
         if (other.name == "Bound")
@@ -251,7 +259,7 @@ public class NeoAgent : Agent
         if (onSamePlatformTimes >= 5)
         {
             punishTime++;
-            AddReward(-1);
+            AddReward(-1f);
             onSamePlatformTimes = 0;
         }
 
@@ -292,8 +300,8 @@ public class NeoAgent : Agent
 
     public Vector2 randomPosition()
     {
-        float x = Random.Range(-50f, 50f);
-        float y = Random.Range(-20f, 60f);
+        float x = Random.Range(-80f, 70f);
+        float y = Random.Range(-30f, 35f);
         Vector2 pos = new Vector2(x, y);
         return pos;
     }
