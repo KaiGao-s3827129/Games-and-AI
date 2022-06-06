@@ -109,6 +109,7 @@ public class NeoAgent : Agent
         }
         switch(attack_action){
             case 0:
+            
                 sword.GetComponent<sword>().Attack();
                 break;
             case 1:
@@ -193,7 +194,7 @@ public class NeoAgent : Agent
 
     public void takenDamage(){
         Debug.Log("taken dmg");
-        AddReward(-0.1f);
+        AddReward(-1.0f);
     }
 
     private void OnTriggerEnter2D(Collider2D other){
@@ -222,7 +223,7 @@ public class NeoAgent : Agent
             }
             else if(dis ==last){
                 last = dis;
-                AddReward(-0.1f);
+                AddReward(-0.5f);
             }
         }
     }
