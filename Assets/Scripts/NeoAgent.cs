@@ -32,6 +32,7 @@ public class NeoAgent : Agent
     private int privateCollectedCoints;
     private int jumpedCount;
     private int coinCount;
+    private float lastDistance = float.MaxValue;
 
     private List<Collider2D> jumpedPlatformsList = new List<Collider2D>();
 
@@ -72,8 +73,8 @@ public class NeoAgent : Agent
     public void Restart()
     {
         // initialize Neo state
-        // transform.position = randomPosition();
-        transform.position = neoStartPos;
+        transform.position = randomPosition();
+        // transform.position = neoStartPos;
 
         // for(int i = 0; i < randomPlatform.agents.Count; i++)
         // {
@@ -210,24 +211,38 @@ public class NeoAgent : Agent
     // Jump to platforms or ground reward 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag =="RewardSquare")
+        Vector2 distance = Boss.transform.position - other.transform.position;
+        float dis = distance.magnitude;
+        // if (lastDistance > dis)
+        // {
+        //     AddReward(0.2f);
+        // } 
+        // else if (lastDistance < dis)
+        // {
+        //     AddReward(-2.0f);
+        // }
+        // else
+        // {
+        //     AddReward(0.0f);
+        // }
+        // lastDistance = dis;
+
+        if(other.name == "Square")
         {
-            // Jump on same platform
             if (other == previourPlatform)
             {
                 HandleJumpOnSamePlatform();
             }
-            else if (jumpedPlatformsList.Contains(other))
+
+            if (other.tag == "GroundSquare")
             {
-                if (previourPlatform.tag == "GroundSquare")
-                {
-                    AddReward(0f);
-                }
-                else
-                {
-                    // Debug.Log("Jump this platform before");
-                    AddReward(-0.1f);
-                }
+                AddReward(-0.3f);
+            }
+            
+            if (jumpedPlatformsList.Contains(other))
+            {
+                // Debug.Log("Jump this platform before");
+                AddReward(-0.1f);
             }
             else
             {
@@ -237,12 +252,10 @@ public class NeoAgent : Agent
                 jumpedPlatformsList.Add(other);
             }
             previourPlatform = other;
-        } 
-        else if (other.tag == "GroundSquare")
-        {
-            AddReward(-0.2f);
         }
-        
+
+
+
         if (other.name == "Bound")
         {
             AddReward(-5f);
