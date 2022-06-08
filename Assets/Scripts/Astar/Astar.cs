@@ -35,7 +35,7 @@ public class Astar : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         // bombsParent = GameObject.Find("Bombs").transform;
 
-        InvokeRepeating("doAstar", 1f, 1f);
+        InvokeRepeating("doAstar", 1f, 0.5f);
     }
 
     // Update is called once per frame

@@ -24,14 +24,16 @@ public class NeoAgent : Agent
     private Vector2 bossLocation2;
     public float last = 10000.0f;
     public float lastDistanceToBoss = 10000.0f;
+    public string lastLoc;
+    private int onSamePlatformTimes;
+    private int punishTime;
 
     // Start is called before the first frame update
     void Start()
-    {
+    {   //Switch boss location Vector
         bossLocation1 = new Vector2(55.6f,22.9f);
         bossLocation2 = new Vector2(-55.8f, 30.8f);
         Application.runInBackground = true;
-        // anim = GetComponent<Animator>();
         neo = GetComponent<Rigidbody2D>();
         Neo = GameObject.Find("Neo");
         sword = GameObject.Find("sword");
@@ -40,20 +42,21 @@ public class NeoAgent : Agent
         neoStartPos = transform.position;
         randomPlatform = GameObject.Find("Platforms").GetComponent<RandomPlatform>();
         Boss.transform.position = bossLocation1;
-        // minions = randomPlatform.agents;
-        // minionNames = randomPlatform.leaderMinions;
+        // repeat check the distance between boss and agent
         InvokeRepeating("nearByBoss", 0, 0.5f);
     }
 
     public void Restart()
-    {    
+    {    lastLoc = "Plat";
         last = 10000.0f;
+        //Switch boss loaction when start
         if(Boss.transform.position.x==bossLocation1.x && Boss.transform.position.y==bossLocation1.y){
             Boss.transform.position = bossLocation2;
         }else{
             Boss.transform.position = bossLocation1;
         }
         deadMinionNum = 0;
+        //rendom generate Neo start location
         var random = new System.Random();
         var list = randomPlatform.platformList;
         int index = random.Next(list.Count);
@@ -63,6 +66,7 @@ public class NeoAgent : Agent
         {
             Destroy(randomPlatform.agents[i]);
         }
+        //Update the Boss health point when start
         Boss.GetComponent<BossState>().healthPoint=500;
         Boss.GetComponent<BossState>().healthBar.SetHealth(500);
         randomPlatform.agents.Clear();
@@ -70,6 +74,8 @@ public class NeoAgent : Agent
         foreach(Transform coin in coinLocations){
             coin.gameObject.SetActive(true);
         }
+        punishTime = 0;
+        onSamePlatformTimes = 0;
         
     }
     public override void OnEpisodeBegin(){
@@ -79,14 +85,9 @@ public class NeoAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        //Add boss position and Neo position
         sensor.AddObservation(transform.position);
         sensor.AddObservation(Boss.transform.position);
-        // if(randomPlatform.skillBox.transform.position!=null){
-        //     sensor.AddObservation(randomPlatform.skillBox.transform.position);
-        // }
-        // if(randomPlatform.weaponBox.transform.position!=null){
-        //     sensor.AddObservation(randomPlatform.weaponBox.transform.position);
-        // }
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -96,6 +97,7 @@ public class NeoAgent : Agent
         int jump_action = actionBuffers.DiscreteActions[1];
         int attack_action = actionBuffers.DiscreteActions[2];
         float moveHorizontal = 0.0f;
+        //move action
         switch(move_action){
             case 0:
                 moveHorizontal = -1.0f;
@@ -104,7 +106,7 @@ public class NeoAgent : Agent
                 moveHorizontal = 1.0f;
                 break;
             // case 3:
-            //     Neo.GetComponent<NeoMovement>().Shoot();
+            //     // Neo.GetComponent<NeoMovement>().Shoot();
             //     break;
         }
         switch(attack_action){
@@ -168,6 +170,7 @@ public class NeoAgent : Agent
     {
     }
 
+    //attack minion get 4 rewards
     public void handleSwordAttack(){
         // Debug.Log("hit!");
         AddReward(4.0f);
@@ -178,6 +181,7 @@ public class NeoAgent : Agent
         }
     }
 
+    //Attack boss 10 rewards
     public void handleSwordAttackBoss(){
         if(Boss.GetComponent<BossState>().healthPoint<=0){
             EndEpisode();
@@ -185,13 +189,13 @@ public class NeoAgent : Agent
         AddReward(10.0f);
     }
 
-
+    //Attack and not damage enemy minus 0.1 reward.
     public void handleSwordNotAttack(){
         // Debug.Log("doesnt hit anything");
         AddReward(-0.1f);
     }
 
-
+    //Agent take damage minus 0.1 reward
     public void takenDamage(){
         Debug.Log("taken dmg");
         AddReward(-1.0f);
@@ -207,11 +211,21 @@ public class NeoAgent : Agent
         //     AddReward(3.0f);
         // }
         // Debug.Log(other.gameObject.name);
+
+        //Jump on the ground
         if(other.gameObject.name=="Ground"){
-            AddReward(-0.5f);
+            if(lastLoc =="Plat"){
+                AddReward(-0.7f);
+            }else{
+            AddReward(-1.5f);
+            
             last = 10000.0f;
+            lastLoc = "Grou";
         }
+        }
+        //Jump on the platform
         else if(other.gameObject.name=="Square"){
+            lastLoc = "Plat";
             Vector2 distance = Boss.transform.position - other.transform.position;
             float dis = distance.magnitude;
             if(dis<last){
@@ -223,28 +237,53 @@ public class NeoAgent : Agent
             }
             else if(dis ==last){
                 last = dis;
-                AddReward(-0.5f);
+                // AddReward(-0.6f);
+                HandleJumpOnSamePlatform();
             }
         }
     }
 
+    //Jump on the platform minus reward
+    public void HandleJumpOnSamePlatform()
+    {
+        Debug.Log(onSamePlatformTimes);
+        AddReward(-0.2f);
+        Debug.Log("On Same Platform!");
+        onSamePlatformTimes++;
+        if (onSamePlatformTimes >= 5)
+        {
+            punishTime++;
+            AddReward(-1f);
+            onSamePlatformTimes = 0;
+        }
+
+        if (punishTime >= 5)
+        {
+            // Debug.Log(GetCumulativeReward());
+            AddReward(-5f);
+            Debug.Log("Punish time over 5");
+            EndEpisode();
+        }
+    }
+
+    //Touch bound minus reward
     private void OnCollisionEnter2D(Collision2D col)
     {
         if(col.gameObject.name=="Bound"){
             AddReward(-1.0f);
         }
     }
+
+    //Near by boss get 0.2 reward.
     public void nearByBoss(){
         Vector2 distance = Boss.transform.position-Neo.transform.position;
         float distanceToTarget = distance.magnitude;
         if(distanceToTarget < lastDistanceToBoss){
             lastDistanceToBoss = distanceToTarget;
-            Debug.Log(111111);
-            AddReward(0.1f);
+            AddReward(0.2f);
         }else{
             lastDistanceToBoss = distanceToTarget;
-            Debug.Log(22222);
-            AddReward(-0.1f);
+            AddReward(-0.2f);
         }
     }
 
