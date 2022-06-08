@@ -76,6 +76,8 @@ public class NeoAgent : Agent
         }
         punishTime = 0;
         onSamePlatformTimes = 0;
+        neo.GetComponent<NeoState>().healthPoint = 10;
+        neo.GetComponent<NeoState>().previousHealthPoint = 10;
         
     }
     public override void OnEpisodeBegin(){

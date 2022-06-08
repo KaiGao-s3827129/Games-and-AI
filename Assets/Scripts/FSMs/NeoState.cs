@@ -20,8 +20,8 @@ public enum AttackState{
 public class NeoState : MonoBehaviour
 {
     //Neo's health points
-    public int healthPoint = 3;
-    public int previousHealthPoint=3;
+    public int healthPoint = 10;
+    public int previousHealthPoint=10;
     public PlayerState currentPlayerState;
     private GameObject neo;
     public JumpState currentJumpState;
@@ -113,7 +113,7 @@ public class NeoState : MonoBehaviour
     }
 
     public void TakeDamage(int damage){
-        // healthPoint -= damage;
+        healthPoint -= damage;
         neo.GetComponent<NeoAgent>().takenDamage();
     }
 }
